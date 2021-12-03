@@ -101,4 +101,4 @@ theme_config:
 deploy:
   type: git
   repo: git@github.com:woozyking/blog.git
-  branch: master
+  branch: main
