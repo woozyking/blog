@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)">
+<meta name="generator" content="Hexo 5.4.0">
+
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="mask-icon" href="/favicon.ico" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"runzhou.li","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.8.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Buscando...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+<meta name="description" content="I had a simple problem along the way of exploring Node.js, which involves writing modules that work for both server and client sides. Just like many programmers nowadays, I google’d out a solution (wh">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Shareable Code for Node and Browser">
+<meta property="og:url" content="https://runzhou.li/2015/03/11/Sharable-JS-for-Node-and-Browser/index.html">
+<meta property="og:site_name" content="woozyking">
+<meta property="og:description" content="I had a simple problem along the way of exploring Node.js, which involves writing modules that work for both server and client sides. Just like many programmers nowadays, I google’d out a solution (wh">
+<meta property="og:locale" content="es_ES">
+<meta property="article:published_time" content="2015-03-11T23:00:07.000Z">
+<meta property="article:modified_time" content="2021-12-03T21:42:39.461Z">
+<meta property="article:author" content="Runzhou Li (Leo)">
+<meta property="article:tag" content="programming">
+<meta property="article:tag" content="node">
+<meta property="article:tag" content="js">
+<meta property="article:tag" content="javascript">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://runzhou.li/2015/03/11/Sharable-JS-for-Node-and-Browser/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"es","comments":true,"permalink":"https://runzhou.li/2015/03/11/Sharable-JS-for-Node-and-Browser/","path":"2015/03/11/Sharable-JS-for-Node-and-Browser/","title":"Shareable Code for Node and Browser"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Shareable Code for Node and Browser | woozyking</title>
+  
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Cambiar a barra de navegación" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">woozyking</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-overview-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Tabla de contenidos
+        </li>
+        <li class="sidebar-nav-overview">
+          Inicio
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Runzhou Li (Leo)"
+      src="/favicon.png">
+  <p class="site-author-name" itemprop="name">Runzhou Li (Leo)</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">21</span>
+          <span class="site-state-item-name">entradas</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">30</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/woozyking" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;woozyking" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="es">
+    <link itemprop="mainEntityOfPage" href="https://runzhou.li/2015/03/11/Sharable-JS-for-Node-and-Browser/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/favicon.png">
+      <meta itemprop="name" content="Runzhou Li (Leo)">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="woozyking">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Shareable Code for Node and Browser
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Publicado el</span>
+
+      <time title="Creado por: 2015-03-11 23:00:07" itemprop="dateCreated datePublished" datetime="2015-03-11T23:00:07+00:00">2015-03-11</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Editado el</span>
+        <time title="Modificado por: 2021-12-03 21:42:39" itemprop="dateModified" datetime="2021-12-03T21:42:39+00:00">2021-12-03</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>I had a simple problem along the way of exploring Node.js, which involves writing modules that work for both server and client sides. Just like many programmers nowadays, I google’d out <a target="_blank" rel="noopener" href="https://caolanmcmahon.com/posts/writing_for_node_and_the_browser/">a solution</a> (which was written by the person who authored <a target="_blank" rel="noopener" href="https://github.com/caolan/async"><code>async</code></a>, so I guess I need to thank him at least twice).</p>
+<p>However this doesn’t solve all my problem since I am way too lazy to get rid of all those amazing open source libraries. <span id="more"></span>And:</p>
+<blockquote>
+<p>Of course, the browser doesn’t support many other node features like require(), so you’ll need to test that your code is suitable for use in the browser first.<br>– <em>Caolan McMahon</em></p>
+</blockquote>
+<p>Realizing dependencies can be passed into the exposed module as its arguments, I have finally landed a solution that is simple (for me) to grasp.</p>
+<p>Say I needed to have a shared utility module for both Node.js and browser to use, one that rely on underscore.js and moment.js, which fortunately have fairly consistent interfaces for both platforms.</p>
+<figure class="highlight javascript"><figcaption><span>shared-utils.js</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// my module that relies on underscore.js and moment.js</span></span><br><span class="line"><span class="keyword">var</span> utils = <span class="function"><span class="keyword">function</span>(<span class="params">_, moment</span>) </span>&#123;</span><br><span class="line">  <span class="comment">// private stuff</span></span><br><span class="line">  <span class="keyword">var</span> getNow = <span class="function"><span class="keyword">function</span>(<span class="params">utcOffset</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> moment.utc().utcOffset(utcOffset || <span class="number">0</span>);</span><br><span class="line">  &#125;;</span><br><span class="line">  <span class="comment">// ... more private stuff ...</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">// public stuff</span></span><br><span class="line">  <span class="keyword">return</span> &#123;</span><br><span class="line">    <span class="attr">sum</span>: <span class="function"><span class="keyword">function</span>(<span class="params">values</span>) </span>&#123;</span><br><span class="line">      <span class="keyword">return</span> _.reduce(values, <span class="function"><span class="keyword">function</span>(<span class="params">memo, num</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> memo + num;</span><br><span class="line">      &#125;, <span class="number">0</span>);</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">dateTimeRange</span>: <span class="function"><span class="keyword">function</span>(<span class="params">past, unit, utcOffset</span>) </span>&#123;</span><br><span class="line">      <span class="keyword">var</span> dates = [];</span><br><span class="line">      <span class="keyword">var</span> now = getNow(utcOffset || <span class="number">0</span>);</span><br><span class="line"></span><br><span class="line">      <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; past; i++) &#123;</span><br><span class="line">        dates.push(moment(now).subtract(i, unit || <span class="string">&#x27;day&#x27;</span>));</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">      <span class="keyword">return</span> dates;</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="comment">// ... more public stuff ...</span></span><br><span class="line">  &#125;;</span><br><span class="line">&#125;;  <span class="comment">// but NOT actually &quot;self-excuting&quot; this yet</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// &quot;sync&quot; the behavior of node require() and browser &lt;script&gt; tag</span></span><br><span class="line"><span class="keyword">if</span> (<span class="keyword">typeof</span> <span class="built_in">module</span> !== <span class="string">&#x27;undefined&#x27;</span> &amp;&amp; <span class="built_in">module</span>.exports) &#123;</span><br><span class="line">  <span class="comment">// we&#x27;re on node.js, where we have the sweet module system to support exports and require</span></span><br><span class="line">  <span class="built_in">module</span>.exports = utils(</span><br><span class="line">    <span class="built_in">require</span>(<span class="string">&#x27;underscore&#x27;</span>),</span><br><span class="line">    <span class="built_in">require</span>(<span class="string">&#x27;moment&#x27;</span>)</span><br><span class="line">  );  <span class="comment">// given that both packages are installed</span></span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">  <span class="comment">// we&#x27;re on browser, so let&#x27;s &quot;call&quot; the defered self-executing function</span></span><br><span class="line">  utils = utils(</span><br><span class="line">    _,</span><br><span class="line">    moment</span><br><span class="line">  );  <span class="comment">// similarly, given that both libraries are included already</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>So now I could use this sweet little module in node:</p>
+<figure class="highlight javascript"><figcaption><span>app.js</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// expose public directory to client side</span></span><br><span class="line"><span class="comment">// here I&#x27;m using express</span></span><br><span class="line"><span class="keyword">var</span> express = <span class="built_in">require</span>(<span class="string">&#x27;express&#x27;</span>);</span><br><span class="line"><span class="keyword">var</span> app = express();</span><br><span class="line"><span class="keyword">var</span> server = <span class="built_in">require</span>(<span class="string">&#x27;http&#x27;</span>).createServer(app);</span><br><span class="line">app.use(express.static(__dirname + <span class="string">&#x27;/public&#x27;</span>));</span><br><span class="line"></span><br><span class="line"><span class="comment">// test it out on server side</span></span><br><span class="line"><span class="keyword">var</span> utils = <span class="built_in">require</span>(<span class="string">&#x27;./public/js/shared-utils&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(utils.sum([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>]));</span><br></pre></td></tr></table></figure>
+
+<p>and in browser:</p>
+<figure class="highlight html"><figcaption><span>index.html</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;js/underscore.min.js&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;js/moment.min.js&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;js/shared-utils.js&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="javascript"></span></span><br><span class="line"><span class="javascript">  <span class="built_in">console</span>.log(utils.sum([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>]));</span></span><br><span class="line"><span class="javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>For now, I am satisfied.</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/programming/" rel="tag"># programming</a>
+              <a href="/tags/node/" rel="tag"># node</a>
+              <a href="/tags/js/" rel="tag"># js</a>
+              <a href="/tags/javascript/" rel="tag"># javascript</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2014/05/02/inbox-0/" rel="prev" title="Inbox 0">
+                  <i class="fa fa-chevron-left"></i> Inbox 0
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2015/03/14/Open-Source-Charting-Libraries-I-Have-Tried/" rel="next" title="Open Source Charting Libraries I Have Tried">
+                  Open Source Charting Libraries I Have Tried <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Runzhou Li (Leo)</span>
+</div>
+  <div class="powered-by">Creado mediante <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

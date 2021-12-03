@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)">
+<meta name="generator" content="Hexo 5.4.0">
+
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="mask-icon" href="/favicon.ico" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"runzhou.li","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.8.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Buscando...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+<meta name="description" content="Code structure can be an important factor of a clean, well-organized codebase that is less intimidating to a new maintainer, and pleasant to work with for everyone. When done right, it can even beat a">
+<meta property="og:type" content="article">
+<meta property="og:title" content="On Code Structure">
+<meta property="og:url" content="https://runzhou.li/2019/03/10/On-Code-Structure/index.html">
+<meta property="og:site_name" content="woozyking">
+<meta property="og:description" content="Code structure can be an important factor of a clean, well-organized codebase that is less intimidating to a new maintainer, and pleasant to work with for everyone. When done right, it can even beat a">
+<meta property="og:locale" content="es_ES">
+<meta property="og:image" content="https://runzhou.li/images/pasted-1.png">
+<meta property="og:image" content="https://runzhou.li/images/pasted-2.png">
+<meta property="article:published_time" content="2019-03-10T16:08:00.000Z">
+<meta property="article:modified_time" content="2021-12-03T21:42:39.461Z">
+<meta property="article:author" content="Runzhou Li (Leo)">
+<meta property="article:tag" content="software engineering">
+<meta property="article:tag" content="programming">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://runzhou.li/images/pasted-1.png">
+
+
+<link rel="canonical" href="https://runzhou.li/2019/03/10/On-Code-Structure/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"es","comments":true,"permalink":"https://runzhou.li/2019/03/10/On-Code-Structure/","path":"2019/03/10/On-Code-Structure/","title":"On Code Structure"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>On Code Structure | woozyking</title>
+  
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Cambiar a barra de navegación" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">woozyking</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Tabla de contenidos
+        </li>
+        <li class="sidebar-nav-overview">
+          Inicio
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Make-the-filesystem-work-for-you"><span class="nav-number">1.</span> <span class="nav-text">Make the filesystem work for you</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Progressive-Refactoring"><span class="nav-number">2.</span> <span class="nav-text">Progressive Refactoring</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Grouping-Conventions"><span class="nav-number">3.</span> <span class="nav-text">Grouping Conventions</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Final-Remarks"><span class="nav-number">4.</span> <span class="nav-text">Final Remarks</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Runzhou Li (Leo)"
+      src="/favicon.png">
+  <p class="site-author-name" itemprop="name">Runzhou Li (Leo)</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">21</span>
+          <span class="site-state-item-name">entradas</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">30</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/woozyking" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;woozyking" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="es">
+    <link itemprop="mainEntityOfPage" href="https://runzhou.li/2019/03/10/On-Code-Structure/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/favicon.png">
+      <meta itemprop="name" content="Runzhou Li (Leo)">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="woozyking">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          On Code Structure
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Publicado el</span>
+
+      <time title="Creado por: 2019-03-10 16:08:00" itemprop="dateCreated datePublished" datetime="2019-03-10T16:08:00+00:00">2019-03-10</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Editado el</span>
+        <time title="Modificado por: 2021-12-03 21:42:39" itemprop="dateModified" datetime="2021-12-03T21:42:39+00:00">2021-12-03</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>Code structure can be an important factor of a clean, well-organized codebase that is less intimidating to a new maintainer, and pleasant to work with for everyone. When done right, it can even beat a thousand <del>word</del> doc.</p>
+<p>In my experience, the significance of code structure is either overlooked or over-engineered from the beginning. Both would supercharge the build-up of technical debts and sometimes could lead to a dead project sooner than you can say “refactor”.</p>
+<p>By following a couple of simple conventions, we can make any project, almost language agnostically, better structured.</p>
+<h3 id="Make-the-filesystem-work-for-you"><a href="#Make-the-filesystem-work-for-you" class="headerlink" title="Make the filesystem work for you"></a>Make the filesystem work for you</h3><p>First, make the filesystem work for you, not the other way around. You want the readers of the code to think as less as possible on <em>how</em> and <em>where</em> to locate the relevant code they’re looking for. Modern tools such as <a target="_blank" rel="noopener" href="https://code.visualstudio.com/docs/editor/intellisense">IntelliSense</a> make this relative unessential, but we cannot assume everyone has them available all the time.</p>
+<p>This is more important if you work with a less opinionated stack or framework. In such a case, keeping a sane structure of files and folders would minimize frictions between maintainers, and across its development lifecycles.</p>
+<p>There is no fixed “best way” to structure files and folders. But it’s important to pick one and stick to it.</p>
+<p>For example, A Python API server project written in Flask may have a structure as below:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">./src/ # project root</span><br><span class="line">+-- app.py # entry point</span><br><span class="line">+-- modules/ # various groupings of functionalities</span><br><span class="line">|   +-- __init__.py</span><br><span class="line">|   +-- users/</span><br><span class="line">|   |   +-- __init__.py</span><br><span class="line">|   |   +-- auth.py</span><br><span class="line">|   |   +-- role.py</span><br><span class="line">|   +-- comments.py</span><br><span class="line">|   +-- posts/</span><br><span class="line">|   |   +-- __init__.py</span><br><span class="line">|   |   +-- util.py</span><br></pre></td></tr></table></figure>
+
+<p>In this example, <code>comments</code> are among the modules that are at the same level as <code>users</code> and <code>posts</code>. But by itself, it’s a file, while the other two are folders. I’ll explain more about this in the next point.</p>
+<h3 id="Progressive-Refactoring"><a href="#Progressive-Refactoring" class="headerlink" title="Progressive Refactoring"></a>Progressive Refactoring</h3><p>When you start on a new project or a new feature of a given project, it’s not a bad idea at all to put <em>everything</em> in one file. All until its size grows to a point that makes it hard to navigate through, then we start to divide.</p>
+<p>This time we’ll take an Express.js based single-file router as a starting point, and gradually refactor it to a more manageable form.</p>
+<p>We’ll start with</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">./src/ # project root</span><br><span class="line">+-- app.js  # entry point</span><br></pre></td></tr></table></figure>
+
+<p>We’ll assume the content of <code>app.js</code> to be something like <a target="_blank" rel="noopener" href="https://github.com/EQWorks/ws-product-nodejs/blob/master/index.js">https://github.com/EQWorks/ws-product-nodejs/blob/master/index.js</a>. It’s a nice little web server that serves some PostgreSQL driven queries, everything in one file with no more than 100 lines of code. Short, sweet, and everything within (one file) short reach.</p>
+<p>But soon the project would grow into something like:</p>
+<p><img src="/images/pasted-1.png" alt="almost 1k"></p>
+<p><img src="/images/pasted-2.png" alt="peepo christ"></p>
+<p>Navigating through this would be a nightmare and you can hear your inner self screaming “refactor! refactor now!”. So let’s refactor this, progressively.</p>
+<p><code>$ mkdir app &amp;&amp; mv app.js app/index.js</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">./src/ # project root</span><br><span class="line">+-- app/</span><br><span class="line">|   +-- index.js</span><br></pre></td></tr></table></figure>
+
+<p>The first action is to stop the bleed by turning the <code>app.js</code> file into a package form. This does not make the existing code any more pleasant than before, but any new changes will have more leg room to expand on while keeping usage of the entire module the same:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">// the usage of &#x27;app&#x27; stays the same as before</span><br><span class="line">const app = require(&#x27;./src/app&#x27;)</span><br></pre></td></tr></table></figure>
+
+<p>Then you can wield your refactor ax <em>whenever</em> and <em>wherever</em> you can, all in a naturally scoped package form <code>app/</code> that wraps all the implementation details and groupings without breaking the API. At some point, the structure could look like:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">./src/ # project root</span><br><span class="line">+-- app/</span><br><span class="line">|   +-- index.js # entry point</span><br><span class="line">|   +-- db.js</span><br><span class="line">|   +-- models/</span><br><span class="line">|   |   +-- monsters.js</span><br><span class="line">|   |   +-- heroes.js</span><br><span class="line">|   +-- routes.js</span><br></pre></td></tr></table></figure>
+
+<p>The evolution of the packages, sub-packages, sub-sub-packages, etc., all leverages the language’s filesystem-based package resolution mechanism (in this case Node.js, but similar with many), thus keeping the structure intuitive no matter how deep the structure tree goes, as long as the basic understanding of such mechanism is shared in common.</p>
+<p>From within the code perspective, there are many strategies to divide and group. I like to keep as many things as <a target="_blank" rel="noopener" href="https://medium.com/javascript-scene/master-the-javascript-interview-what-is-a-pure-function-d1c076bec976">pure functions</a> as possible and keep them in an <code>util.js</code> module, or <code>util/</code> (sub-)package. They can also be <code>./src/feature/util</code> which is “local” to the given <code>feature</code>; or when a portion’s usage becomes common enough, refactored out to be a part of the “global” <code>./src/util</code>. But that’s just one strategy among many. More discussions around this topic in the next point.</p>
+<h3 id="Grouping-Conventions"><a href="#Grouping-Conventions" class="headerlink" title="Grouping Conventions"></a>Grouping Conventions</h3><p>No matter how much we leverage the filesystem based package resolution mechanism, there would always come the inevitable human-opinion based disputes. Developer A likes to call data interactions <code>queries</code>, while developer B prefers <code>interfaces</code>. Pick any, and stick through.</p>
+<p>It is paramount though, <em>not</em> to confuse the readers of the code with misleading grouping. For instance, coming as a deeply experienced <code>Ruby on Rails</code> developer, it’s in their nature to group things by <code>models</code>, <code>views</code>, and <code>controllers</code>. But to adopt such grouping, in a more <code>Sinatra</code>-like stack (like Python Flask and Express.js from above), it is more important to communicate with the rest of the maintainers <em>what</em> belongs to <em>where</em>, so a <code>view</code> related functionality does not appear in the <code>controllers</code> group.</p>
+<p>Or, simply follow a more natural convention. In the context of a web application, group by intended URLs the route handlers listen to would be an excellent way.</p>
+<p>For instance, you would have two versions of the APIs, and a few API endpoint groups (the <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Representational_state_transfer#Applied_to_Web_services">RESTful APIs</a> term is “resources”):</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">GET /v1/users</span><br><span class="line">GET /v1/users/:id</span><br><span class="line">POST /v1/users</span><br><span class="line">DELETE /v1/users</span><br><span class="line"># ...and more</span><br><span class="line">GET /v2/comments</span><br><span class="line">GET /v2/comments/:id</span><br><span class="line"># ...and more</span><br></pre></td></tr></table></figure>
+
+<p>Why not map that naturally to your files structure?</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">./src/ # project root</span><br><span class="line">+-- v1/ # v1 API endpoints</span><br><span class="line">|   +-- users/ # users group/resource</span><br><span class="line">|   |   +-- interface.js # db related queries/interface</span><br><span class="line">|   |   +-- index.js # router</span><br><span class="line">|   # ... more</span><br><span class="line">+-- v2/ # v2 API endpoints</span><br><span class="line">|   +-- comments.js # comments group/resource</span><br><span class="line">|   # ... more</span><br></pre></td></tr></table></figure>
+
+<p>This way, when a non-technical person complains that <em>“users dashboard have X glitch in v1”</em>, the developer can just go into <code>./src/v1/users</code>, and have a much smaller scope to deal with, without spending much valuable brain-cycle on pinning where things are.</p>
+<h3 id="Final-Remarks"><a href="#Final-Remarks" class="headerlink" title="Final Remarks"></a>Final Remarks</h3><p>All of the above conventions are quite loose and are intentionally kept so. This is because every stack has its own set of ground rules to follow and best practices to base on. Also, it is meant to be adapted with personal preferences to not overshadow but to signify your, or your team’s style. Furthermore, in this highly evolving world of software, to keep these conventions loosely and naturally applied would allow for the projects to evolve along.</p>
+<p>Hopefully, by adopting some or all of the above conventions, and by adapting them with your personal preferences, you get to <a href="/2016/07/06/Maximize-The-Joy-of-Programming/" title="enjoy">enjoy</a> programming even more.</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/software-engineering/" rel="tag"># software engineering</a>
+              <a href="/tags/programming/" rel="tag"># programming</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2018/09/02/Lessons-learned-after-losing-my-DoorDash-account/" rel="prev" title="Lessons learned after losing my DoorDash account">
+                  <i class="fa fa-chevron-left"></i> Lessons learned after losing my DoorDash account
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2019/12/11/Break-It-Down/" rel="next" title="Break It Down">
+                  Break It Down <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Runzhou Li (Leo)</span>
+</div>
+  <div class="powered-by">Creado mediante <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

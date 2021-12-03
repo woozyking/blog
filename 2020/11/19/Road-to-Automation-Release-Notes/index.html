@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)">
+<meta name="generator" content="Hexo 5.4.0">
+
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="mask-icon" href="/favicon.ico" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"runzhou.li","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.8.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Buscando...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+<meta name="description" content="Automation is not a binary thing. We rarely go from manual to fully autonomous with one switch. Just like software development itself, it often requires iterative revisions, with some craftsmanship an">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Road to Automation: Release Notes">
+<meta property="og:url" content="https://runzhou.li/2020/11/19/Road-to-Automation-Release-Notes/index.html">
+<meta property="og:site_name" content="woozyking">
+<meta property="og:description" content="Automation is not a binary thing. We rarely go from manual to fully autonomous with one switch. Just like software development itself, it often requires iterative revisions, with some craftsmanship an">
+<meta property="og:locale" content="es_ES">
+<meta property="og:image" content="https://i.imgur.com/LFlaQvU.png">
+<meta property="og:image" content="https://i.imgur.com/D4JcCmP.png">
+<meta property="og:image" content="https://i.imgur.com/AbJB9iF.png">
+<meta property="og:image" content="https://i.imgur.com/eyFl3SG.png">
+<meta property="og:image" content="https://i.imgur.com/fhYFtL4.png">
+<meta property="article:published_time" content="2020-11-19T21:48:12.000Z">
+<meta property="article:modified_time" content="2021-12-03T21:42:39.461Z">
+<meta property="article:author" content="Runzhou Li (Leo)">
+<meta property="article:tag" content="programming">
+<meta property="article:tag" content="software development">
+<meta property="article:tag" content="automation">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.imgur.com/LFlaQvU.png">
+
+
+<link rel="canonical" href="https://runzhou.li/2020/11/19/Road-to-Automation-Release-Notes/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"es","comments":true,"permalink":"https://runzhou.li/2020/11/19/Road-to-Automation-Release-Notes/","path":"2020/11/19/Road-to-Automation-Release-Notes/","title":"Road to Automation: Release Notes"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Road to Automation: Release Notes | woozyking</title>
+  
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Cambiar a barra de navegación" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">woozyking</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-overview-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Tabla de contenidos
+        </li>
+        <li class="sidebar-nav-overview">
+          Inicio
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Runzhou Li (Leo)"
+      src="/favicon.png">
+  <p class="site-author-name" itemprop="name">Runzhou Li (Leo)</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">21</span>
+          <span class="site-state-item-name">entradas</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">30</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/woozyking" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;woozyking" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="es">
+    <link itemprop="mainEntityOfPage" href="https://runzhou.li/2020/11/19/Road-to-Automation-Release-Notes/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/favicon.png">
+      <meta itemprop="name" content="Runzhou Li (Leo)">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="woozyking">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Road to Automation: Release Notes
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Publicado el</span>
+
+      <time title="Creado por: 2020-11-19 21:48:12" itemprop="dateCreated datePublished" datetime="2020-11-19T21:48:12+00:00">2020-11-19</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Editado el</span>
+        <time title="Modificado por: 2021-12-03 21:42:39" itemprop="dateModified" datetime="2021-12-03T21:42:39+00:00">2021-12-03</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>Automation is not a binary thing. We rarely go from manual to fully autonomous with one switch. Just like software development itself, it often requires iterative revisions, with some craftsmanship and never-enough imaginations.</p>
+<p>A case I would love to share is our 8-month and counting journey we took to automate our release notes process.</p>
+<span id="more"></span>
+<p>Writing release notes for the software we proudly make isn’t always easy. Even some of the most popular applications don’t get the release notes they deserve (and please don’t learn from them).</p>
+<p><img src="https://i.imgur.com/LFlaQvU.png" alt="where to be found?"></p>
+<p>Fortunately, we can also get inspiration from some <strong>great examples</strong>.</p>
+<p><img src="https://i.imgur.com/D4JcCmP.png" alt="hybrid"></p>
+<p><img src="https://i.imgur.com/AbJB9iF.png" alt="story"></p>
+<p>Having concise and coherent release notes sure are great, but they often require a lot of effort and time that most developers don’t have.</p>
+<p>Thus we <a target="_blank" rel="noopener" href="https://github.com/EQWorks/release">initiated a project</a> to help ourselves to relatively effortlessly produce release notes or at least the materials that save time for human editorial.</p>
+<p>We started at the source of software changes – commits (at the time of writing, this refers to git commits). We laid out <a target="_blank" rel="noopener" href="https://github.com/EQWorks/common/blob/master/git.md#on-commits">some conventions</a> to encourage good commit and commit message practices. The adaptation of these conventions alone allows our developers to think more on behalf of the end-users, something akin to the <a target="_blank" rel="noopener" href="https://basecamp.com/handbook/01-basecamp-is-you">concept of having everyone bearing the responsibility of marketing</a>. And for our objective of automation, this gives us a solid starting point due to having a predictable structure of our commit messages.</p>
+<p>The next step was to prototype the core capabilities of parsing out commit messages and constructing a markdown formatted release notes. Given our existing practice of utilizing git tags for releases, we quickly made the first usable version.</p>
+<p>The first version would require <a target="_blank" rel="noopener" href="https://github.com/EQWorks/release/blob/de8bff3b83c28ed54cef80ab9a5a31129cceffd5/.env.example">a configuration file</a> to specify the target project git repository and which tags to compare. Both are apparent areas to improve on. So we progressed it to be a <a target="_blank" rel="noopener" href="https://github.com/EQWorks/release/commit/310483172b060051f729c4ceffb3501dcac3f314">portable CLI with automatic tag discovery</a> that works in any git repository (including <code>release</code> itself).</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">woozyking@runzhoudembp release % release notes --print --skip alpha</span><br><span class="line">## Release Notes: from v1.4.0 to v1.5.0</span><br><span class="line"></span><br><span class="line">### devops</span><br><span class="line"></span><br><span class="line">* dogfood github release notes after npm publish (f5718f8 by Runzhou Li (woozyking))</span><br><span class="line"></span><br><span class="line">### notes</span><br><span class="line"></span><br><span class="line">* `--fetch` flag to control whether to run git fetch (28550c9 by Runzhou Li (woozyking))</span><br><span class="line">* `--github` flag to update the head ref associated GitHub release (21d6278 by Runzhou Li (woozyking))</span><br><span class="line">	* omit local file output</span><br><span class="line">	* factor out `utils.exec` to perform `execSync` and `log`</span><br><span class="line">	* requires `$GITHUB_TOKEN`, `$GITHUB_OWNER`, and `$GITHUB_REPO` env vars</span><br><span class="line">	* `$GITHUB_REPO` falls back to local repo toplevel name</span><br></pre></td></tr></table></figure>
+
+<p>The portable CLI nature and its usage simplicity allowed the team to adopt the tool and organically formed a process to perform releases with this tool being a part of it:</p>
+<ol>
+<li>Create a git tag (at the time of writing, we usually do this through GitHub releases).</li>
+<li>Sync local repo to obtain the created git tag.</li>
+<li>Run the <code>release notes</code> command to generate release notes.</li>
+<li>Copy/paste the output into where we retain the release notes (again, usually the GitHub release from step 1).</li>
+</ol>
+<p>The (manual) process highlighted opportunities for further automation. We introduced <a target="_blank" rel="noopener" href="https://github.com/EQWorks/release/commit/21d627883c2d5ff680c61f54ff429629ec1a581f">an option</a> to directly update the GitHub release notes, which eradicated step 4 from above. Then we started integrating the release CLI as <a target="_blank" rel="noopener" href="https://github.com/EQWorks/notify/blob/master/.github/workflows/npm.yml#L40">a part of the CI/CD (continuous integration/deployment) workflows</a> of our growing number of projects, which eliminated the need for steps 2 and 3. And at the time of writing, we’re attempting to <a target="_blank" rel="noopener" href="https://github.com/EQWorks/release/pull/24">automate away step 1</a> as well.</p>
+<p>At this point, we’d have an established adoption of the tool, with little to no accessibility inhibition and minimal human involvement to initiate a release. So after about six months of active usage, we took our next step into refining its core capabilities. We added an alternative output formatting that we adapted from <a target="_blank" rel="noopener" href="https://keepachangelog.com/en/1.0.0/">Keep a Changelog</a>, as well as an NLP (Natural Language Processing) model <a target="_blank" rel="noopener" href="https://github.com/EQWorks/release/pull/14">for labeling</a> the nature of each commit message.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">woozyking@runzhoudembp release % release changelog --print --skip alpha</span><br><span class="line">## Changelog: from v2.1.1 to v3.0.0</span><br><span class="line"></span><br><span class="line">### CHANGED</span><br><span class="line"></span><br><span class="line">* version - v3.0.0 (b2156bd by Tamires)</span><br><span class="line"></span><br><span class="line">### FIXED</span><br><span class="line"></span><br><span class="line">* lib/parse-subject - fix t2 when no match by default it to &#x27;others&#x27; (3593397 by Tamires Lowande)</span><br><span class="line">* lib/baseHandler - cover single tag and no tag cases (281c4c0 by Runzhou Li (woozyking))</span><br><span class="line"></span><br><span class="line">### ADDED</span><br><span class="line"></span><br><span class="line">* nlp - add model training process as a jupyter notebook (1c57956 by Runzhou Li (woozyking))</span><br><span class="line">* lib/parseCommits - update to the newly trained sub-1MB NLP model (d7c4a1e by Runzhou Li (woozyking))</span><br></pre></td></tr></table></figure>
+
+<p>We initially adopted the NLP model from <a target="_blank" rel="noopener" href="https://github.com/gesteves91/fasttext-commit-classification">a random but lucky encounter</a> and then <a target="_blank" rel="noopener" href="https://github.com/EQWorks/release/pull/20">revised it</a> using the <a target="_blank" rel="noopener" href="https://fasttext.cc/">same tool</a> made available from Facebook Research. The model is far from perfect, and its training dataset is still lacking. We already have some ideas lined up <a target="_blank" rel="noopener" href="https://github.com/EQWorks/release/issues/25">to seek a better model</a> <strong>automatically</strong>.</p>
+<p>Today, for some software, such as libraries and tools intended for other developers, we think it’s almost sufficient to use the release tool we made to generate their release notes, such as you can see at <a target="_blank" rel="noopener" href="https://github.com/EQWorks/release/releases">release’s releases</a>.</p>
+<p>But the ones for our end-users, we would still take some time to grey out irrelevant technical details or summarize out the noteworthy highlights based on the generated release notes.</p>
+<p><img src="https://i.imgur.com/eyFl3SG.png" alt="grey out"></p>
+<p><img src="https://i.imgur.com/fhYFtL4.png" alt="highlights"></p>
+<p>The still needed human involvements are perhaps the next targets to improve on, and the <a target="_blank" rel="noopener" href="https://openai.com/blog/openai-api/">increasingly available</a> and <a target="_blank" rel="noopener" href="https://pytorch.org/">highly accessible</a> tools at our disposal will only make it easier by the day.</p>
+<p>The above was a piece of our journey, but if you can identify manual chores among any tasks you do, you may hit on this adventurous road of automation too. It shall be rewarding.</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/programming/" rel="tag"># programming</a>
+              <a href="/tags/software-development/" rel="tag"># software development</a>
+              <a href="/tags/automation/" rel="tag"># automation</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2019/12/11/Break-It-Down/" rel="prev" title="Break It Down">
+                  <i class="fa fa-chevron-left"></i> Break It Down
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2021/11/26/Road-to-Automation-Updates/" rel="next" title="Road to Automation: Updates">
+                  Road to Automation: Updates <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Runzhou Li (Leo)</span>
+</div>
+  <div class="powered-by">Creado mediante <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

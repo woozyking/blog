@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)">
+<meta name="generator" content="Hexo 5.4.0">
+
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="mask-icon" href="/favicon.ico" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"runzhou.li","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.8.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Buscando...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+<meta name="description" content="TL;DRDon’t trust your password on a system that has no multi-factor authentication mechanism, especially ones that allow the change of the ID (email in this case) of your login without rigorous checks">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Lessons learned after losing my DoorDash account">
+<meta property="og:url" content="https://runzhou.li/2018/09/02/Lessons-learned-after-losing-my-DoorDash-account/index.html">
+<meta property="og:site_name" content="woozyking">
+<meta property="og:description" content="TL;DRDon’t trust your password on a system that has no multi-factor authentication mechanism, especially ones that allow the change of the ID (email in this case) of your login without rigorous checks">
+<meta property="og:locale" content="es_ES">
+<meta property="og:image" content="https://runzhou.li/images/screenshots/2018-08-19-email_change_alert.jpg">
+<meta property="og:image" content="https://runzhou.li/images/screenshots/2018-08-19_cc_transactions.png">
+<meta property="og:image" content="https://runzhou.li/images/screenshots/2018-08-19_first_contact.png">
+<meta property="og:image" content="https://runzhou.li/images/screenshots/2018-08-19_first_contact_response.png">
+<meta property="og:image" content="https://runzhou.li/images/screenshots/2018-08-19_first_contact2.png">
+<meta property="article:published_time" content="2018-09-02T21:58:09.000Z">
+<meta property="article:modified_time" content="2021-12-03T21:42:39.461Z">
+<meta property="article:author" content="Runzhou Li (Leo)">
+<meta property="article:tag" content="security">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://runzhou.li/images/screenshots/2018-08-19-email_change_alert.jpg">
+
+
+<link rel="canonical" href="https://runzhou.li/2018/09/02/Lessons-learned-after-losing-my-DoorDash-account/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"es","comments":true,"permalink":"https://runzhou.li/2018/09/02/Lessons-learned-after-losing-my-DoorDash-account/","path":"2018/09/02/Lessons-learned-after-losing-my-DoorDash-account/","title":"Lessons learned after losing my DoorDash account"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Lessons learned after losing my DoorDash account | woozyking</title>
+  
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Cambiar a barra de navegación" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">woozyking</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Tabla de contenidos
+        </li>
+        <li class="sidebar-nav-overview">
+          Inicio
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#TL-DR"><span class="nav-number">1.</span> <span class="nav-text">TL;DR</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Update-Sep-07-2018"><span class="nav-number">2.</span> <span class="nav-text">Update (Sep 07, 2018)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#How-it-started"><span class="nav-number">3.</span> <span class="nav-text">How it started</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#First-response-from-DoorDash"><span class="nav-number">4.</span> <span class="nav-text">First response from DoorDash</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Lessons-learned"><span class="nav-number">5.</span> <span class="nav-text">Lessons learned</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Leverage-SSO-single-sign-on-when-applicable"><span class="nav-number">5.1.</span> <span class="nav-text">Leverage SSO (single sign-on) when applicable</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Apply-2FA-MFA-multi-factor-authentication-wherever-possible"><span class="nav-number">5.2.</span> <span class="nav-text">Apply 2FA&#x2F;MFA (multi-factor authentication) wherever possible</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Separate-emails-from-actual-account-IDs-and-log-EVERYTHING"><span class="nav-number">5.3.</span> <span class="nav-text">Separate emails from actual account IDs, and log EVERYTHING</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Runzhou Li (Leo)"
+      src="/favicon.png">
+  <p class="site-author-name" itemprop="name">Runzhou Li (Leo)</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">21</span>
+          <span class="site-state-item-name">entradas</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">30</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/woozyking" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;woozyking" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="es">
+    <link itemprop="mainEntityOfPage" href="https://runzhou.li/2018/09/02/Lessons-learned-after-losing-my-DoorDash-account/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/favicon.png">
+      <meta itemprop="name" content="Runzhou Li (Leo)">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="woozyking">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Lessons learned after losing my DoorDash account
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Publicado el</span>
+
+      <time title="Creado por: 2018-09-02 21:58:09" itemprop="dateCreated datePublished" datetime="2018-09-02T21:58:09+00:00">2018-09-02</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Editado el</span>
+        <time title="Modificado por: 2021-12-03 21:42:39" itemprop="dateModified" datetime="2021-12-03T21:42:39+00:00">2021-12-03</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h3 id="TL-DR"><a href="#TL-DR" class="headerlink" title="TL;DR"></a>TL;DR</h3><p>Don’t trust your password on a system that has no multi-factor authentication mechanism, especially ones that allow the change of <em>the ID</em> (email in this case) of your login without rigorous checks; <em>EVEN MORE SO</em> if you have your financial service access/information (such as credit card) associated to it.</p>
+<h3 id="Update-Sep-07-2018"><a href="#Update-Sep-07-2018" class="headerlink" title="Update (Sep 07, 2018)"></a>Update (Sep 07, 2018)</h3><p>The account was recovered. That means I’m gladly proven wrong by DoorDash about not having sufficient logs to trace back. Thanks DoorDash.</p>
+<span id="more"></span>
+
+<h3 id="How-it-started"><a href="#How-it-started" class="headerlink" title="How it started"></a>How it started</h3><p>On August 19th, 2018, at 1:28PM EDT, I received a disturbing email notification from DoorDash, indicating that I have changed my email address.</p>
+<p><img src="/images/screenshots/2018-08-19-email_change_alert.jpg" alt="Email alert"></p>
+<p>As it says:</p>
+<blockquote>
+<p>If you initiated this change, you can safely disregard this email. If you didn’t do this, please contact us by submitting a request here as soon as possible, since your account might be at risk.</p>
+</blockquote>
+<p>That wasn’t me, so I immediately took action to submit a support case as instructed by the email alert.</p>
+<p>At this point I only have myself to blame, since I used my “throw-away” password for this account, which I’m 99% certain that it has already been “pawned”.</p>
+<p>Meanwhile I opened my banking app to check my credit card transactions since it was associated to the compromised DoorDash account, and of course:</p>
+<p><img src="/images/screenshots/2018-08-19_cc_transactions.png" alt="CC transactions"></p>
+<p>The transaction was immediately reversed/refunded, thanks to DoorDash, and/or the underlying payment service that they use to process credit transactions; or even the person that compromised my account themselves – it’s possible that a hacker would want to prepare for “sleeper” compromised accounts by making the event as silent as possible to have a better chance of being unnoticed.</p>
+<p>Whatever it was, I contacted my bank to get my credit card number re-issued.</p>
+<h3 id="First-response-from-DoorDash"><a href="#First-response-from-DoorDash" class="headerlink" title="First response from DoorDash"></a>First response from DoorDash</h3><p>I received the very first response from DoorDash support after about 5 hours. Probably due to my poor phrasing that mentioned about the above transactions (I don’t have a record of the original message sent to them), and their support training of catching certain keywords to match cases to be handled, the emphasis understood by the support turned out to be <del>fradulent</del> fraudulent charges:</p>
+<p><img src="/images/screenshots/2018-08-19_first_contact.png" alt="First contact"></p>
+<p>Then I responded by reiterating the actual issue, which was about my compromised account email address:</p>
+<p><img src="/images/screenshots/2018-08-19_first_contact_response.png" alt="First contact response"></p>
+<p>And of course, the still misunderstanding response was that there were no records of transactions for both e-mail addresses:</p>
+<p><img src="/images/screenshots/2018-08-19_first_contact2.png" alt="First contact 2"></p>
+<p>While their misunderstanding of the issue was frustrating to deal with, the information was somewhat meaningful, that the person who compromised my account may have already done a few more email changes to be virtually invisible without access to audit trails.</p>
+<h3 id="Lessons-learned"><a href="#Lessons-learned" class="headerlink" title="Lessons learned"></a>Lessons learned</h3><p>I suspect that either such audit trail does not exist for email changes (hopefully not the case, DoorDash), or that the consumer support team at DoorDash doesn’t have access to such information.</p>
+<blockquote class="twitter-tweet" data-lang="zh-cn"><p lang="en" dir="ltr"><a target="_blank" rel="noopener" href="https://twitter.com/DoorDash?ref_src=twsrc%5Etfw">@DoorDash</a> account got compromised, its system alerted me of the unauthorized email change, immediately followed up with a support ticket per instruction. ~29 hours later, still locked out of my account, and a compromised cc in it. Help!</p>&mdash; woozyking (@woozyking) <a target="_blank" rel="noopener" href="https://twitter.com/woozyking/status/1031669919337742336?ref_src=twsrc%5Etfw">2018年8月20日</a></blockquote>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+<p>This exchange of information, and my attempt of mild harassment on Twitter (no response to my public tweet though), or honestly just me reiterating repeatedly on the issue, and proofs such as my very first (and only) legitimate order through DoorDash, finally got a different kind of response from the support team – they have elevated the issue to the appropriate team for review and follow up, and I can anticipate a response soon…</p>
+<p>Or not soon enough, since it’s been two weeks at the time of writing. Maybe that’s their way of saying fuck off.</p>
+<p>Because what does one frustrating consumer matter to a company that is valuated at <a target="_blank" rel="noopener" href="https://techcrunch.com/2018/08/16/doordash-4-billion/">4-billion</a>, right?</p>
+<p>But this event has taught me a few lessons, and I think some of them are especially valuable to me as a web developer, to be able to design and implement better systems that actually give a fuck about user accounts.</p>
+<h4 id="Leverage-SSO-single-sign-on-when-applicable"><a href="#Leverage-SSO-single-sign-on-when-applicable" class="headerlink" title="Leverage SSO (single sign-on) when applicable"></a>Leverage SSO (single sign-on) when applicable</h4><p>I was afraid of sharing too much personal information, and being “vendor-locked” to the SSO provider – but since I used my Gmail to sign up DoorDash originally, using its supported Google SSO would be a better choice. And who am I kidding about sharing personal information? I’ve already sold my soul to these internet giants <code>¯\_(ツ)_/¯</code></p>
+<h4 id="Apply-2FA-MFA-multi-factor-authentication-wherever-possible"><a href="#Apply-2FA-MFA-multi-factor-authentication-wherever-possible" class="headerlink" title="Apply 2FA/MFA (multi-factor authentication) wherever possible"></a>Apply 2FA/MFA (multi-factor authentication) wherever possible</h4><p>If it’s a must to use a direct email login, make sure to also have 2FA/MFA in place to have an added layer of security.</p>
+<p>I would even abandon the use of a traditional password login system, as the service provider is always at risk of getting hacked and have users’ passwords being cracked. A one-time passcode based authentication system is less prone to such issue, since the generated passcode typically has a very short expiration time (usually within a few minutes), and a strong enough hash algorithm renders any cracking effort within such short window not worthwhile.</p>
+<p>In fact, that’s what I have done since 2014 for all projects that I’ve designed and implemented, to use email/SMS-bound “passwordless” authentication, with the assumption of:</p>
+<ul>
+<li>Any user can forget their password at some point</li>
+<li>Any password can be cracked given enough time</li>
+</ul>
+<p>This way, there’s no need to implement a “forget my password” mechanism – it’s already baked in. The mild inconvenience of having to receive a new passcode every time users attempt to login can be cleverly resolved through the techniques of what Slack calls “Magic Link”.</p>
+<p>But I would also offer an optional MFA on top of the “passwordless” login mechanism, implementing <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Time-based_One-time_Password_algorithm">“TOTP” (Time-based One-time Password Algorithm)</a> through apps such as Google Authenticator doesn’t add too much complexity to the system, but in exchange you get an even better layer of security for the users.</p>
+<h4 id="Separate-emails-from-actual-account-IDs-and-log-EVERYTHING"><a href="#Separate-emails-from-actual-account-IDs-and-log-EVERYTHING" class="headerlink" title="Separate emails from actual account IDs, and log EVERYTHING"></a>Separate emails from actual account IDs, and log EVERYTHING</h4><p>Even I have fallen for being lazy on this. But my excuse is that I have never had a use case for users to change email addresses. But if your system does allow it, <em>please please please</em> separate them from actual account IDs, and log EVERYTHING that can be offered as a trail when a compromising event like mine on DoorDash takes place.</p>
+<p>Otherwise, kiss bye-bye to that account (and probably that service) like I did 👋</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/security/" rel="tag"># security</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2018/04/09/Serverless-and-Attention-Span/" rel="prev" title="Serverless and Attention Span">
+                  <i class="fa fa-chevron-left"></i> Serverless and Attention Span
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2019/03/10/On-Code-Structure/" rel="next" title="On Code Structure">
+                  On Code Structure <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Runzhou Li (Leo)</span>
+</div>
+  <div class="powered-by">Creado mediante <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

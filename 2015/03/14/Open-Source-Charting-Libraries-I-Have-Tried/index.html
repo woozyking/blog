@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)">
+<meta name="generator" content="Hexo 5.4.0">
+
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="mask-icon" href="/favicon.ico" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"runzhou.li","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.8.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Buscando...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+<meta name="description" content="In a recent project, I needed to maintain quite a number (8-9 and growing) of charts that support “real-time” data updates (1 second interval) on a single page. The following open source libraries are">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Open Source Charting Libraries I Have Tried">
+<meta property="og:url" content="https://runzhou.li/2015/03/14/Open-Source-Charting-Libraries-I-Have-Tried/index.html">
+<meta property="og:site_name" content="woozyking">
+<meta property="og:description" content="In a recent project, I needed to maintain quite a number (8-9 and growing) of charts that support “real-time” data updates (1 second interval) on a single page. The following open source libraries are">
+<meta property="og:locale" content="es_ES">
+<meta property="article:published_time" content="2015-03-14T01:22:28.000Z">
+<meta property="article:modified_time" content="2021-12-03T21:42:39.461Z">
+<meta property="article:author" content="Runzhou Li (Leo)">
+<meta property="article:tag" content="open source">
+<meta property="article:tag" content="data visualization">
+<meta property="article:tag" content="charting">
+<meta property="article:tag" content="SVG">
+<meta property="article:tag" content="Canvas">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://runzhou.li/2015/03/14/Open-Source-Charting-Libraries-I-Have-Tried/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"es","comments":true,"permalink":"https://runzhou.li/2015/03/14/Open-Source-Charting-Libraries-I-Have-Tried/","path":"2015/03/14/Open-Source-Charting-Libraries-I-Have-Tried/","title":"Open Source Charting Libraries I Have Tried"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Open Source Charting Libraries I Have Tried | woozyking</title>
+  
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Cambiar a barra de navegación" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">woozyking</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Tabla de contenidos
+        </li>
+        <li class="sidebar-nav-overview">
+          Inicio
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#C3-js-Based-on-d3-js-SVG"><span class="nav-number">1.</span> <span class="nav-text">C3.js - Based on d3.js, SVG</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Chart-js-Canvas"><span class="nav-number">2.</span> <span class="nav-text">Chart.js - Canvas</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Epoch-Based-on-d3-js-SVG-for-Basic-Charts-SVG-Canvas-for-Real-time-Charts"><span class="nav-number">3.</span> <span class="nav-text">Epoch - Based on d3.js, SVG for Basic Charts, SVG + Canvas for Real-time Charts</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#cubism-Based-on-d3-js-SVG-Canvas"><span class="nav-number">4.</span> <span class="nav-text">cubism - Based on d3.js, SVG + Canvas</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Other-Notes"><span class="nav-number">5.</span> <span class="nav-text">Other Notes</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Runzhou Li (Leo)"
+      src="/favicon.png">
+  <p class="site-author-name" itemprop="name">Runzhou Li (Leo)</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">21</span>
+          <span class="site-state-item-name">entradas</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">30</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/woozyking" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;woozyking" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="es">
+    <link itemprop="mainEntityOfPage" href="https://runzhou.li/2015/03/14/Open-Source-Charting-Libraries-I-Have-Tried/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/favicon.png">
+      <meta itemprop="name" content="Runzhou Li (Leo)">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="woozyking">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Open Source Charting Libraries I Have Tried
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Publicado el</span>
+
+      <time title="Creado por: 2015-03-14 01:22:28" itemprop="dateCreated datePublished" datetime="2015-03-14T01:22:28+00:00">2015-03-14</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Editado el</span>
+        <time title="Modificado por: 2021-12-03 21:42:39" itemprop="dateModified" datetime="2021-12-03T21:42:39+00:00">2021-12-03</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>In a recent project, I needed to maintain quite a number (8-9 and growing) of charts that support “real-time” data updates (1 second interval) on a single page. The following open source libraries are what I have tried.</p>
+<span id="more"></span>
+<h4 id="C3-js-Based-on-d3-js-SVG"><a href="#C3-js-Based-on-d3-js-SVG" class="headerlink" title="C3.js - Based on d3.js, SVG"></a><a target="_blank" rel="noopener" href="https://c3js.org/"><code>C3.js</code></a> - Based on d3.js, SVG</h4><p>What C3.js stood out to me was its superb documentation - straight to the point code examples, combined with concise API references. I never wasted a minute to find what I needed was there, or not. Unfortunately its performance suffered greatly from the number of charts I needed to have on a single page, and the frequency of data points being updated.</p>
+<p>It is however very suitable for use cases that do not require real-time updates.</p>
+<h4 id="Chart-js-Canvas"><a href="#Chart-js-Canvas" class="headerlink" title="Chart.js - Canvas"></a><a target="_blank" rel="noopener" href="https://www.chartjs.org/"><code>Chart.js</code></a> - Canvas</h4><p>I moved on and picked this non-SVG based library with the most stars on GitHub. It has great documentation, rich and extensible APIs, and plenty of chart types. However I only tried it for a brief moment and gave it up for a few simple reasons. You have to configure colors for each dataset, sometimes more than one per dataset depending on chart types, and you cannot even style it with CSS. In fact, the whole library is CSS free (which is not necessarily a bad thing, and logical for a pure Canvas based solution). And there is no emphasis and mention about its real-time capabilities. The given APIs definitely does not look like it is designed for such use case.</p>
+<h4 id="Epoch-Based-on-d3-js-SVG-for-Basic-Charts-SVG-Canvas-for-Real-time-Charts"><a href="#Epoch-Based-on-d3-js-SVG-for-Basic-Charts-SVG-Canvas-for-Real-time-Charts" class="headerlink" title="Epoch - Based on d3.js, SVG for Basic Charts, SVG + Canvas for Real-time Charts"></a><a target="_blank" rel="noopener" href="https://fastly.github.io/epoch"><code>Epoch</code></a> - Based on d3.js, SVG for Basic Charts, SVG + Canvas for Real-time Charts</h4><p>During the library hunt, I came across <a target="_blank" rel="noopener" href="https://stackoverflow.com/a/12335448/158111">this answer on stackoverflow</a> regarding performance issues with pure SVG implementations and how to resolve them. That gave me the direction to land on the next one - Epoch. It applies the technique of utilizing partial Canvas to optimize real-time charts rendering, just what I need. One downside of using it is that its styling can be tedious, especially without the use of a CSS preprocessor.</p>
+<p>Epoch is great for use cases where you need to setup real-time monitors for things like CPU usage, live trend of tweets count on certain hash-tags and so on. It is <strong>not</strong> for the type of data visualization that encourages user to interact with. It does not have any type of interactivity support, not even for its Basic Charts as of version 0.6.</p>
+<h4 id="cubism-Based-on-d3-js-SVG-Canvas"><a href="#cubism-Based-on-d3-js-SVG-Canvas" class="headerlink" title="cubism - Based on d3.js, SVG + Canvas"></a><a target="_blank" rel="noopener" href="https://square.github.io/cubism"><code>cubism</code></a> - Based on d3.js, SVG + Canvas</h4><p>Another popular library that applies similar technique as Epoch, probably more advanced for customization. Unfortunately, the documentation is too much for me to digest quickly, and not to the point (no live code examples, mostly).</p>
+<h4 id="Other-Notes"><a href="#Other-Notes" class="headerlink" title="Other Notes"></a>Other Notes</h4><p>Keep in mind that all the pros and cons of aforementioned libraries are greatly biased by a single use case, plus my personal preference of documentation style and API friendliness. Ultimately I would just tailor a solution based on <a target="_blank" rel="noopener" href="https://d3js.org/">d3.js</a> for maximum flexibility and control. I think I am going to learn it, hopefully soon. For now, I have settled with <a target="_blank" rel="noopener" href="https://fastly.github.io/epoch"><code>Epoch</code></a>, because it is data visualization dummy friendly,</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/open-source/" rel="tag"># open source</a>
+              <a href="/tags/data-visualization/" rel="tag"># data visualization</a>
+              <a href="/tags/charting/" rel="tag"># charting</a>
+              <a href="/tags/SVG/" rel="tag"># SVG</a>
+              <a href="/tags/Canvas/" rel="tag"># Canvas</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2015/03/11/Sharable-JS-for-Node-and-Browser/" rel="prev" title="Shareable Code for Node and Browser">
+                  <i class="fa fa-chevron-left"></i> Shareable Code for Node and Browser
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2015/03/19/The-Way-I-Code/" rel="next" title="The Way I Code">
+                  The Way I Code <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Runzhou Li (Leo)</span>
+</div>
+  <div class="powered-by">Creado mediante <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>
