@@ -95,10 +95,3 @@ theme_config:
     GitHub: https://github.com/woozyking || fab fa-github
   motion:
     enable: false
-
-# Deployment
-## Docs: http://hexo.io/docs/deployment.html
-deploy:
-  type: git
-  repo: git@github.com:woozyking/blog.git
-  branch: main
