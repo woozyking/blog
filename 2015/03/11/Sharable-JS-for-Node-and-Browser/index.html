@@ -4,10 +4,8 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width">
 <meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
-<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)">
-<meta name="generator" content="Hexo 5.4.0">
-
-<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 6.3.0">
+<link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
   <link rel="apple-touch-icon" sizes="180x180" href="/favicon.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
@@ -17,10 +15,11 @@
 
 
 
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha256-Z1K5uhUaJXA7Ll0XrZ/0JhX4lAtZFpT6jkKrEDT0drU=" crossorigin="anonymous">
 
-<script class="next-config" data-name="main" type="application/json">{"hostname":"runzhou.li","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.8.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Buscando...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
-<meta name="description" content="I had a simple problem along the way of exploring Node.js, which involves writing modules that work for both server and client sides. Just like many programmers nowadays, I google’d out a solution (wh">
+<script class="next-config" data-name="main" type="application/json">{"hostname":"runzhou.li","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.14.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Buscando...","empty":"No hemos encontrado ningún resultado para la búsqueda: ${query}","hits_time":"${hits} resultados encontrados en ${time} ms","hits":"${hits} resultados encontrados"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="I had a simple problem along the way of exploring Node.js, which involves writing modules that work for both server and client sides. Just like many programmers nowadays, I google’d out a solution (wh">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Shareable Code for Node and Browser">
 <meta property="og:url" content="https://runzhou.li/2015/03/11/Sharable-JS-for-Node-and-Browser/index.html">
@@ -28,7 +27,7 @@
 <meta property="og:description" content="I had a simple problem along the way of exploring Node.js, which involves writing modules that work for both server and client sides. Just like many programmers nowadays, I google’d out a solution (wh">
 <meta property="og:locale" content="es_ES">
 <meta property="article:published_time" content="2015-03-11T23:00:07.000Z">
-<meta property="article:modified_time" content="2021-12-03T21:42:39.461Z">
+<meta property="article:modified_time" content="2022-12-15T02:31:46.686Z">
 <meta property="article:author" content="Runzhou Li (Leo)">
 <meta property="article:tag" content="programming">
 <meta property="article:tag" content="node">
@@ -50,6 +49,12 @@
 
 
 
+
+
+  <script async defer data-website-id="" src=""></script>
+
+  <script defer data-domain="" src=""></script>
+
   <noscript>
     <link rel="stylesheet" href="/css/noscript.css">
   </noscript>
@@ -59,8 +64,8 @@
   <div class="headband"></div>
 
   <main class="main">
-    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
-      <div class="header-inner"><div class="site-brand-container">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
   <div class="site-nav-toggle">
     <div class="toggle" aria-label="Cambiar a barra de navegación" role="button">
     </div>
@@ -76,7 +81,7 @@
   </div>
 
   <div class="site-nav-right">
-    <div class="toggle popup-trigger">
+    <div class="toggle popup-trigger" aria-label="Buscar" role="button">
     </div>
   </div>
 </div>
@@ -87,15 +92,9 @@
 
 
 
-</div>
+</header>
         
   
-  <div class="toggle sidebar-toggle" role="button">
-    <span class="toggle-line"></span>
-    <span class="toggle-line"></span>
-    <span class="toggle-line"></span>
-  </div>
-
   <aside class="sidebar">
 
     <div class="sidebar-inner sidebar-overview-active">
@@ -115,54 +114,42 @@
         <!--/noindex-->
 
         <div class="site-overview-wrap sidebar-panel">
-          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <img class="site-author-image" itemprop="image" alt="Runzhou Li (Leo)"
       src="/favicon.png">
   <p class="site-author-name" itemprop="name">Runzhou Li (Leo)</p>
   <div class="site-description" itemprop="description"></div>
 </div>
-<div class="site-state-wrap site-overview-item animated">
+<div class="site-state-wrap animated">
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">21</span>
+          <span class="site-state-item-count">22</span>
           <span class="site-state-item-name">entradas</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
         <span class="site-state-item-count">30</span>
-        <span class="site-state-item-name">tags</span></a>
+        <span class="site-state-item-name">etiquetas</span></a>
       </div>
   </nav>
 </div>
-  <div class="links-of-author site-overview-item animated">
+  <div class="links-of-author animated">
       <span class="links-of-author-item">
         <a href="https://github.com/woozyking" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;woozyking" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
       </span>
   </div>
 
-
-
         </div>
       </div>
     </div>
-  </aside>
-  <div class="sidebar-dimmer"></div>
-
-
-    </header>
 
     
-  <div class="back-to-top" role="button" aria-label="Back to top">
-    <i class="fa fa-arrow-up"></i>
-    <span>0%</span>
-  </div>
+  </aside>
 
-<noscript>
-  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
-</noscript>
 
+    </div>
 
     <div class="main-inner post posts-expand">
 
@@ -180,11 +167,16 @@
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/favicon.png">
       <meta itemprop="name" content="Runzhou Li (Leo)">
-      <meta itemprop="description" content="">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="woozyking">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Shareable Code for Node and Browser | woozyking">
+      <meta itemprop="description" content="">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
@@ -201,13 +193,13 @@
 
       <time title="Creado por: 2015-03-11 23:00:07" itemprop="dateCreated datePublished" datetime="2015-03-11T23:00:07+00:00">2015-03-11</time>
     </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Editado el</span>
-        <time title="Modificado por: 2021-12-03 21:42:39" itemprop="dateModified" datetime="2021-12-03T21:42:39+00:00">2021-12-03</time>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
       </span>
+      <span class="post-meta-item-text">Editado el</span>
+      <time title="Modificado por: 2022-12-15 02:31:46" itemprop="dateModified" datetime="2022-12-15T02:31:46+00:00">2022-12-15</time>
+    </span>
 
   
 </div>
@@ -226,13 +218,13 @@
 </blockquote>
 <p>Realizing dependencies can be passed into the exposed module as its arguments, I have finally landed a solution that is simple (for me) to grasp.</p>
 <p>Say I needed to have a shared utility module for both Node.js and browser to use, one that rely on underscore.js and moment.js, which fortunately have fairly consistent interfaces for both platforms.</p>
-<figure class="highlight javascript"><figcaption><span>shared-utils.js</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// my module that relies on underscore.js and moment.js</span></span><br><span class="line"><span class="keyword">var</span> utils = <span class="function"><span class="keyword">function</span>(<span class="params">_, moment</span>) </span>&#123;</span><br><span class="line">  <span class="comment">// private stuff</span></span><br><span class="line">  <span class="keyword">var</span> getNow = <span class="function"><span class="keyword">function</span>(<span class="params">utcOffset</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> moment.utc().utcOffset(utcOffset || <span class="number">0</span>);</span><br><span class="line">  &#125;;</span><br><span class="line">  <span class="comment">// ... more private stuff ...</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">// public stuff</span></span><br><span class="line">  <span class="keyword">return</span> &#123;</span><br><span class="line">    <span class="attr">sum</span>: <span class="function"><span class="keyword">function</span>(<span class="params">values</span>) </span>&#123;</span><br><span class="line">      <span class="keyword">return</span> _.reduce(values, <span class="function"><span class="keyword">function</span>(<span class="params">memo, num</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> memo + num;</span><br><span class="line">      &#125;, <span class="number">0</span>);</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">dateTimeRange</span>: <span class="function"><span class="keyword">function</span>(<span class="params">past, unit, utcOffset</span>) </span>&#123;</span><br><span class="line">      <span class="keyword">var</span> dates = [];</span><br><span class="line">      <span class="keyword">var</span> now = getNow(utcOffset || <span class="number">0</span>);</span><br><span class="line"></span><br><span class="line">      <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; past; i++) &#123;</span><br><span class="line">        dates.push(moment(now).subtract(i, unit || <span class="string">&#x27;day&#x27;</span>));</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">      <span class="keyword">return</span> dates;</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="comment">// ... more public stuff ...</span></span><br><span class="line">  &#125;;</span><br><span class="line">&#125;;  <span class="comment">// but NOT actually &quot;self-excuting&quot; this yet</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// &quot;sync&quot; the behavior of node require() and browser &lt;script&gt; tag</span></span><br><span class="line"><span class="keyword">if</span> (<span class="keyword">typeof</span> <span class="built_in">module</span> !== <span class="string">&#x27;undefined&#x27;</span> &amp;&amp; <span class="built_in">module</span>.exports) &#123;</span><br><span class="line">  <span class="comment">// we&#x27;re on node.js, where we have the sweet module system to support exports and require</span></span><br><span class="line">  <span class="built_in">module</span>.exports = utils(</span><br><span class="line">    <span class="built_in">require</span>(<span class="string">&#x27;underscore&#x27;</span>),</span><br><span class="line">    <span class="built_in">require</span>(<span class="string">&#x27;moment&#x27;</span>)</span><br><span class="line">  );  <span class="comment">// given that both packages are installed</span></span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">  <span class="comment">// we&#x27;re on browser, so let&#x27;s &quot;call&quot; the defered self-executing function</span></span><br><span class="line">  utils = utils(</span><br><span class="line">    _,</span><br><span class="line">    moment</span><br><span class="line">  );  <span class="comment">// similarly, given that both libraries are included already</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><figcaption><span>shared-utils.js</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// my module that relies on underscore.js and moment.js</span></span><br><span class="line"><span class="keyword">var</span> utils = <span class="keyword">function</span>(<span class="params">_, moment</span>) &#123;</span><br><span class="line">  <span class="comment">// private stuff</span></span><br><span class="line">  <span class="keyword">var</span> getNow = <span class="keyword">function</span>(<span class="params">utcOffset</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> moment.<span class="title function_">utc</span>().<span class="title function_">utcOffset</span>(utcOffset || <span class="number">0</span>);</span><br><span class="line">  &#125;;</span><br><span class="line">  <span class="comment">// ... more private stuff ...</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">// public stuff</span></span><br><span class="line">  <span class="keyword">return</span> &#123;</span><br><span class="line">    <span class="attr">sum</span>: <span class="keyword">function</span>(<span class="params">values</span>) &#123;</span><br><span class="line">      <span class="keyword">return</span> _.<span class="title function_">reduce</span>(values, <span class="keyword">function</span>(<span class="params">memo, num</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> memo + num;</span><br><span class="line">      &#125;, <span class="number">0</span>);</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">dateTimeRange</span>: <span class="keyword">function</span>(<span class="params">past, unit, utcOffset</span>) &#123;</span><br><span class="line">      <span class="keyword">var</span> dates = [];</span><br><span class="line">      <span class="keyword">var</span> now = <span class="title function_">getNow</span>(utcOffset || <span class="number">0</span>);</span><br><span class="line"></span><br><span class="line">      <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; past; i++) &#123;</span><br><span class="line">        dates.<span class="title function_">push</span>(<span class="title function_">moment</span>(now).<span class="title function_">subtract</span>(i, unit || <span class="string">&#x27;day&#x27;</span>));</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">      <span class="keyword">return</span> dates;</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="comment">// ... more public stuff ...</span></span><br><span class="line">  &#125;;</span><br><span class="line">&#125;;  <span class="comment">// but NOT actually &quot;self-excuting&quot; this yet</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// &quot;sync&quot; the behavior of node require() and browser &lt;script&gt; tag</span></span><br><span class="line"><span class="keyword">if</span> (<span class="keyword">typeof</span> <span class="variable language_">module</span> !== <span class="string">&#x27;undefined&#x27;</span> &amp;&amp; <span class="variable language_">module</span>.<span class="property">exports</span>) &#123;</span><br><span class="line">  <span class="comment">// we&#x27;re on node.js, where we have the sweet module system to support exports and require</span></span><br><span class="line">  <span class="variable language_">module</span>.<span class="property">exports</span> = <span class="title function_">utils</span>(</span><br><span class="line">    <span class="built_in">require</span>(<span class="string">&#x27;underscore&#x27;</span>),</span><br><span class="line">    <span class="built_in">require</span>(<span class="string">&#x27;moment&#x27;</span>)</span><br><span class="line">  );  <span class="comment">// given that both packages are installed</span></span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">  <span class="comment">// we&#x27;re on browser, so let&#x27;s &quot;call&quot; the defered self-executing function</span></span><br><span class="line">  utils = <span class="title function_">utils</span>(</span><br><span class="line">    _,</span><br><span class="line">    moment</span><br><span class="line">  );  <span class="comment">// similarly, given that both libraries are included already</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>So now I could use this sweet little module in node:</p>
-<figure class="highlight javascript"><figcaption><span>app.js</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// expose public directory to client side</span></span><br><span class="line"><span class="comment">// here I&#x27;m using express</span></span><br><span class="line"><span class="keyword">var</span> express = <span class="built_in">require</span>(<span class="string">&#x27;express&#x27;</span>);</span><br><span class="line"><span class="keyword">var</span> app = express();</span><br><span class="line"><span class="keyword">var</span> server = <span class="built_in">require</span>(<span class="string">&#x27;http&#x27;</span>).createServer(app);</span><br><span class="line">app.use(express.static(__dirname + <span class="string">&#x27;/public&#x27;</span>));</span><br><span class="line"></span><br><span class="line"><span class="comment">// test it out on server side</span></span><br><span class="line"><span class="keyword">var</span> utils = <span class="built_in">require</span>(<span class="string">&#x27;./public/js/shared-utils&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(utils.sum([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>]));</span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><figcaption><span>app.js</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// expose public directory to client side</span></span><br><span class="line"><span class="comment">// here I&#x27;m using express</span></span><br><span class="line"><span class="keyword">var</span> express = <span class="built_in">require</span>(<span class="string">&#x27;express&#x27;</span>);</span><br><span class="line"><span class="keyword">var</span> app = <span class="title function_">express</span>();</span><br><span class="line"><span class="keyword">var</span> server = <span class="built_in">require</span>(<span class="string">&#x27;http&#x27;</span>).<span class="title function_">createServer</span>(app);</span><br><span class="line">app.<span class="title function_">use</span>(express.<span class="title function_">static</span>(__dirname + <span class="string">&#x27;/public&#x27;</span>));</span><br><span class="line"></span><br><span class="line"><span class="comment">// test it out on server side</span></span><br><span class="line"><span class="keyword">var</span> utils = <span class="built_in">require</span>(<span class="string">&#x27;./public/js/shared-utils&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(utils.<span class="title function_">sum</span>([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>]));</span><br></pre></td></tr></table></figure>
 
 <p>and in browser:</p>
-<figure class="highlight html"><figcaption><span>index.html</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;js/underscore.min.js&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;js/moment.min.js&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;js/shared-utils.js&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="javascript"></span></span><br><span class="line"><span class="javascript">  <span class="built_in">console</span>.log(utils.sum([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>]));</span></span><br><span class="line"><span class="javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight html"><figcaption><span>index.html</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;js/underscore.min.js&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;js/moment.min.js&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;js/shared-utils.js&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">  <span class="variable language_">console</span>.<span class="title function_">log</span>(utils.<span class="title function_">sum</span>([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>]));</span></span><br><span class="line"><span class="language-javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
 
 <p>For now, I am satisfied.</p>
 
@@ -282,7 +274,7 @@
 
 <div class="copyright">
   &copy; 
-  <span itemprop="copyrightYear">2021</span>
+  <span itemprop="copyrightYear">2022</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
@@ -295,11 +287,21 @@
   </footer>
 
   
-  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <div class="back-to-top" role="button" aria-label="Volver al principio">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
 <script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/next-boot.js"></script>
 
   
-
 
 
 

@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 6.3.0">
+<link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="mask-icon" href="/favicon.ico" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha256-Z1K5uhUaJXA7Ll0XrZ/0JhX4lAtZFpT6jkKrEDT0drU=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"runzhou.li","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.14.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Buscando...","empty":"No hemos encontrado ningún resultado para la búsqueda: ${query}","hits_time":"${hits} resultados encontrados en ${time} ms","hits":"${hits} resultados encontrados"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="Generated through Stable Diffusion v1-4   Software QA (quality assurance), much like documentation, while important, often gets overlooked and buried down in the priority list when compared">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Road to Automation: QA">
+<meta property="og:url" content="https://runzhou.li/2022/12/10/Road-to-Automation-QA/index.html">
+<meta property="og:site_name" content="woozyking">
+<meta property="og:description" content="Generated through Stable Diffusion v1-4   Software QA (quality assurance), much like documentation, while important, often gets overlooked and buried down in the priority list when compared">
+<meta property="og:locale" content="es_ES">
+<meta property="og:image" content="https://user-images.githubusercontent.com/2837532/207129082-794079b4-c95b-43f8-9fe4-d044396e1434.png">
+<meta property="article:published_time" content="2022-12-10T15:54:40.000Z">
+<meta property="article:modified_time" content="2022-12-15T02:31:46.686Z">
+<meta property="article:author" content="Runzhou Li (Leo)">
+<meta property="article:tag" content="programming">
+<meta property="article:tag" content="software development">
+<meta property="article:tag" content="automation">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://user-images.githubusercontent.com/2837532/207129082-794079b4-c95b-43f8-9fe4-d044396e1434.png">
+
+
+<link rel="canonical" href="https://runzhou.li/2022/12/10/Road-to-Automation-QA/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"es","comments":true,"permalink":"https://runzhou.li/2022/12/10/Road-to-Automation-QA/","path":"2022/12/10/Road-to-Automation-QA/","title":"Road to Automation: QA"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Road to Automation: QA | woozyking</title>
+  
+
+
+
+
+
+
+  <script async defer data-website-id="" src=""></script>
+
+  <script defer data-domain="" src=""></script>
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Cambiar a barra de navegación" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">woozyking</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Buscar" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Tabla de contenidos
+        </li>
+        <li class="sidebar-nav-overview">
+          Inicio
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Commit-Message-Convention-Check"><span class="nav-number">1.</span> <span class="nav-text">Commit Message Convention Check</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Environment-Variables-Usage-and-Security-Sanitization"><span class="nav-number">2.</span> <span class="nav-text">Environment Variables Usage and Security Sanitization</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Bonus-Slack-Notification"><span class="nav-number">3.</span> <span class="nav-text">Bonus: Slack Notification</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Final-Remarks"><span class="nav-number">4.</span> <span class="nav-text">Final Remarks</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Runzhou Li (Leo)"
+      src="/favicon.png">
+  <p class="site-author-name" itemprop="name">Runzhou Li (Leo)</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">22</span>
+          <span class="site-state-item-name">entradas</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">30</span>
+        <span class="site-state-item-name">etiquetas</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/woozyking" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;woozyking" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="es">
+    <link itemprop="mainEntityOfPage" href="https://runzhou.li/2022/12/10/Road-to-Automation-QA/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/favicon.png">
+      <meta itemprop="name" content="Runzhou Li (Leo)">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="woozyking">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Road to Automation: QA | woozyking">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Road to Automation: QA
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Publicado el</span>
+
+      <time title="Creado por: 2022-12-10 15:54:40" itemprop="dateCreated datePublished" datetime="2022-12-10T15:54:40+00:00">2022-12-10</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Editado el</span>
+      <time title="Modificado por: 2022-12-15 02:31:46" itemprop="dateModified" datetime="2022-12-15T02:31:46+00:00">2022-12-15</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <figure>
+    <img src="https://user-images.githubusercontent.com/2837532/207129082-794079b4-c95b-43f8-9fe4-d044396e1434.png" />
+    <figcaption align="center">Generated through <a target="_blank" rel="noopener" href="https://huggingface.co/CompVis/stable-diffusion-v1-4">Stable Diffusion v1-4</a></figcaption>
+</figure>
+
+<p>Software QA (quality assurance), much like documentation, while important, often gets overlooked and buried down in the priority list when compared to research and development efforts.</p>
+<p>While there are increasing efforts to automate the various aspects of software QA, many still require substantial effort to get meaningful values (such as writing unit- or end-to-end tests). However, we have sophisticated a few other fronts that can integrate into many projects with minimal setup.</p>
+<span id="more"></span>
+<h2 id="Commit-Message-Convention-Check"><a href="#Commit-Message-Convention-Check" class="headerlink" title="Commit Message Convention Check"></a>Commit Message Convention Check</h2><p>Primarily because we already rely on the <a target="_blank" rel="noopener" href="https://engineering.eqworks.io/developments/git/">same convention</a> to facilitate <a href="/2021/11/26/Road-to-Automation-Updates/" title="Road to Automation: Updates">team updates</a> and <a href="/2020/11/19/Road-to-Automation-Release-Notes/" title="Road to Automation: Release Notes">product release</a> efforts, ensuring that our commit messages follow the said convention becomes even more critical. And for this reason, we created a CLI (command line interface).</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">(some repo) % npx @eqworks/commit-watch -b origin/main --verbose</span><br><span class="line">⚠ 6/9 do not match pattern &quot;category[/sub-category] - subject title&quot;</span><br><span class="line"></span><br><span class="line">✖ define APIError</span><br><span class="line">✖ fix /readme to reflect changes in selectUser</span><br><span class="line">✖ remove unnecessary await</span><br><span class="line">✖ refactor selectUser to return user || undefined</span><br><span class="line">✖ PR fixes, throws APIError</span><br><span class="line">✖ check if user exists, won&#x27;t send opt email if user unknown</span><br><span class="line">✓ users - make getUsers async, await db query</span><br><span class="line">✓ login - throw error on /users endpoints when user not found</span><br><span class="line">✓ login - misc PR changes</span><br></pre></td></tr></table></figure>
+
+<p>The CLI form factor means it is simple to integrate into any CI/CD (continuous integration/deployment) processes, such as GitHub Actions.</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">name:</span> <span class="string">Main</span></span><br><span class="line"></span><br><span class="line"><span class="attr">on:</span></span><br><span class="line">  <span class="attr">pull_request:</span></span><br><span class="line">  <span class="attr">push:</span></span><br><span class="line">    <span class="attr">branches:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">main</span></span><br><span class="line"></span><br><span class="line"><span class="attr">jobs:</span></span><br><span class="line">  <span class="attr">commit-watch:</span></span><br><span class="line">    <span class="attr">runs-on:</span> <span class="string">ubuntu-latest</span></span><br><span class="line">    <span class="attr">if:</span> <span class="string">contains(github.event_name,</span> <span class="string">&#x27;pull_request&#x27;</span><span class="string">)</span> <span class="comment"># only run on pull requests</span></span><br><span class="line">    <span class="attr">steps:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">uses:</span> <span class="string">actions/checkout@v3</span></span><br><span class="line">        <span class="attr">with:</span></span><br><span class="line">          <span class="attr">fetch-depth:</span> <span class="number">0</span> <span class="comment"># needed for obtaining relevant commit metadata for commit-watch</span></span><br><span class="line"></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">run:</span> <span class="string">npx</span> <span class="string">@eqworks/commit-watch</span> <span class="string">-b</span> <span class="string">$&#123;&#123;</span> <span class="string">github.event.pull_request.base.sha</span> <span class="string">&#125;&#125;</span> <span class="string">-h</span> <span class="string">$&#123;&#123;</span> <span class="string">github.event.pull_request.head.sha</span> <span class="string">&#125;&#125;</span> <span class="string">-v</span></span><br></pre></td></tr></table></figure>
+
+<p>And the CLI exits with an error when encountering any unsatisfactory commit messages against the convention. You can find more usage details in the <a target="_blank" rel="noopener" href="https://github.com/EQWorks/commit-watch"><code>commit-watch</code> repo</a>.</p>
+<h2 id="Environment-Variables-Usage-and-Security-Sanitization"><a href="#Environment-Variables-Usage-and-Security-Sanitization" class="headerlink" title="Environment Variables Usage and Security Sanitization"></a>Environment Variables Usage and Security Sanitization</h2><p>Another aspect that often haunts developers is environment variable usage, especially when we accidentally need to remember to configure them at build or deployment time. To mitigate that, we created another CLI.</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">(@eqworks/updates repo) % npx @eqworks/scan-env</span><br><span class="line">Missing in live context</span><br><span class="line"></span><br><span class="line">ORG_TZ:</span><br><span class="line">	cli.js (has default)</span><br><span class="line">	sources/util.js (has default)</span><br><span class="line">GITHUB_TOKEN:</span><br><span class="line">	sources/github/graphql.js</span><br><span class="line">GITHUB_ORG:</span><br><span class="line">	sources/github/graphql.js (has default)</span><br><span class="line">	sources/github/v2.js (has default)</span><br><span class="line">NOTION_TOKEN:</span><br><span class="line">	sources/notion/api.js</span><br><span class="line">BASE_URL:</span><br><span class="line">	sources/notion/index.js (has default)</span><br><span class="line">DATABASE_ID:</span><br><span class="line">	targets/notion/index.js (has default)</span><br><span class="line">SLACK_TOKEN:</span><br><span class="line">	targets/slack.js</span><br><span class="line">SLACK_CHANNEL:</span><br><span class="line">	targets/slack.js</span><br></pre></td></tr></table></figure>
+
+<p>The CLI works well with Python and JavaScript (Node.js) projects. In the future, we plan to support more language stacks. And since we use Serverless extensively, we have also built good support to detect when the application’s environment variables mismatch with the references dictated in the <code>serverless.yml</code> configuration.</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">(a-serverless-service) % npx @eqworks/scan-env</span><br><span class="line">Missing in serverless.yml</span><br><span class="line"></span><br><span class="line">LOG_LEVEL:</span><br><span class="line">	src/__init__.py (has default)</span><br><span class="line">STAGE:</span><br><span class="line">	src/app.py (has default)</span><br><span class="line">PG_URI:</span><br><span class="line">	src/modules/pg.py (has default)</span><br><span class="line">MONGO_URI:</span><br><span class="line">    src/modules/mongo.py</span><br><span class="line"></span><br><span class="line">Unused from serverless.yml</span><br><span class="line"></span><br><span class="line">NOT_USED_ANIMO</span><br><span class="line">SNOOP_LEON</span><br><span class="line">NICKY_JELLY</span><br></pre></td></tr></table></figure>
+
+<p>Like <code>commit-watch</code>, the CLI easily integrates into any CI/CD workflow.</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">name:</span> <span class="string">Main</span></span><br><span class="line"></span><br><span class="line"><span class="attr">on:</span></span><br><span class="line">  <span class="attr">pull_request:</span></span><br><span class="line">  <span class="attr">push:</span></span><br><span class="line">    <span class="attr">branches:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">main</span></span><br><span class="line"></span><br><span class="line"><span class="attr">jobs:</span></span><br><span class="line">  <span class="attr">scan-env:</span></span><br><span class="line">    <span class="attr">runs-on:</span> <span class="string">ubuntu-latest</span></span><br><span class="line">    <span class="attr">steps:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">run:</span> <span class="string">npx</span> <span class="string">@eqworks/scan-env</span> <span class="string">--strict</span></span><br><span class="line">        <span class="attr">env:</span></span><br><span class="line">          <span class="comment"># any build/deploy/run-time environment variables</span></span><br><span class="line">          <span class="attr">PG_URI:</span> <span class="string">$&#123;&#123;</span> <span class="string">secrets.PG_URI</span> <span class="string">&#125;&#125;</span></span><br><span class="line">          <span class="attr">MONGO_URI:</span> <span class="string">$&#123;&#123;</span> <span class="string">secrets.MONGO_URI</span> <span class="string">&#125;&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>You can find more details in <a target="_blank" rel="noopener" href="https://github.com/EQWorks/scan-env">its repo</a>.</p>
+<h2 id="Bonus-Slack-Notification"><a href="#Bonus-Slack-Notification" class="headerlink" title="Bonus: Slack Notification"></a>Bonus: Slack Notification</h2><p>While this one is not strictly about QA, we often use it hand-in-hand with all QA-related CLIs in our CI/CD workflows to notify us of various statuses.</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">name:</span> <span class="string">Serverless</span> <span class="string">Deploy</span> <span class="bullet">-</span> <span class="string">prod</span> <span class="string">stage</span></span><br><span class="line"></span><br><span class="line"><span class="attr">on:</span></span><br><span class="line">  <span class="attr">push:</span></span><br><span class="line">    <span class="attr">tags:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&#x27;prod-*&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="attr">jobs:</span></span><br><span class="line">  <span class="attr">deploy:</span></span><br><span class="line">    <span class="attr">runs-on:</span> <span class="string">ubuntu-latest</span></span><br><span class="line"></span><br><span class="line">    <span class="attr">steps:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">uses:</span> <span class="string">actions/checkout@v3</span></span><br><span class="line">        <span class="attr">with:</span></span><br><span class="line">          <span class="attr">fetch-depth:</span> <span class="number">0</span></span><br><span class="line"></span><br><span class="line">      <span class="comment"># ...</span></span><br><span class="line"></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">run:</span> <span class="string">npx</span> <span class="string">serverless</span> <span class="string">deploy</span> <span class="string">--stage=prod</span></span><br><span class="line">        <span class="attr">env:</span></span><br><span class="line">          <span class="comment"># ...</span></span><br><span class="line"></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">Notify</span> <span class="string">on</span> <span class="string">deployment</span> <span class="string">status</span></span><br><span class="line">        <span class="attr">if:</span> <span class="string">$&#123;&#123;</span> <span class="string">always()</span> <span class="string">&#125;&#125;</span></span><br><span class="line">        <span class="attr">run:</span> <span class="string">npx</span> <span class="string">@eqworks/notify</span> <span class="string">deployment</span> <span class="string">$GITHUB_REPOSITORY</span> <span class="string">--commit=$GITHUB_SHA</span> <span class="string">--stage=prod</span> <span class="string">--status=$JOB_STATUS</span></span><br><span class="line">        <span class="attr">env:</span></span><br><span class="line">          <span class="attr">SLACK_HOOK:</span> <span class="string">$&#123;&#123;</span> <span class="string">secrets.SLACK_HOOK</span> <span class="string">&#125;&#125;</span></span><br><span class="line">          <span class="attr">JOB_STATUS:</span> <span class="string">$&#123;&#123;</span> <span class="string">job.status</span> <span class="string">&#125;&#125;</span></span><br><span class="line"></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">Generate</span> <span class="string">tag</span> <span class="string">associated</span> <span class="string">release</span> <span class="string">changelog</span></span><br><span class="line">        <span class="attr">run:</span> <span class="string">npx</span> <span class="string">@eqworks/release</span> <span class="string">changelog</span> <span class="string">-v</span> <span class="string">--pattern=&quot;prod-*&quot;</span> <span class="string">--head=$&#123;GITHUB_REF##*/&#125;</span> <span class="string">--github</span></span><br><span class="line">        <span class="attr">env:</span></span><br><span class="line">          <span class="attr">GITHUB_OWNER:</span> <span class="string">...</span></span><br><span class="line">          <span class="attr">GITHUB_TOKEN:</span> <span class="string">$&#123;&#123;</span> <span class="string">secrets.GITHUB_TOKEN</span> <span class="string">&#125;&#125;</span></span><br><span class="line"></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">Notify</span> <span class="string">on</span> <span class="string">release</span> <span class="string">changelog</span> <span class="string">update</span></span><br><span class="line">        <span class="attr">if:</span> <span class="string">$&#123;&#123;</span> <span class="string">success()</span> <span class="string">&#125;&#125;</span></span><br><span class="line">        <span class="attr">run:</span> <span class="string">npx</span> <span class="string">@eqworks/notify</span> <span class="string">send</span> <span class="string">&quot;Release changelog updated for $&#123;GITHUB_REPOSITORY&#125; $&#123;GITHUB_REF##*/&#125;&quot;</span> <span class="string">--link=&quot;https://github.com/$&#123;GITHUB_REPOSITORY&#125;/releases/tag/$&#123;GITHUB_REF##*/&#125;&quot;</span> <span class="string">--status=$JOB_STATUS</span></span><br><span class="line">        <span class="attr">env:</span></span><br><span class="line">          <span class="attr">SLACK_HOOK:</span> <span class="string">$&#123;&#123;</span> <span class="string">secrets.SLACK_HOOK</span> <span class="string">&#125;&#125;</span></span><br><span class="line">          <span class="attr">JOB_STATUS:</span> <span class="string">$&#123;&#123;</span> <span class="string">job.status</span> <span class="string">&#125;&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>There are more details in the <a target="_blank" rel="noopener" href="https://github.com/EQWorks/notify"><code>notify</code> repo</a>, including its usage as a Node.js library.</p>
+<h2 id="Final-Remarks"><a href="#Final-Remarks" class="headerlink" title="Final Remarks"></a>Final Remarks</h2><p>While far from comprehensive, we’ve built a little collection to start saying, “There’s a CLI for that.” The point, though, is to identify common-enough issues to create flexible and composable toolings to form reasonable solutions while getting as much value as possible.</p>
+<p>Do you have similar itches? Do you have any other ideas? Let us know by creating issues in the respective repositories:</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/EQWorks/commit-watch">https://github.com/EQWorks/commit-watch</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/EQWorks/scan-env">https://github.com/EQWorks/scan-env</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/EQWorks/notify">https://github.com/EQWorks/notify</a></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/programming/" rel="tag"># programming</a>
+              <a href="/tags/software-development/" rel="tag"># software development</a>
+              <a href="/tags/automation/" rel="tag"># automation</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/11/26/Road-to-Automation-Updates/" rel="prev" title="Road to Automation: Updates">
+                  <i class="fa fa-chevron-left"></i> Road to Automation: Updates
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Runzhou Li (Leo)</span>
+</div>
+  <div class="powered-by">Creado mediante <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="Volver al principio">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>
