@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 6.3.0">
+<link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="mask-icon" href="/favicon.ico" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"runzhou.li","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.17.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Buscando...","empty":"No hemos encontrado ningún resultado para la búsqueda: ${query}","hits_time":"${hits} resultados encontrados en ${time} ms","hits":"${hits} resultados encontrados"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="TL;DR We leveraged OpenAI’s June 13 update to make our web app navigational assistant 5x faster and 20x cheaper. While OpenAI stepped in the right direction with the Function Calling feature, we prove">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Natural Language to JSON: GPT before&#x2F;after 0613">
+<meta property="og:url" content="https://runzhou.li/2023/06/23/Natural-Language-to-JSON-GPT-before-after-0613/index.html">
+<meta property="og:site_name" content="woozyking">
+<meta property="og:description" content="TL;DR We leveraged OpenAI’s June 13 update to make our web app navigational assistant 5x faster and 20x cheaper. While OpenAI stepped in the right direction with the Function Calling feature, we prove">
+<meta property="og:locale" content="es_ES">
+<meta property="og:image" content="https://github.com/RiskThinking/work-samples/assets/2837532/0d7a2764-d81b-42f4-aa0d-db3706352472">
+<meta property="og:image" content="https://github.com/RiskThinking/work-samples/assets/2837532/f9e7e764-2a1e-4338-b778-427a7e2efcc1">
+<meta property="og:image" content="https://github.com/RiskThinking/work-samples/assets/2837532/0d7a2764-d81b-42f4-aa0d-db3706352472">
+<meta property="article:published_time" content="2023-06-23T11:20:24.000Z">
+<meta property="article:modified_time" content="2023-06-23T22:39:46.460Z">
+<meta property="article:author" content="Runzhou Li (Leo)">
+<meta property="article:tag" content="meta-automation">
+<meta property="article:tag" content="NLP">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://github.com/RiskThinking/work-samples/assets/2837532/0d7a2764-d81b-42f4-aa0d-db3706352472">
+
+
+<link rel="canonical" href="https://runzhou.li/2023/06/23/Natural-Language-to-JSON-GPT-before-after-0613/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"es","comments":true,"permalink":"https://runzhou.li/2023/06/23/Natural-Language-to-JSON-GPT-before-after-0613/","path":"2023/06/23/Natural-Language-to-JSON-GPT-before-after-0613/","title":"Natural Language to JSON: GPT before/after 0613"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Natural Language to JSON: GPT before/after 0613 | woozyking</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Cambiar a barra de navegación" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">woozyking</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Buscar" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Tabla de contenidos
+        </li>
+        <li class="sidebar-nav-overview">
+          Inicio
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#TL-DR"><span class="nav-number">1.</span> <span class="nav-text">TL;DR</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Intro"><span class="nav-number">2.</span> <span class="nav-text">Intro</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Benchmark-Base-gpt-4-0314"><span class="nav-number">3.</span> <span class="nav-text">Benchmark Base (gpt-4-0314)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0613-Function-Calling"><span class="nav-number">4.</span> <span class="nav-text">0613 Function Calling</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0613-Custom-prompt-engineering"><span class="nav-number">5.</span> <span class="nav-text">0613 Custom prompt-engineering</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Recap"><span class="nav-number">6.</span> <span class="nav-text">Recap</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Runzhou Li (Leo)"
+      src="/favicon.png">
+  <p class="site-author-name" itemprop="name">Runzhou Li (Leo)</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">23</span>
+          <span class="site-state-item-name">entradas</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">32</span>
+        <span class="site-state-item-name">etiquetas</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/woozyking" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;woozyking" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="es">
+    <link itemprop="mainEntityOfPage" href="https://runzhou.li/2023/06/23/Natural-Language-to-JSON-GPT-before-after-0613/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/favicon.png">
+      <meta itemprop="name" content="Runzhou Li (Leo)">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="woozyking">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Natural Language to JSON: GPT before/after 0613 | woozyking">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Natural Language to JSON: GPT before/after 0613
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Publicado el</span>
+      
+
+      <time title="Creado por: 2023-06-23 11:20:24 / Modificado por: 22:39:46" itemprop="dateCreated datePublished" datetime="2023-06-23T11:20:24+00:00">2023-06-23</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h2 id="TL-DR"><a href="#TL-DR" class="headerlink" title="TL;DR"></a>TL;DR</h2><ul>
+<li>We leveraged OpenAI’s June 13 update to make our web app navigational assistant <strong>5x faster and 20x cheaper</strong>.</li>
+<li>While OpenAI stepped in the right direction with the <em>Function Calling</em> feature, we proved it has room to improve still.</li>
+</ul>
+<p><img src="https://github.com/RiskThinking/work-samples/assets/2837532/0d7a2764-d81b-42f4-aa0d-db3706352472" alt="table"></p>
+<h2 id="Intro"><a href="#Intro" class="headerlink" title="Intro"></a>Intro</h2><p>At <a target="_blank" rel="noopener" href="https://riskthinking.ai/">RiskThinking.AI</a>, we initiated a project back in April to leverage OpenAI’s GPT model to build a navigational assistant for our web app. At the time, <code>gpt-4-0314</code> was the only viable model since <code>gpt-3.5-turbo-0301</code> doesn’t have system steerability.</p>
+<span id="more"></span>
+
+<video controls>
+  <source src="https://github.com/RiskThinking/work-samples/assets/2837532/c46526a7-f96a-418c-8ffc-e4c106b3dc71" type="video/mp4">
+  Your browser does not support HTML video.
+</video>
+
+<blockquote>
+<p>Credit: <a target="_blank" rel="noopener" href="https://medium.com/@jegrieve">@jegrieve</a></p>
+</blockquote>
+<p>One glaring problem is that it’s not fast and can get excruciatingly slow!</p>
+<video controls>
+  <source src="https://github.com/RiskThinking/work-samples/assets/2837532/a2cc9466-fedc-4fd3-b9bf-eccdb37f4249" type="video/mp4">
+  Your browser does not support HTML video.
+</video>
+
+<blockquote>
+<p>Nobody has the patience to wait for 10+ seconds to spin the globe to Toronto</p>
+</blockquote>
+<p>Until now…</p>
+<p>Since OpenAI’s <a target="_blank" rel="noopener" href="https://openai.com/blog/function-calling-and-other-api-updates">June 13 update</a>, OpenAI enabled system steerability for it’s <code>gpt-3.5-turbo</code> model, and along with that, came the <a target="_blank" rel="noopener" href="https://platform.openai.com/docs/guides/gpt/function-calling"><em>Function Calling</em></a> feature in recognition of the overwhelming use cases built on top of the same simple principle, <em>Natural Language to JSON</em> (our web app navigational assistant would be no different).</p>
+<blockquote>
+<p>Under the hood, functions are injected into the system message in a syntax the model has been trained on. This means functions count against the model’s context limit and are billed as input tokens. If running into context limits, we suggest limiting the number of functions or the length of documentation you provide for function parameters.</p>
+</blockquote>
+<p>We benchmarked the models before and after the June 13 update and concluded a new navigational assistant that’s <strong>5 times faster and 20 times cheaper</strong>. On top of that, we exposed that OpenAI’s <em>Function Calling</em>, while promising, can still do better!</p>
+<h2 id="Benchmark-Base-gpt-4-0314"><a href="#Benchmark-Base-gpt-4-0314" class="headerlink" title="Benchmark Base (gpt-4-0314)"></a>Benchmark Base (<code>gpt-4-0314</code>)</h2><p>This is the base implementation of our original Copilot implementation, where we leverage both <code>&lt;system&gt;</code> and <code>&lt;user&gt;</code> prompt engineering to achieve the steerability we needed for stable and high precision <code>assistant</code> output of JSON object that can be used for application usage (e.g. VELO).</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line">Model: &quot;gpt-4-0314&quot; (pre-0613)</span><br><span class="line"></span><br><span class="line">&lt;System&gt;:</span><br><span class="line">You are an app navigation copilot which converts user asks based on possible parameters to a JSON form. For errors, respond with &#123;&#125;</span><br><span class="line"></span><br><span class="line">&lt;User&gt;:</span><br><span class="line">Bench nikkei against tsx in the energy sector for &gt;4 degrees scenario in 2070</span><br><span class="line"></span><br><span class="line">Output format:</span><br><span class="line">&#123;&quot;Horizon&quot;: 2050, &quot;Scenario&quot;: &#123;&quot;id&quot;: &quot;RT3&quot;, &quot;name&quot;: &quot;ALL&quot;&#125;, &quot;Benchmark&quot;: &#123;&quot;name&quot;: &quot;TSX 60&quot;, &quot;index&quot;: 20, &quot;portfolio_name&quot;: &quot;TSX 60&quot;, &quot;portfolio_id&quot;: 20&#125;, &quot;BenchmarkSector&quot;: &quot;Index&quot;, &quot;Portfolio&quot;: &#123;&quot;name&quot;: &quot;S&amp;P 500&quot;, &quot;index&quot;: 22, &quot;portfolio_name&quot;: &quot;S&amp;P 500&quot;, &quot;portfolio_id&quot;: 22&#125;, &quot;PortfolioSector&quot;: &quot;Index&quot;&#125;</span><br><span class="line"></span><br><span class="line">Possible values for each parameter:</span><br><span class="line">- Horizon: &#123;&#x27;type&#x27;: &#x27;integer&#x27;, &#x27;description&#x27;: &#x27;parsed from user input to best match the closest next decade year&#x27;, &#x27;min&#x27;: 2030, &#x27;max&#x27;: 2090, &#x27;default&#x27;: 2050&#125;</span><br><span class="line">- Scenario: &#123;&#x27;type&#x27;: &#x27;object&#x27;, &#x27;description&#x27;: &#x27;Climate crisis temperature rise scenario&#x27;, &#x27;enums&#x27;: [&#123;&#x27;id&#x27;: &#x27;RT3&#x27;, &#x27;name&#x27;: &#x27;ALL&#x27;&#125;, &#123;&#x27;id&#x27;: &#x27;Paris&#x27;, &#x27;name&#x27;: &#x27;&lt;2°&#x27;&#125;, &#123;&#x27;id&#x27;: &#x27;NDC&#x27;, &#x27;name&#x27;: &#x27;2°- 4°&#x27;&#125;, &#123;&#x27;id&#x27;: &#x27;Hot House&#x27;, &#x27;name&#x27;: &#x27;&gt;4°&#x27;&#125;], &#x27;default&#x27;: &#123;&#x27;id&#x27;: &#x27;RT3&#x27;, &#x27;name&#x27;: &#x27;ALL&#x27;&#125;&#125;</span><br><span class="line">- Benchmark: &#123;&#x27;type&#x27;: &#x27;object&#x27;, &#x27;description&#x27;: &#x27;The base benchmark portfolio/index&#x27;, &#x27;enums&#x27;: [&#123;&#x27;name&#x27;: &#x27;TSX 60&#x27;, &#x27;index&#x27;: 20, &#x27;portfolio_name&#x27;: &#x27;TSX 60&#x27;, &#x27;portfolio_id&#x27;: 20&#125;, &#123;&#x27;name&#x27;: &#x27;NIKKEI 225&#x27;, &#x27;index&#x27;: 23, &#x27;portfolio_name&#x27;: &#x27;NIKKEI 225&#x27;, &#x27;portfolio_id&#x27;: 23&#125;, &#123;&#x27;name&#x27;: &#x27;FTSE 100&#x27;, &#x27;index&#x27;: 24, &#x27;portfolio_name&#x27;: &#x27;FTSE 100&#x27;, &#x27;portfolio_id&#x27;: 24&#125;, &#123;&#x27;name&#x27;: &#x27;DAX 40&#x27;, &#x27;index&#x27;: 21, &#x27;portfolio_name&#x27;: &#x27;DAX 40&#x27;, &#x27;portfolio_id&#x27;: 21&#125;, &#123;&#x27;name&#x27;: &#x27;S&amp;P 500&#x27;, &#x27;index&#x27;: 22, &#x27;portfolio_name&#x27;: &#x27;S&amp;P 500&#x27;, &#x27;portfolio_id&#x27;: 22&#125;, &#123;&#x27;name&#x27;: &#x27;FTSE/JSE 40&#x27;, &#x27;index&#x27;: 25, &#x27;portfolio_name&#x27;: &#x27;FTSE/JSE 40&#x27;, &#x27;portfolio_id&#x27;: 25&#125;, &#123;&#x27;name&#x27;: &#x27;BIST 30&#x27;, &#x27;index&#x27;: 26, &#x27;portfolio_name&#x27;: &#x27;BIST 30&#x27;, &#x27;portfolio_id&#x27;: 26&#125;, &#123;&#x27;name&#x27;: &#x27;MOEX RUSSIA&#x27;, &#x27;index&#x27;: 27, &#x27;portfolio_name&#x27;: &#x27;MOEX RUSSIA&#x27;, &#x27;portfolio_id&#x27;: 27&#125;, &#123;&#x27;name&#x27;: &#x27;IPC MEXICO&#x27;, &#x27;index&#x27;: 28, &#x27;portfolio_name&#x27;: &#x27;IPC MEXICO&#x27;, &#x27;portfolio_id&#x27;: 28&#125;, &#123;&#x27;name&#x27;: &#x27;IDX80&#x27;, &#x27;index&#x27;: 29, &#x27;portfolio_name&#x27;: &#x27;IDX80&#x27;, &#x27;portfolio_id&#x27;: 29&#125;, &#123;&#x27;name&#x27;: &#x27;FTSE MIB&#x27;, &#x27;index&#x27;: 30, &#x27;portfolio_name&#x27;: &#x27;FTSE MIB&#x27;, &#x27;portfolio_id&#x27;: 30&#125;, &#123;&#x27;name&#x27;: &#x27;CAC 40&#x27;, &#x27;index&#x27;: 31, &#x27;portfolio_name&#x27;: &#x27;CAC 40&#x27;, &#x27;portfolio_id&#x27;: 31&#125;, &#123;&#x27;name&#x27;: &#x27;ASX200&#x27;, &#x27;index&#x27;: 32, &#x27;portfolio_name&#x27;: &#x27;ASX200&#x27;, &#x27;portfolio_id&#x27;: 32&#125;, &#123;&#x27;name&#x27;: &#x27;CSI300&#x27;, &#x27;index&#x27;: 33, &#x27;portfolio_name&#x27;: &#x27;CSI300&#x27;, &#x27;portfolio_id&#x27;: 33&#125;, &#123;&#x27;name&#x27;: &#x27;KOSPI&#x27;, &#x27;index&#x27;: 34, &#x27;portfolio_name&#x27;: &#x27;KOSPI&#x27;, &#x27;portfolio_id&#x27;: 34&#125;, &#123;&#x27;name&#x27;: &#x27;NIFTY50&#x27;, &#x27;index&#x27;: 35, &#x27;portfolio_name&#x27;: &#x27;NIFTY50&#x27;, &#x27;portfolio_id&#x27;: 35&#125;, &#123;&#x27;name&#x27;: &#x27;S&amp;P Merval&#x27;, &#x27;index&#x27;: 36, &#x27;portfolio_name&#x27;: &#x27;S&amp;P Merval&#x27;, &#x27;portfolio_id&#x27;: 36&#125;, &#123;&#x27;name&#x27;: &#x27;Tadawul All Share&#x27;, &#x27;index&#x27;: 37, &#x27;portfolio_name&#x27;: &#x27;Tadawul All Share&#x27;, &#x27;portfolio_id&#x27;: 37&#125;, &#123;&#x27;name&#x27;: &#x27;Bovespa&#x27;, &#x27;index&#x27;: 38, &#x27;portfolio_name&#x27;: &#x27;Bovespa&#x27;, &#x27;portfolio_id&#x27;: 38&#125;, &#123;&#x27;name&#x27;: &#x27;MSCI World&#x27;, &#x27;index&#x27;: 39, &#x27;portfolio_name&#x27;: &#x27;MSCI World&#x27;, &#x27;portfolio_id&#x27;: 39&#125;], &#x27;default&#x27;: &#123;&#x27;name&#x27;: &#x27;TSX 60&#x27;, &#x27;index&#x27;: 20, &#x27;portfolio_name&#x27;: &#x27;TSX 60&#x27;, &#x27;portfolio_id&#x27;: 20&#125;&#125;</span><br><span class="line">- BenchmarkSector: &#123;&#x27;type&#x27;: &#x27;string&#x27;, &#x27;description&#x27;: &#x27;The base benchmark portfolio/index sector&#x27;, &#x27;enums&#x27;: [&#x27;Financials&#x27;, &#x27;Materials&#x27;, &#x27;Energy&#x27;, &#x27;Consumer Staples&#x27;, &#x27;Consumer Discretionary&#x27;, &#x27;Industrials&#x27;, &#x27;Real Estate&#x27;, &#x27;Information Technology&#x27;, &#x27;Utilities&#x27;], &#x27;default&#x27;: &#x27;Index&#x27;&#125;</span><br><span class="line">- Portfolio: &#123;&#x27;type&#x27;: &#x27;object&#x27;, &#x27;description&#x27;: &#x27;The target benchmark portfolio/index&#x27;, &#x27;enums&#x27;: [&#123;&#x27;name&#x27;: &#x27;TSX 60&#x27;, &#x27;index&#x27;: 20, &#x27;portfolio_name&#x27;: &#x27;TSX 60&#x27;, &#x27;portfolio_id&#x27;: 20&#125;, &#123;&#x27;name&#x27;: &#x27;NIKKEI 225&#x27;, &#x27;index&#x27;: 23, &#x27;portfolio_name&#x27;: &#x27;NIKKEI 225&#x27;, &#x27;portfolio_id&#x27;: 23&#125;, &#123;&#x27;name&#x27;: &#x27;FTSE 100&#x27;, &#x27;index&#x27;: 24, &#x27;portfolio_name&#x27;: &#x27;FTSE 100&#x27;, &#x27;portfolio_id&#x27;: 24&#125;, &#123;&#x27;name&#x27;: &#x27;DAX 40&#x27;, &#x27;index&#x27;: 21, &#x27;portfolio_name&#x27;: &#x27;DAX 40&#x27;, &#x27;portfolio_id&#x27;: 21&#125;, &#123;&#x27;name&#x27;: &#x27;S&amp;P 500&#x27;, &#x27;index&#x27;: 22, &#x27;portfolio_name&#x27;: &#x27;S&amp;P 500&#x27;, &#x27;portfolio_id&#x27;: 22&#125;, &#123;&#x27;name&#x27;: &#x27;FTSE/JSE 40&#x27;, &#x27;index&#x27;: 25, &#x27;portfolio_name&#x27;: &#x27;FTSE/JSE 40&#x27;, &#x27;portfolio_id&#x27;: 25&#125;, &#123;&#x27;name&#x27;: &#x27;BIST 30&#x27;, &#x27;index&#x27;: 26, &#x27;portfolio_name&#x27;: &#x27;BIST 30&#x27;, &#x27;portfolio_id&#x27;: 26&#125;, &#123;&#x27;name&#x27;: &#x27;MOEX RUSSIA&#x27;, &#x27;index&#x27;: 27, &#x27;portfolio_name&#x27;: &#x27;MOEX RUSSIA&#x27;, &#x27;portfolio_id&#x27;: 27&#125;, &#123;&#x27;name&#x27;: &#x27;IPC MEXICO&#x27;, &#x27;index&#x27;: 28, &#x27;portfolio_name&#x27;: &#x27;IPC MEXICO&#x27;, &#x27;portfolio_id&#x27;: 28&#125;, &#123;&#x27;name&#x27;: &#x27;IDX80&#x27;, &#x27;index&#x27;: 29, &#x27;portfolio_name&#x27;: &#x27;IDX80&#x27;, &#x27;portfolio_id&#x27;: 29&#125;, &#123;&#x27;name&#x27;: &#x27;FTSE MIB&#x27;, &#x27;index&#x27;: 30, &#x27;portfolio_name&#x27;: &#x27;FTSE MIB&#x27;, &#x27;portfolio_id&#x27;: 30&#125;, &#123;&#x27;name&#x27;: &#x27;CAC 40&#x27;, &#x27;index&#x27;: 31, &#x27;portfolio_name&#x27;: &#x27;CAC 40&#x27;, &#x27;portfolio_id&#x27;: 31&#125;, &#123;&#x27;name&#x27;: &#x27;ASX200&#x27;, &#x27;index&#x27;: 32, &#x27;portfolio_name&#x27;: &#x27;ASX200&#x27;, &#x27;portfolio_id&#x27;: 32&#125;, &#123;&#x27;name&#x27;: &#x27;CSI300&#x27;, &#x27;index&#x27;: 33, &#x27;portfolio_name&#x27;: &#x27;CSI300&#x27;, &#x27;portfolio_id&#x27;: 33&#125;, &#123;&#x27;name&#x27;: &#x27;KOSPI&#x27;, &#x27;index&#x27;: 34, &#x27;portfolio_name&#x27;: &#x27;KOSPI&#x27;, &#x27;portfolio_id&#x27;: 34&#125;, &#123;&#x27;name&#x27;: &#x27;NIFTY50&#x27;, &#x27;index&#x27;: 35, &#x27;portfolio_name&#x27;: &#x27;NIFTY50&#x27;, &#x27;portfolio_id&#x27;: 35&#125;, &#123;&#x27;name&#x27;: &#x27;S&amp;P Merval&#x27;, &#x27;index&#x27;: 36, &#x27;portfolio_name&#x27;: &#x27;S&amp;P Merval&#x27;, &#x27;portfolio_id&#x27;: 36&#125;, &#123;&#x27;name&#x27;: &#x27;Tadawul All Share&#x27;, &#x27;index&#x27;: 37, &#x27;portfolio_name&#x27;: &#x27;Tadawul All Share&#x27;, &#x27;portfolio_id&#x27;: 37&#125;, &#123;&#x27;name&#x27;: &#x27;Bovespa&#x27;, &#x27;index&#x27;: 38, &#x27;portfolio_name&#x27;: &#x27;Bovespa&#x27;, &#x27;portfolio_id&#x27;: 38&#125;, &#123;&#x27;name&#x27;: &#x27;MSCI World&#x27;, &#x27;index&#x27;: 39, &#x27;portfolio_name&#x27;: &#x27;MSCI World&#x27;, &#x27;portfolio_id&#x27;: 39&#125;], &#x27;default&#x27;: &#123;&#x27;name&#x27;: &#x27;S&amp;P 500&#x27;, &#x27;index&#x27;: 22, &#x27;portfolio_name&#x27;: &#x27;S&amp;P 500&#x27;, &#x27;portfolio_id&#x27;: 22&#125;&#125;</span><br><span class="line">- PortfolioSector: &#123;&#x27;type&#x27;: &#x27;string&#x27;, &#x27;description&#x27;: &#x27;The target benchmark portfolio/index sector&#x27;, &#x27;enums&#x27;: [&#x27;Financials&#x27;, &#x27;Industrials&#x27;, &#x27;Consumer Discretionary&#x27;, &#x27;Health Care&#x27;, &#x27;Utilities&#x27;, &#x27;Information Technology&#x27;, &#x27;Real Estate&#x27;, &#x27;Energy&#x27;, &#x27;Materials&#x27;, &#x27;Communications&#x27;, &#x27;Consumer Staples&#x27;], &#x27;default&#x27;: &#x27;Index&#x27;&#125;</span><br><span class="line"></span><br><span class="line">&lt;Assistant&gt;:</span><br><span class="line">&#123;</span><br><span class="line">  &quot;Horizon&quot;: 2070,</span><br><span class="line">  &quot;Scenario&quot;: &#123;</span><br><span class="line">    &quot;id&quot;: &quot;Hot House&quot;,</span><br><span class="line">    &quot;name&quot;: &quot;&gt;4°&quot;</span><br><span class="line">  &#125;,</span><br><span class="line">  &quot;Benchmark&quot;: &#123;</span><br><span class="line">    &quot;name&quot;: &quot;NIKKEI 225&quot;,</span><br><span class="line">    &quot;index&quot;: 23,</span><br><span class="line">    &quot;portfolio_name&quot;: &quot;NIKKEI 225&quot;,</span><br><span class="line">    &quot;portfolio_id&quot;: 23</span><br><span class="line">  &#125;,</span><br><span class="line">  &quot;BenchmarkSector&quot;: &quot;Energy&quot;,</span><br><span class="line">  &quot;Portfolio&quot;: &#123;</span><br><span class="line">    &quot;name&quot;: &quot;TSX 60&quot;,</span><br><span class="line">    &quot;index&quot;: 20,</span><br><span class="line">    &quot;portfolio_name&quot;: &quot;TSX 60&quot;,</span><br><span class="line">    &quot;portfolio_id&quot;: 20</span><br><span class="line">  &#125;,</span><br><span class="line">  &quot;PortfolioSector&quot;: &quot;Energy&quot;</span><br><span class="line">&#125;</span><br><span class="line">143.06s over 10 runs</span><br></pre></td></tr></table></figure>
+
+<p>Token <code>usage</code>:</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;prompt_tokens&quot;</span><span class="punctuation">:</span> <span class="number">1848</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;completion_tokens&quot;</span><span class="punctuation">:</span> <span class="number">140</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;total_tokens&quot;</span><span class="punctuation">:</span> <span class="number">1988</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>The cost per call would be <code>(1848 * 0.03 / 1000) + (140 * 0.06 / 1000) = $0.06384</code> per call.</p>
+<h2 id="0613-Function-Calling"><a href="#0613-Function-Calling" class="headerlink" title="0613 Function Calling"></a>0613 Function Calling</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">&lt;System&gt;:</span><br><span class="line">N/A, using 0613 &quot;Function calling&quot;</span><br><span class="line"></span><br><span class="line">&lt;User&gt;:</span><br><span class="line">Bench nikkei against tsx in the energy sector for &gt;4 degrees scenario in 2070</span><br><span class="line"></span><br><span class="line">Function calling params:</span><br><span class="line">[&#123;&#x27;name&#x27;: &#x27;get_nav_params&#x27;, &#x27;description&#x27;: &#x27;Get navigational parameters based on user message and the scoped parameters&#x27;, &#x27;parameters&#x27;: &#123;&#x27;type&#x27;: &#x27;object&#x27;, &#x27;properties&#x27;: &#123;&#x27;Horizon&#x27;: &#123;&#x27;type&#x27;: &#x27;integer&#x27;, &#x27;description&#x27;: &#x27;parsed from user input to best match the closest next decade year&#x27;, &#x27;min&#x27;: 2030, &#x27;max&#x27;: 2090, &#x27;default&#x27;: 2050&#125;, &#x27;Scenario&#x27;: &#123;&#x27;type&#x27;: &#x27;object&#x27;, &#x27;description&#x27;: &#x27;Climate crisis temperature rise scenario&#x27;, &#x27;enums&#x27;: [&#123;&#x27;id&#x27;: &#x27;RT3&#x27;, &#x27;name&#x27;: &#x27;ALL&#x27;&#125;, &#123;&#x27;id&#x27;: &#x27;Paris&#x27;, &#x27;name&#x27;: &#x27;&lt;2°&#x27;&#125;, &#123;&#x27;id&#x27;: &#x27;NDC&#x27;, &#x27;name&#x27;: &#x27;2°- 4°&#x27;&#125;, &#123;&#x27;id&#x27;: &#x27;Hot House&#x27;, &#x27;name&#x27;: &#x27;&gt;4°&#x27;&#125;], &#x27;default&#x27;: &#123;&#x27;id&#x27;: &#x27;RT3&#x27;, &#x27;name&#x27;: &#x27;ALL&#x27;&#125;&#125;, &#x27;Benchmark&#x27;: &#123;&#x27;type&#x27;: &#x27;object&#x27;, &#x27;description&#x27;: &#x27;The base benchmark portfolio/index&#x27;, &#x27;enums&#x27;: [&#123;&#x27;name&#x27;: &#x27;TSX 60&#x27;, &#x27;index&#x27;: 20, &#x27;portfolio_name&#x27;: &#x27;TSX 60&#x27;, &#x27;portfolio_id&#x27;: 20&#125;, &#123;&#x27;name&#x27;: &#x27;NIKKEI 225&#x27;, &#x27;index&#x27;: 23, &#x27;portfolio_name&#x27;: &#x27;NIKKEI 225&#x27;, &#x27;portfolio_id&#x27;: 23&#125;, &#123;&#x27;name&#x27;: &#x27;FTSE 100&#x27;, &#x27;index&#x27;: 24, &#x27;portfolio_name&#x27;: &#x27;FTSE 100&#x27;, &#x27;portfolio_id&#x27;: 24&#125;, &#123;&#x27;name&#x27;: &#x27;DAX 40&#x27;, &#x27;index&#x27;: 21, &#x27;portfolio_name&#x27;: &#x27;DAX 40&#x27;, &#x27;portfolio_id&#x27;: 21&#125;, &#123;&#x27;name&#x27;: &#x27;S&amp;P 500&#x27;, &#x27;index&#x27;: 22, &#x27;portfolio_name&#x27;: &#x27;S&amp;P 500&#x27;, &#x27;portfolio_id&#x27;: 22&#125;, &#123;&#x27;name&#x27;: &#x27;FTSE/JSE 40&#x27;, &#x27;index&#x27;: 25, &#x27;portfolio_name&#x27;: &#x27;FTSE/JSE 40&#x27;, &#x27;portfolio_id&#x27;: 25&#125;, &#123;&#x27;name&#x27;: &#x27;BIST 30&#x27;, &#x27;index&#x27;: 26, &#x27;portfolio_name&#x27;: &#x27;BIST 30&#x27;, &#x27;portfolio_id&#x27;: 26&#125;, &#123;&#x27;name&#x27;: &#x27;MOEX RUSSIA&#x27;, &#x27;index&#x27;: 27, &#x27;portfolio_name&#x27;: &#x27;MOEX RUSSIA&#x27;, &#x27;portfolio_id&#x27;: 27&#125;, &#123;&#x27;name&#x27;: &#x27;IPC MEXICO&#x27;, &#x27;index&#x27;: 28, &#x27;portfolio_name&#x27;: &#x27;IPC MEXICO&#x27;, &#x27;portfolio_id&#x27;: 28&#125;, &#123;&#x27;name&#x27;: &#x27;IDX80&#x27;, &#x27;index&#x27;: 29, &#x27;portfolio_name&#x27;: &#x27;IDX80&#x27;, &#x27;portfolio_id&#x27;: 29&#125;, &#123;&#x27;name&#x27;: &#x27;FTSE MIB&#x27;, &#x27;index&#x27;: 30, &#x27;portfolio_name&#x27;: &#x27;FTSE MIB&#x27;, &#x27;portfolio_id&#x27;: 30&#125;, &#123;&#x27;name&#x27;: &#x27;CAC 40&#x27;, &#x27;index&#x27;: 31, &#x27;portfolio_name&#x27;: &#x27;CAC 40&#x27;, &#x27;portfolio_id&#x27;: 31&#125;, &#123;&#x27;name&#x27;: &#x27;ASX200&#x27;, &#x27;index&#x27;: 32, &#x27;portfolio_name&#x27;: &#x27;ASX200&#x27;, &#x27;portfolio_id&#x27;: 32&#125;, &#123;&#x27;name&#x27;: &#x27;CSI300&#x27;, &#x27;index&#x27;: 33, &#x27;portfolio_name&#x27;: &#x27;CSI300&#x27;, &#x27;portfolio_id&#x27;: 33&#125;, &#123;&#x27;name&#x27;: &#x27;KOSPI&#x27;, &#x27;index&#x27;: 34, &#x27;portfolio_name&#x27;: &#x27;KOSPI&#x27;, &#x27;portfolio_id&#x27;: 34&#125;, &#123;&#x27;name&#x27;: &#x27;NIFTY50&#x27;, &#x27;index&#x27;: 35, &#x27;portfolio_name&#x27;: &#x27;NIFTY50&#x27;, &#x27;portfolio_id&#x27;: 35&#125;, &#123;&#x27;name&#x27;: &#x27;S&amp;P Merval&#x27;, &#x27;index&#x27;: 36, &#x27;portfolio_name&#x27;: &#x27;S&amp;P Merval&#x27;, &#x27;portfolio_id&#x27;: 36&#125;, &#123;&#x27;name&#x27;: &#x27;Tadawul All Share&#x27;, &#x27;index&#x27;: 37, &#x27;portfolio_name&#x27;: &#x27;Tadawul All Share&#x27;, &#x27;portfolio_id&#x27;: 37&#125;, &#123;&#x27;name&#x27;: &#x27;Bovespa&#x27;, &#x27;index&#x27;: 38, &#x27;portfolio_name&#x27;: &#x27;Bovespa&#x27;, &#x27;portfolio_id&#x27;: 38&#125;, &#123;&#x27;name&#x27;: &#x27;MSCI World&#x27;, &#x27;index&#x27;: 39, &#x27;portfolio_name&#x27;: &#x27;MSCI World&#x27;, &#x27;portfolio_id&#x27;: 39&#125;], &#x27;default&#x27;: &#123;&#x27;name&#x27;: &#x27;TSX 60&#x27;, &#x27;index&#x27;: 20, &#x27;portfolio_name&#x27;: &#x27;TSX 60&#x27;, &#x27;portfolio_id&#x27;: 20&#125;&#125;, &#x27;BenchmarkSector&#x27;: &#123;&#x27;type&#x27;: &#x27;string&#x27;, &#x27;description&#x27;: &#x27;The base benchmark portfolio/index sector&#x27;, &#x27;enums&#x27;: [&#x27;Financials&#x27;, &#x27;Materials&#x27;, &#x27;Energy&#x27;, &#x27;Consumer Staples&#x27;, &#x27;Consumer Discretionary&#x27;, &#x27;Industrials&#x27;, &#x27;Real Estate&#x27;, &#x27;Information Technology&#x27;, &#x27;Utilities&#x27;], &#x27;default&#x27;: &#x27;Index&#x27;&#125;, &#x27;Portfolio&#x27;: &#123;&#x27;type&#x27;: &#x27;object&#x27;, &#x27;description&#x27;: &#x27;The target benchmark portfolio/index&#x27;, &#x27;enums&#x27;: [&#123;&#x27;name&#x27;: &#x27;TSX 60&#x27;, &#x27;index&#x27;: 20, &#x27;portfolio_name&#x27;: &#x27;TSX 60&#x27;, &#x27;portfolio_id&#x27;: 20&#125;, &#123;&#x27;name&#x27;: &#x27;NIKKEI 225&#x27;, &#x27;index&#x27;: 23, &#x27;portfolio_name&#x27;: &#x27;NIKKEI 225&#x27;, &#x27;portfolio_id&#x27;: 23&#125;, &#123;&#x27;name&#x27;: &#x27;FTSE 100&#x27;, &#x27;index&#x27;: 24, &#x27;portfolio_name&#x27;: &#x27;FTSE 100&#x27;, &#x27;portfolio_id&#x27;: 24&#125;, &#123;&#x27;name&#x27;: &#x27;DAX 40&#x27;, &#x27;index&#x27;: 21, &#x27;portfolio_name&#x27;: &#x27;DAX 40&#x27;, &#x27;portfolio_id&#x27;: 21&#125;, &#123;&#x27;name&#x27;: &#x27;S&amp;P 500&#x27;, &#x27;index&#x27;: 22, &#x27;portfolio_name&#x27;: &#x27;S&amp;P 500&#x27;, &#x27;portfolio_id&#x27;: 22&#125;, &#123;&#x27;name&#x27;: &#x27;FTSE/JSE 40&#x27;, &#x27;index&#x27;: 25, &#x27;portfolio_name&#x27;: &#x27;FTSE/JSE 40&#x27;, &#x27;portfolio_id&#x27;: 25&#125;, &#123;&#x27;name&#x27;: &#x27;BIST 30&#x27;, &#x27;index&#x27;: 26, &#x27;portfolio_name&#x27;: &#x27;BIST 30&#x27;, &#x27;portfolio_id&#x27;: 26&#125;, &#123;&#x27;name&#x27;: &#x27;MOEX RUSSIA&#x27;, &#x27;index&#x27;: 27, &#x27;portfolio_name&#x27;: &#x27;MOEX RUSSIA&#x27;, &#x27;portfolio_id&#x27;: 27&#125;, &#123;&#x27;name&#x27;: &#x27;IPC MEXICO&#x27;, &#x27;index&#x27;: 28, &#x27;portfolio_name&#x27;: &#x27;IPC MEXICO&#x27;, &#x27;portfolio_id&#x27;: 28&#125;, &#123;&#x27;name&#x27;: &#x27;IDX80&#x27;, &#x27;index&#x27;: 29, &#x27;portfolio_name&#x27;: &#x27;IDX80&#x27;, &#x27;portfolio_id&#x27;: 29&#125;, &#123;&#x27;name&#x27;: &#x27;FTSE MIB&#x27;, &#x27;index&#x27;: 30, &#x27;portfolio_name&#x27;: &#x27;FTSE MIB&#x27;, &#x27;portfolio_id&#x27;: 30&#125;, &#123;&#x27;name&#x27;: &#x27;CAC 40&#x27;, &#x27;index&#x27;: 31, &#x27;portfolio_name&#x27;: &#x27;CAC 40&#x27;, &#x27;portfolio_id&#x27;: 31&#125;, &#123;&#x27;name&#x27;: &#x27;ASX200&#x27;, &#x27;index&#x27;: 32, &#x27;portfolio_name&#x27;: &#x27;ASX200&#x27;, &#x27;portfolio_id&#x27;: 32&#125;, &#123;&#x27;name&#x27;: &#x27;CSI300&#x27;, &#x27;index&#x27;: 33, &#x27;portfolio_name&#x27;: &#x27;CSI300&#x27;, &#x27;portfolio_id&#x27;: 33&#125;, &#123;&#x27;name&#x27;: &#x27;KOSPI&#x27;, &#x27;index&#x27;: 34, &#x27;portfolio_name&#x27;: &#x27;KOSPI&#x27;, &#x27;portfolio_id&#x27;: 34&#125;, &#123;&#x27;name&#x27;: &#x27;NIFTY50&#x27;, &#x27;index&#x27;: 35, &#x27;portfolio_name&#x27;: &#x27;NIFTY50&#x27;, &#x27;portfolio_id&#x27;: 35&#125;, &#123;&#x27;name&#x27;: &#x27;S&amp;P Merval&#x27;, &#x27;index&#x27;: 36, &#x27;portfolio_name&#x27;: &#x27;S&amp;P Merval&#x27;, &#x27;portfolio_id&#x27;: 36&#125;, &#123;&#x27;name&#x27;: &#x27;Tadawul All Share&#x27;, &#x27;index&#x27;: 37, &#x27;portfolio_name&#x27;: &#x27;Tadawul All Share&#x27;, &#x27;portfolio_id&#x27;: 37&#125;, &#123;&#x27;name&#x27;: &#x27;Bovespa&#x27;, &#x27;index&#x27;: 38, &#x27;portfolio_name&#x27;: &#x27;Bovespa&#x27;, &#x27;portfolio_id&#x27;: 38&#125;, &#123;&#x27;name&#x27;: &#x27;MSCI World&#x27;, &#x27;index&#x27;: 39, &#x27;portfolio_name&#x27;: &#x27;MSCI World&#x27;, &#x27;portfolio_id&#x27;: 39&#125;], &#x27;default&#x27;: &#123;&#x27;name&#x27;: &#x27;S&amp;P 500&#x27;, &#x27;index&#x27;: 22, &#x27;portfolio_name&#x27;: &#x27;S&amp;P 500&#x27;, &#x27;portfolio_id&#x27;: 22&#125;&#125;, &#x27;PortfolioSector&#x27;: &#123;&#x27;type&#x27;: &#x27;string&#x27;, &#x27;description&#x27;: &#x27;The target benchmark portfolio/index sector&#x27;, &#x27;enums&#x27;: [&#x27;Financials&#x27;, &#x27;Industrials&#x27;, &#x27;Consumer Discretionary&#x27;, &#x27;Health Care&#x27;, &#x27;Utilities&#x27;, &#x27;Information Technology&#x27;, &#x27;Real Estate&#x27;, &#x27;Energy&#x27;, &#x27;Materials&#x27;, &#x27;Communications&#x27;, &#x27;Consumer Staples&#x27;], &#x27;default&#x27;: &#x27;Index&#x27;&#125;&#125;&#125;&#125;]</span><br><span class="line"></span><br><span class="line">Model: gpt-4-0613</span><br><span class="line"></span><br><span class="line">&lt;Assistant (Function calling)&gt;:</span><br><span class="line">&#123;</span><br><span class="line">  &quot;name&quot;: &quot;get_nav_params&quot;,</span><br><span class="line">  &quot;arguments&quot;: &quot;&#123;\n  \&quot;Horizon\&quot;: 2070,\n  \&quot;BenchmarkSector\&quot;: \&quot;Nikkei\&quot;,\n  \&quot;PortfolioSector\&quot;: \&quot;TSX\&quot;\n&#125;&quot;</span><br><span class="line">&#125;</span><br><span class="line">28.63s over 10 runs</span><br><span class="line"></span><br><span class="line">Model: gpt-3.5-turbo-0613</span><br><span class="line"></span><br><span class="line">&lt;Assistant (Function calling)&gt;:</span><br><span class="line">&#123;</span><br><span class="line">  &quot;name&quot;: &quot;get_nav_params&quot;,</span><br><span class="line">  &quot;arguments&quot;: &quot;&#123;\n  \&quot;Horizon\&quot;: 2070,\n  \&quot;BenchmarkSector\&quot;: \&quot;Energy\&quot;,\n  \&quot;PortfolioSector\&quot;: \&quot;Energy\&quot;\n&#125;&quot;</span><br><span class="line">&#125;</span><br><span class="line">13.07s over 10 runs</span><br></pre></td></tr></table></figure>
+
+<p>Token <code>usage</code> (<code>gpt-4-0613</code>): <code>(132 * 0.03 / 1000) + (38 * 0.06 / 1000) = $0.00624</code> per call.</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;prompt_tokens&quot;</span><span class="punctuation">:</span> <span class="number">132</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;completion_tokens&quot;</span><span class="punctuation">:</span> <span class="number">38</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;total_tokens&quot;</span><span class="punctuation">:</span> <span class="number">170</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>Token <code>usage</code> (<code>gpt-3.5-turbo-0613</code>): <code>166 * 0.0015 / 1000 = $0.000249</code> per call</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// gpt-3.5-turbo-0613</span></span><br><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;prompt_tokens&quot;</span><span class="punctuation">:</span> <span class="number">132</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;completion_tokens&quot;</span><span class="punctuation">:</span> <span class="number">34</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;total_tokens&quot;</span><span class="punctuation">:</span> <span class="number">166</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>The <code>arguments</code> field is what we need to use. It’s dysfunctional (to say the least) for our use case, even though they are both really fast and cheap. From the tokens count, it looks like its proprietary <em>Function Calling</em> <code>system</code> message may have been compressed too much which resulted in its less desirable outcome for our use case.</p>
+<h2 id="0613-Custom-prompt-engineering"><a href="#0613-Custom-prompt-engineering" class="headerlink" title="0613 Custom prompt-engineering"></a>0613 Custom prompt-engineering</h2><p>We rebase the same prompt engineering we used for the pre-0613 <code>gpt-4</code> model and apply it to both <code>gpt-4-0613</code> and <code>gpt-3.5-turbo-0613</code> (which has system steerability over the previous version).</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br></pre></td><td class="code"><pre><span class="line">&lt;System&gt;:</span><br><span class="line">You are an app navigation copilot which converts user asks based on possible parameters to a JSON form. For errors, respond with &#123;&#125;</span><br><span class="line"></span><br><span class="line">&lt;User&gt;:</span><br><span class="line">Bench nikkei against tsx in the energy sector for &gt;4 degrees scenario in 2070</span><br><span class="line"></span><br><span class="line">Output format:</span><br><span class="line">&#123;&quot;Horizon&quot;: 2050, &quot;Scenario&quot;: &#123;&quot;id&quot;: &quot;RT3&quot;, &quot;name&quot;: &quot;ALL&quot;&#125;, &quot;Benchmark&quot;: &#123;&quot;name&quot;: &quot;TSX 60&quot;, &quot;index&quot;: 20, &quot;portfolio_name&quot;: &quot;TSX 60&quot;, &quot;portfolio_id&quot;: 20&#125;, &quot;BenchmarkSector&quot;: &quot;Index&quot;, &quot;Portfolio&quot;: &#123;&quot;name&quot;: &quot;S&amp;P 500&quot;, &quot;index&quot;: 22, &quot;portfolio_name&quot;: &quot;S&amp;P 500&quot;, &quot;portfolio_id&quot;: 22&#125;, &quot;PortfolioSector&quot;: &quot;Index&quot;&#125;</span><br><span class="line"></span><br><span class="line">Possible values for each parameter:</span><br><span class="line">- Horizon: &#123;&#x27;type&#x27;: &#x27;integer&#x27;, &#x27;description&#x27;: &#x27;parsed from user input to best match the closest next decade year&#x27;, &#x27;min&#x27;: 2030, &#x27;max&#x27;: 2090, &#x27;default&#x27;: 2050&#125;</span><br><span class="line">- Scenario: &#123;&#x27;type&#x27;: &#x27;object&#x27;, &#x27;description&#x27;: &#x27;Climate crisis temperature rise scenario&#x27;, &#x27;enums&#x27;: [&#123;&#x27;id&#x27;: &#x27;RT3&#x27;, &#x27;name&#x27;: &#x27;ALL&#x27;&#125;, &#123;&#x27;id&#x27;: &#x27;Paris&#x27;, &#x27;name&#x27;: &#x27;&lt;2°&#x27;&#125;, &#123;&#x27;id&#x27;: &#x27;NDC&#x27;, &#x27;name&#x27;: &#x27;2°- 4°&#x27;&#125;, &#123;&#x27;id&#x27;: &#x27;Hot House&#x27;, &#x27;name&#x27;: &#x27;&gt;4°&#x27;&#125;], &#x27;default&#x27;: &#123;&#x27;id&#x27;: &#x27;RT3&#x27;, &#x27;name&#x27;: &#x27;ALL&#x27;&#125;&#125;</span><br><span class="line">- Benchmark: &#123;&#x27;type&#x27;: &#x27;object&#x27;, &#x27;description&#x27;: &#x27;The base benchmark portfolio/index&#x27;, &#x27;enums&#x27;: [&#123;&#x27;name&#x27;: &#x27;TSX 60&#x27;, &#x27;index&#x27;: 20, &#x27;portfolio_name&#x27;: &#x27;TSX 60&#x27;, &#x27;portfolio_id&#x27;: 20&#125;, &#123;&#x27;name&#x27;: &#x27;NIKKEI 225&#x27;, &#x27;index&#x27;: 23, &#x27;portfolio_name&#x27;: &#x27;NIKKEI 225&#x27;, &#x27;portfolio_id&#x27;: 23&#125;, &#123;&#x27;name&#x27;: &#x27;FTSE 100&#x27;, &#x27;index&#x27;: 24, &#x27;portfolio_name&#x27;: &#x27;FTSE 100&#x27;, &#x27;portfolio_id&#x27;: 24&#125;, &#123;&#x27;name&#x27;: &#x27;DAX 40&#x27;, &#x27;index&#x27;: 21, &#x27;portfolio_name&#x27;: &#x27;DAX 40&#x27;, &#x27;portfolio_id&#x27;: 21&#125;, &#123;&#x27;name&#x27;: &#x27;S&amp;P 500&#x27;, &#x27;index&#x27;: 22, &#x27;portfolio_name&#x27;: &#x27;S&amp;P 500&#x27;, &#x27;portfolio_id&#x27;: 22&#125;, &#123;&#x27;name&#x27;: &#x27;FTSE/JSE 40&#x27;, &#x27;index&#x27;: 25, &#x27;portfolio_name&#x27;: &#x27;FTSE/JSE 40&#x27;, &#x27;portfolio_id&#x27;: 25&#125;, &#123;&#x27;name&#x27;: &#x27;BIST 30&#x27;, &#x27;index&#x27;: 26, &#x27;portfolio_name&#x27;: &#x27;BIST 30&#x27;, &#x27;portfolio_id&#x27;: 26&#125;, &#123;&#x27;name&#x27;: &#x27;MOEX RUSSIA&#x27;, &#x27;index&#x27;: 27, &#x27;portfolio_name&#x27;: &#x27;MOEX RUSSIA&#x27;, &#x27;portfolio_id&#x27;: 27&#125;, &#123;&#x27;name&#x27;: &#x27;IPC MEXICO&#x27;, &#x27;index&#x27;: 28, &#x27;portfolio_name&#x27;: &#x27;IPC MEXICO&#x27;, &#x27;portfolio_id&#x27;: 28&#125;, &#123;&#x27;name&#x27;: &#x27;IDX80&#x27;, &#x27;index&#x27;: 29, &#x27;portfolio_name&#x27;: &#x27;IDX80&#x27;, &#x27;portfolio_id&#x27;: 29&#125;, &#123;&#x27;name&#x27;: &#x27;FTSE MIB&#x27;, &#x27;index&#x27;: 30, &#x27;portfolio_name&#x27;: &#x27;FTSE MIB&#x27;, &#x27;portfolio_id&#x27;: 30&#125;, &#123;&#x27;name&#x27;: &#x27;CAC 40&#x27;, &#x27;index&#x27;: 31, &#x27;portfolio_name&#x27;: &#x27;CAC 40&#x27;, &#x27;portfolio_id&#x27;: 31&#125;, &#123;&#x27;name&#x27;: &#x27;ASX200&#x27;, &#x27;index&#x27;: 32, &#x27;portfolio_name&#x27;: &#x27;ASX200&#x27;, &#x27;portfolio_id&#x27;: 32&#125;, &#123;&#x27;name&#x27;: &#x27;CSI300&#x27;, &#x27;index&#x27;: 33, &#x27;portfolio_name&#x27;: &#x27;CSI300&#x27;, &#x27;portfolio_id&#x27;: 33&#125;, &#123;&#x27;name&#x27;: &#x27;KOSPI&#x27;, &#x27;index&#x27;: 34, &#x27;portfolio_name&#x27;: &#x27;KOSPI&#x27;, &#x27;portfolio_id&#x27;: 34&#125;, &#123;&#x27;name&#x27;: &#x27;NIFTY50&#x27;, &#x27;index&#x27;: 35, &#x27;portfolio_name&#x27;: &#x27;NIFTY50&#x27;, &#x27;portfolio_id&#x27;: 35&#125;, &#123;&#x27;name&#x27;: &#x27;S&amp;P Merval&#x27;, &#x27;index&#x27;: 36, &#x27;portfolio_name&#x27;: &#x27;S&amp;P Merval&#x27;, &#x27;portfolio_id&#x27;: 36&#125;, &#123;&#x27;name&#x27;: &#x27;Tadawul All Share&#x27;, &#x27;index&#x27;: 37, &#x27;portfolio_name&#x27;: &#x27;Tadawul All Share&#x27;, &#x27;portfolio_id&#x27;: 37&#125;, &#123;&#x27;name&#x27;: &#x27;Bovespa&#x27;, &#x27;index&#x27;: 38, &#x27;portfolio_name&#x27;: &#x27;Bovespa&#x27;, &#x27;portfolio_id&#x27;: 38&#125;, &#123;&#x27;name&#x27;: &#x27;MSCI World&#x27;, &#x27;index&#x27;: 39, &#x27;portfolio_name&#x27;: &#x27;MSCI World&#x27;, &#x27;portfolio_id&#x27;: 39&#125;], &#x27;default&#x27;: &#123;&#x27;name&#x27;: &#x27;TSX 60&#x27;, &#x27;index&#x27;: 20, &#x27;portfolio_name&#x27;: &#x27;TSX 60&#x27;, &#x27;portfolio_id&#x27;: 20&#125;&#125;</span><br><span class="line">- BenchmarkSector: &#123;&#x27;type&#x27;: &#x27;string&#x27;, &#x27;description&#x27;: &#x27;The base benchmark portfolio/index sector&#x27;, &#x27;enums&#x27;: [&#x27;Financials&#x27;, &#x27;Materials&#x27;, &#x27;Energy&#x27;, &#x27;Consumer Staples&#x27;, &#x27;Consumer Discretionary&#x27;, &#x27;Industrials&#x27;, &#x27;Real Estate&#x27;, &#x27;Information Technology&#x27;, &#x27;Utilities&#x27;], &#x27;default&#x27;: &#x27;Index&#x27;&#125;</span><br><span class="line">- Portfolio: &#123;&#x27;type&#x27;: &#x27;object&#x27;, &#x27;description&#x27;: &#x27;The target benchmark portfolio/index&#x27;, &#x27;enums&#x27;: [&#123;&#x27;name&#x27;: &#x27;TSX 60&#x27;, &#x27;index&#x27;: 20, &#x27;portfolio_name&#x27;: &#x27;TSX 60&#x27;, &#x27;portfolio_id&#x27;: 20&#125;, &#123;&#x27;name&#x27;: &#x27;NIKKEI 225&#x27;, &#x27;index&#x27;: 23, &#x27;portfolio_name&#x27;: &#x27;NIKKEI 225&#x27;, &#x27;portfolio_id&#x27;: 23&#125;, &#123;&#x27;name&#x27;: &#x27;FTSE 100&#x27;, &#x27;index&#x27;: 24, &#x27;portfolio_name&#x27;: &#x27;FTSE 100&#x27;, &#x27;portfolio_id&#x27;: 24&#125;, &#123;&#x27;name&#x27;: &#x27;DAX 40&#x27;, &#x27;index&#x27;: 21, &#x27;portfolio_name&#x27;: &#x27;DAX 40&#x27;, &#x27;portfolio_id&#x27;: 21&#125;, &#123;&#x27;name&#x27;: &#x27;S&amp;P 500&#x27;, &#x27;index&#x27;: 22, &#x27;portfolio_name&#x27;: &#x27;S&amp;P 500&#x27;, &#x27;portfolio_id&#x27;: 22&#125;, &#123;&#x27;name&#x27;: &#x27;FTSE/JSE 40&#x27;, &#x27;index&#x27;: 25, &#x27;portfolio_name&#x27;: &#x27;FTSE/JSE 40&#x27;, &#x27;portfolio_id&#x27;: 25&#125;, &#123;&#x27;name&#x27;: &#x27;BIST 30&#x27;, &#x27;index&#x27;: 26, &#x27;portfolio_name&#x27;: &#x27;BIST 30&#x27;, &#x27;portfolio_id&#x27;: 26&#125;, &#123;&#x27;name&#x27;: &#x27;MOEX RUSSIA&#x27;, &#x27;index&#x27;: 27, &#x27;portfolio_name&#x27;: &#x27;MOEX RUSSIA&#x27;, &#x27;portfolio_id&#x27;: 27&#125;, &#123;&#x27;name&#x27;: &#x27;IPC MEXICO&#x27;, &#x27;index&#x27;: 28, &#x27;portfolio_name&#x27;: &#x27;IPC MEXICO&#x27;, &#x27;portfolio_id&#x27;: 28&#125;, &#123;&#x27;name&#x27;: &#x27;IDX80&#x27;, &#x27;index&#x27;: 29, &#x27;portfolio_name&#x27;: &#x27;IDX80&#x27;, &#x27;portfolio_id&#x27;: 29&#125;, &#123;&#x27;name&#x27;: &#x27;FTSE MIB&#x27;, &#x27;index&#x27;: 30, &#x27;portfolio_name&#x27;: &#x27;FTSE MIB&#x27;, &#x27;portfolio_id&#x27;: 30&#125;, &#123;&#x27;name&#x27;: &#x27;CAC 40&#x27;, &#x27;index&#x27;: 31, &#x27;portfolio_name&#x27;: &#x27;CAC 40&#x27;, &#x27;portfolio_id&#x27;: 31&#125;, &#123;&#x27;name&#x27;: &#x27;ASX200&#x27;, &#x27;index&#x27;: 32, &#x27;portfolio_name&#x27;: &#x27;ASX200&#x27;, &#x27;portfolio_id&#x27;: 32&#125;, &#123;&#x27;name&#x27;: &#x27;CSI300&#x27;, &#x27;index&#x27;: 33, &#x27;portfolio_name&#x27;: &#x27;CSI300&#x27;, &#x27;portfolio_id&#x27;: 33&#125;, &#123;&#x27;name&#x27;: &#x27;KOSPI&#x27;, &#x27;index&#x27;: 34, &#x27;portfolio_name&#x27;: &#x27;KOSPI&#x27;, &#x27;portfolio_id&#x27;: 34&#125;, &#123;&#x27;name&#x27;: &#x27;NIFTY50&#x27;, &#x27;index&#x27;: 35, &#x27;portfolio_name&#x27;: &#x27;NIFTY50&#x27;, &#x27;portfolio_id&#x27;: 35&#125;, &#123;&#x27;name&#x27;: &#x27;S&amp;P Merval&#x27;, &#x27;index&#x27;: 36, &#x27;portfolio_name&#x27;: &#x27;S&amp;P Merval&#x27;, &#x27;portfolio_id&#x27;: 36&#125;, &#123;&#x27;name&#x27;: &#x27;Tadawul All Share&#x27;, &#x27;index&#x27;: 37, &#x27;portfolio_name&#x27;: &#x27;Tadawul All Share&#x27;, &#x27;portfolio_id&#x27;: 37&#125;, &#123;&#x27;name&#x27;: &#x27;Bovespa&#x27;, &#x27;index&#x27;: 38, &#x27;portfolio_name&#x27;: &#x27;Bovespa&#x27;, &#x27;portfolio_id&#x27;: 38&#125;, &#123;&#x27;name&#x27;: &#x27;MSCI World&#x27;, &#x27;index&#x27;: 39, &#x27;portfolio_name&#x27;: &#x27;MSCI World&#x27;, &#x27;portfolio_id&#x27;: 39&#125;], &#x27;default&#x27;: &#123;&#x27;name&#x27;: &#x27;S&amp;P 500&#x27;, &#x27;index&#x27;: 22, &#x27;portfolio_name&#x27;: &#x27;S&amp;P 500&#x27;, &#x27;portfolio_id&#x27;: 22&#125;&#125;</span><br><span class="line">- PortfolioSector: &#123;&#x27;type&#x27;: &#x27;string&#x27;, &#x27;description&#x27;: &#x27;The target benchmark portfolio/index sector&#x27;, &#x27;enums&#x27;: [&#x27;Financials&#x27;, &#x27;Industrials&#x27;, &#x27;Consumer Discretionary&#x27;, &#x27;Health Care&#x27;, &#x27;Utilities&#x27;, &#x27;Information Technology&#x27;, &#x27;Real Estate&#x27;, &#x27;Energy&#x27;, &#x27;Materials&#x27;, &#x27;Communications&#x27;, &#x27;Consumer Staples&#x27;], &#x27;default&#x27;: &#x27;Index&#x27;&#125;</span><br><span class="line"></span><br><span class="line">Model: gpt-4-0613</span><br><span class="line"></span><br><span class="line">&lt;Assistant&gt;:</span><br><span class="line">&#123;</span><br><span class="line">  &quot;Horizon&quot;: 2070,</span><br><span class="line">  &quot;Scenario&quot;: &#123;</span><br><span class="line">    &quot;id&quot;: &quot;Hot House&quot;,</span><br><span class="line">    &quot;name&quot;: &quot;&gt;4°&quot;</span><br><span class="line">  &#125;,</span><br><span class="line">  &quot;Benchmark&quot;: &#123;</span><br><span class="line">    &quot;name&quot;: &quot;NIKKEI 225&quot;,</span><br><span class="line">    &quot;index&quot;: 23,</span><br><span class="line">    &quot;portfolio_name&quot;: &quot;NIKKEI 225&quot;,</span><br><span class="line">    &quot;portfolio_id&quot;: 23</span><br><span class="line">  &#125;,</span><br><span class="line">  &quot;BenchmarkSector&quot;: &quot;Energy&quot;,</span><br><span class="line">  &quot;Portfolio&quot;: &#123;</span><br><span class="line">    &quot;name&quot;: &quot;TSX 60&quot;,</span><br><span class="line">    &quot;index&quot;: 20,</span><br><span class="line">    &quot;portfolio_name&quot;: &quot;TSX 60&quot;,</span><br><span class="line">    &quot;portfolio_id&quot;: 20</span><br><span class="line">  &#125;,</span><br><span class="line">  &quot;PortfolioSector&quot;: &quot;Energy&quot;</span><br><span class="line">&#125;</span><br><span class="line">72.48s over 10 runs</span><br><span class="line"></span><br><span class="line">Model: gpt-3.5-turbo-0613</span><br><span class="line"></span><br><span class="line">&lt;Assistant&gt;:</span><br><span class="line">&#123;</span><br><span class="line">  &quot;Horizon&quot;: 2070,</span><br><span class="line">  &quot;Scenario&quot;: &#123;</span><br><span class="line">    &quot;id&quot;: &quot;Hot House&quot;,</span><br><span class="line">    &quot;name&quot;: &quot;&gt;4°&quot;</span><br><span class="line">  &#125;,</span><br><span class="line">  &quot;Benchmark&quot;: &#123;</span><br><span class="line">    &quot;name&quot;: &quot;NIKKEI 225&quot;,</span><br><span class="line">    &quot;index&quot;: 23,</span><br><span class="line">    &quot;portfolio_name&quot;: &quot;NIKKEI 225&quot;,</span><br><span class="line">    &quot;portfolio_id&quot;: 23</span><br><span class="line">  &#125;,</span><br><span class="line">  &quot;BenchmarkSector&quot;: &quot;Energy&quot;,</span><br><span class="line">  &quot;Portfolio&quot;: &#123;</span><br><span class="line">    &quot;name&quot;: &quot;TSX 60&quot;,</span><br><span class="line">    &quot;index&quot;: 20,</span><br><span class="line">    &quot;portfolio_name&quot;: &quot;TSX 60&quot;,</span><br><span class="line">    &quot;portfolio_id&quot;: 20</span><br><span class="line">  &#125;,</span><br><span class="line">  &quot;PortfolioSector&quot;: &quot;Energy&quot;</span><br><span class="line">&#125;</span><br><span class="line">28.16s over 10 runs</span><br></pre></td></tr></table></figure>
+
+<p>Token <code>usage</code> (<code>gpt-4-0613</code>): <code>(1848 * 0.03 / 1000) + (140 * 0.06 / 1000) = $0.06384</code> per call, same as <code>gpt-4-0314</code>.</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;prompt_tokens&quot;</span><span class="punctuation">:</span> <span class="number">1848</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;completion_tokens&quot;</span><span class="punctuation">:</span> <span class="number">113</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;total_tokens&quot;</span><span class="punctuation">:</span> <span class="number">1961</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>Token <code>usage</code> (<code>gpt-3.5-turbo-0613</code>): <code>1961 * 0.0015 / 1000 = $0.0029415</code> per call.</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;prompt_tokens&quot;</span><span class="punctuation">:</span> <span class="number">1848</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;completion_tokens&quot;</span><span class="punctuation">:</span> <span class="number">113</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;total_tokens&quot;</span><span class="punctuation">:</span> <span class="number">1961</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>The result is excellent, where even though the speed is not as fast, and cost not as cheap, as OpenAI’s in-house <em>Function Calling</em> implementation, the same staple system and user prompt-engineering implementation is <strong>5 times faster and 20 times cheaper</strong> over <code>gpt-4-0314</code>, so all we had to do was a line of code change:</p>
+<p><img src="https://github.com/RiskThinking/work-samples/assets/2837532/f9e7e764-2a1e-4338-b778-427a7e2efcc1" alt="code change"></p>
+<p>And take a look at the response time in the actual web app usage after the navigational assistant’s update:</p>
+<video controls>
+  <source src="https://github.com/RiskThinking/work-samples/assets/2837532/396120a6-fcaf-4a6c-aba2-a1d859854b4d" type="video/mp4">
+  Your browser does not support HTML video.
+</video>
+
+<h2 id="Recap"><a href="#Recap" class="headerlink" title="Recap"></a>Recap</h2><p>At <a target="_blank" rel="noopener" href="https://riskthinking.ai/">RiskThinking.AI</a>, we embarked on a project to develop a navigational assistant using OpenAI’s GPT model. Initially, we had to use <code>gpt-4-0314</code> as the model of choice due to system steerability not being enabled in <code>gpt-3.5-turbo-0301</code>. However, since OpenAI’s June 13 update, system steerability became available for <code>gpt-3.5-turbo</code>, significantly improving our navigational assistant’s speed and cost-effectiveness, now five times faster and twenty times cheaper.</p>
+<p>While the June 13 update’s <em>Function Calling</em> feature shows promise and provides the fastest response time, we proved there’s still room for further improvement.</p>
+<p><img src="https://github.com/RiskThinking/work-samples/assets/2837532/0d7a2764-d81b-42f4-aa0d-db3706352472" alt="table"></p>
+<blockquote>
+<p>FC = Function Calling</p>
+</blockquote>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/meta-automation/" rel="tag"># meta-automation</a>
+              <a href="/tags/NLP/" rel="tag"># NLP</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2022/12/10/Road-to-Automation-QA/" rel="prev" title="Road to Automation: QA">
+                  <i class="fa fa-chevron-left"></i> Road to Automation: QA
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Runzhou Li (Leo)</span>
+</div>
+  <div class="powered-by">Creado mediante <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="Volver al principio">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>
