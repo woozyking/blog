@@ -8,36 +8,74 @@ tags:
 
 ## TL;DR
 
-- We leveraged OpenAI's June 13 update to make our web app navigational assistant **5x faster and 20x cheaper**.
+- We leveraged OpenAI's June 13 update to make our web app navigational assistant ("Copilot") **5x faster and 20x cheaper**.
 - While OpenAI stepped in the right direction with the _Function Calling_ feature, we proved it has room to improve still.
 
 ![table](https://github.com/RiskThinking/work-samples/assets/2837532/0d7a2764-d81b-42f4-aa0d-db3706352472)
 
 ## Intro
 
-At [RiskThinking.AI](https://riskthinking.ai/), we initiated a project back in April to leverage OpenAI's GPT model to build a navigational assistant for our web app. At the time, `gpt-4-0314` was the only viable model since `gpt-3.5-turbo-0301` doesn't have system steerability.
+At [RiskThinking.AI](https://riskthinking.ai/), we initiated a project back in April to leverage OpenAI's GPT model to build a navigational assistant (dubbed "Copilot") for our web app. At the time, `gpt-4-0314` was the only viable model since `gpt-3.5-turbo-0301` doesn't have system steerability.
 
+The workflow is fairly simple:
 <!-- more -->
+![flow](https://github.com/RiskThinking/work-samples/assets/2837532/2d9e7355-53e7-4807-8e6b-e50d7cfb42e4)
 
-<video controls>
-  <source src="https://github.com/RiskThinking/work-samples/assets/2837532/c46526a7-f96a-418c-8ffc-e4c106b3dc71" type="video/mp4">
-  Your browser does not support HTML video.
-</video>
+Our "Copilot" takes a user query such as “Toronto”, and a web app view states `scope`:
+```js
+{
+  viewState: {
+    type: "object",
+    description: "parsed from user query as a deck.gl viewState with optimal zoom level",
+    default: {
+      "latitude": 49.254,
+      "longitude": -123.13,
+      "zoom": 2
+    }
+  }
+}
+```
 
-> Credit: [@jegrieve](https://medium.com/@jegrieve)
+And performs prompt engineering to form something like:
 
-One glaring problem is that it's not fast and can get excruciatingly slow!
+```python
+[
+  {
+    "role": "system",
+    "content": "You are an app navigation copilot which converts user asks based on possible parameters to a JSON form. For errors, respond with {}"
+  },
+  {
+    "role": "user",
+    "content": """
+    Toronto
+
+    Output format:
+    {"viewState": {"latitude": 49.254, "longitude": -123.13, "zoom": 2}}
+
+    Possible values for each parameter:
+    - viewState: {type: "object", description: "parsed from user query as a deck.gl viewState with optimal zoom level", default: {"latitude": 49.254, "longitude": -123.13, "zoom": 2}}
+    """
+  }
+]
+```
+
+And this is how it works in the web app component:
 
 <video controls>
   <source src="https://github.com/RiskThinking/work-samples/assets/2837532/a2cc9466-fedc-4fd3-b9bf-eccdb37f4249" type="video/mp4">
   Your browser does not support HTML video.
 </video>
 
-> Nobody has the patience to wait for 10+ seconds to spin the globe to Toronto
+See below for a more complex example from our internal sandbox tool (credit: jegrieve):
 
-Until now...
+<video controls>
+  <source src="https://github.com/RiskThinking/work-samples/assets/2837532/c46526a7-f96a-418c-8ffc-e4c106b3dc71" type="video/mp4">
+  Your browser does not support HTML video.
+</video>
 
-Since OpenAI's [June 13 update](https://openai.com/blog/function-calling-and-other-api-updates), OpenAI enabled system steerability for it's `gpt-3.5-turbo` model, and along with that, came the [_Function Calling_](https://platform.openai.com/docs/guides/gpt/function-calling) feature in recognition of the overwhelming use cases built on top of the same simple principle, _Natural Language to JSON_ (our web app navigational assistant would be no different).
+But it can be excruciatingly slow until now…
+
+Since its [June 13 update](https://openai.com/blog/function-calling-and-other-api-updates), OpenAI enabled system steerability for it's `gpt-3.5-turbo` model, and along with that, came the [_Function Calling_](https://platform.openai.com/docs/guides/gpt/function-calling) feature in recognition of the overwhelming use cases built on top of the same simple principle, _Natural Language to JSON_ (our web app navigational assistant would be no different).
 
 > Under the hood, functions are injected into the system message in a syntax the model has been trained on. This means functions count against the model's context limit and are billed as input tokens. If running into context limits, we suggest limiting the number of functions or the length of documentation you provide for function parameters.
 
@@ -162,7 +200,6 @@ Token `usage` (`gpt-4-0613`): `(132 * 0.03 / 1000) + (38 * 0.06 / 1000) = $0.006
 
 Token `usage` (`gpt-3.5-turbo-0613`): `166 * 0.0015 / 1000 = $0.000249` per call
 ```json
-// gpt-3.5-turbo-0613
 {
   "prompt_tokens": 132,
   "completion_tokens": 34,
