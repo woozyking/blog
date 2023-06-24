@@ -31,7 +31,7 @@
 <meta property="og:image" content="https://github.com/RiskThinking/work-samples/assets/2837532/f9e7e764-2a1e-4338-b778-427a7e2efcc1">
 <meta property="og:image" content="https://github.com/RiskThinking/work-samples/assets/2837532/0d7a2764-d81b-42f4-aa0d-db3706352472">
 <meta property="article:published_time" content="2023-06-23T11:20:24.000Z">
-<meta property="article:modified_time" content="2023-06-24T20:38:46.215Z">
+<meta property="article:modified_time" content="2023-06-24T20:48:45.171Z">
 <meta property="article:author" content="Runzhou Li (Leo)">
 <meta property="article:tag" content="meta-automation">
 <meta property="article:tag" content="NLP">
@@ -200,7 +200,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Editado el</span>
-      <time title="Modificado por: 2023-06-24 20:38:46" itemprop="dateModified" datetime="2023-06-24T20:38:46+00:00">2023-06-24</time>
+      <time title="Modificado por: 2023-06-24 20:48:45" itemprop="dateModified" datetime="2023-06-24T20:48:45+00:00">2023-06-24</time>
     </span>
 
   
@@ -258,7 +258,7 @@
 <figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;prompt_tokens&quot;</span><span class="punctuation">:</span> <span class="number">132</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;completion_tokens&quot;</span><span class="punctuation">:</span> <span class="number">38</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;total_tokens&quot;</span><span class="punctuation">:</span> <span class="number">170</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
 
 <p>Token <code>usage</code> (<code>gpt-3.5-turbo-0613</code>): <code>166 * 0.0015 / 1000 = $0.000249</code> per call</p>
-<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// gpt-3.5-turbo-0613</span></span><br><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;prompt_tokens&quot;</span><span class="punctuation">:</span> <span class="number">132</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;completion_tokens&quot;</span><span class="punctuation">:</span> <span class="number">34</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;total_tokens&quot;</span><span class="punctuation">:</span> <span class="number">166</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;prompt_tokens&quot;</span><span class="punctuation">:</span> <span class="number">132</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;completion_tokens&quot;</span><span class="punctuation">:</span> <span class="number">34</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;total_tokens&quot;</span><span class="punctuation">:</span> <span class="number">166</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
 
 <p>The <code>arguments</code> field is what we need to use. It’s dysfunctional (to say the least) for our use case, even though they are both really fast and cheap. From the tokens count, it looks like its proprietary <em>Function Calling</em> <code>system</code> message may have been compressed too much which resulted in its less desirable outcome for our use case.</p>
 <h2 id="0613-Custom-prompt-engineering"><a href="#0613-Custom-prompt-engineering" class="headerlink" title="0613 Custom prompt-engineering"></a>0613 Custom prompt-engineering</h2><p>We rebase the same prompt engineering we used for the pre-0613 <code>gpt-4</code> model and apply it to both <code>gpt-4-0613</code> and <code>gpt-3.5-turbo-0613</code> (which has system steerability over the previous version).</p>
