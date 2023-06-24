@@ -75,7 +75,7 @@ See below for a more complex example from our internal sandbox tool (credit: jeg
 
 But it can be excruciatingly slow until now…
 
-Since its [June 13 update](https://openai.com/blog/function-calling-and-other-api-updates), OpenAI enabled system steerability for it's `gpt-3.5-turbo` model, and along with that, came the [_Function Calling_](https://platform.openai.com/docs/guides/gpt/function-calling) feature in recognition of the overwhelming use cases built on top of the same simple principle, _Natural Language to JSON_ (our web app navigational assistant would be no different).
+Since its [June 13 update](https://openai.com/blog/function-calling-and-other-api-updates), OpenAI enabled system steerability for the `gpt-3.5-turbo` model, and along with that, came the [_Function Calling_](https://platform.openai.com/docs/guides/gpt/function-calling) feature in recognition of the overwhelming use cases built on top of the same simple principle, _Natural Language to JSON_ (our web app navigational assistant would be no different).
 
 > Under the hood, functions are injected into the system message in a syntax the model has been trained on. This means functions count against the model's context limit and are billed as input tokens. If running into context limits, we suggest limiting the number of functions or the length of documentation you provide for function parameters.
 
@@ -298,10 +298,10 @@ The result is excellent, where even though the speed is not as fast, and cost no
 
 ![code change](https://github.com/RiskThinking/work-samples/assets/2837532/f9e7e764-2a1e-4338-b778-427a7e2efcc1)
 
-And take a look at the response time in the actual web app usage after the navigational assistant's update:
+Take a look at the difference before and after:
 
 <video controls>
-  <source src="https://github.com/RiskThinking/work-samples/assets/2837532/396120a6-fcaf-4a6c-aba2-a1d859854b4d" type="video/mp4">
+  <source src="https://github.com/RiskThinking/work-samples/assets/2837532/67115ea5-f6ec-4162-817b-b1802aa6576e" type="video/mp4">
   Your browser does not support HTML video.
 </video>
 
