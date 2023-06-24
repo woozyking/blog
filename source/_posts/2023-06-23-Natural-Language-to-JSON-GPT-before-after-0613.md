@@ -47,7 +47,7 @@ We benchmarked the models before and after the June 13 update and concluded a ne
 
 This is the base implementation of our original Copilot implementation, where we leverage both `<system>` and `<user>` prompt engineering to achieve the steerability we needed for stable and high precision `assistant` output of JSON object that can be used for application usage (e.g. VELO).
 
-```
+```bash
 Model: "gpt-4-0314" (pre-0613)
 
 <System>:
@@ -57,15 +57,15 @@ You are an app navigation copilot which converts user asks based on possible par
 Bench nikkei against tsx in the energy sector for >4 degrees scenario in 2070
 
 Output format:
-{"Horizon": 2050, "Scenario": {"id": "RT3", "name": "ALL"}, "Benchmark": {"name": "TSX 60", "index": 20, "portfolio_name": "TSX 60", "portfolio_id": 20}, "BenchmarkSector": "Index", "Portfolio": {"name": "S&P 500", "index": 22, "portfolio_name": "S&P 500", "portfolio_id": 22}, "PortfolioSector": "Index"}
+{"Horizon": 2050, "Scenario": {"id": "RT3", "name": "ALL"}, "Benchmark": ...}
 
 Possible values for each parameter:
-- Horizon: {'type': 'integer', 'description': 'parsed from user input to best match the closest next decade year', 'min': 2030, 'max': 2090, 'default': 2050}
-- Scenario: {'type': 'object', 'description': 'Climate crisis temperature rise scenario', 'enums': [{'id': 'RT3', 'name': 'ALL'}, {'id': 'Paris', 'name': '<2°'}, {'id': 'NDC', 'name': '2°- 4°'}, {'id': 'Hot House', 'name': '>4°'}], 'default': {'id': 'RT3', 'name': 'ALL'}}
-- Benchmark: {'type': 'object', 'description': 'The base benchmark portfolio/index', 'enums': [{'name': 'TSX 60', 'index': 20, 'portfolio_name': 'TSX 60', 'portfolio_id': 20}, {'name': 'NIKKEI 225', 'index': 23, 'portfolio_name': 'NIKKEI 225', 'portfolio_id': 23}, {'name': 'FTSE 100', 'index': 24, 'portfolio_name': 'FTSE 100', 'portfolio_id': 24}, {'name': 'DAX 40', 'index': 21, 'portfolio_name': 'DAX 40', 'portfolio_id': 21}, {'name': 'S&P 500', 'index': 22, 'portfolio_name': 'S&P 500', 'portfolio_id': 22}, {'name': 'FTSE/JSE 40', 'index': 25, 'portfolio_name': 'FTSE/JSE 40', 'portfolio_id': 25}, {'name': 'BIST 30', 'index': 26, 'portfolio_name': 'BIST 30', 'portfolio_id': 26}, {'name': 'MOEX RUSSIA', 'index': 27, 'portfolio_name': 'MOEX RUSSIA', 'portfolio_id': 27}, {'name': 'IPC MEXICO', 'index': 28, 'portfolio_name': 'IPC MEXICO', 'portfolio_id': 28}, {'name': 'IDX80', 'index': 29, 'portfolio_name': 'IDX80', 'portfolio_id': 29}, {'name': 'FTSE MIB', 'index': 30, 'portfolio_name': 'FTSE MIB', 'portfolio_id': 30}, {'name': 'CAC 40', 'index': 31, 'portfolio_name': 'CAC 40', 'portfolio_id': 31}, {'name': 'ASX200', 'index': 32, 'portfolio_name': 'ASX200', 'portfolio_id': 32}, {'name': 'CSI300', 'index': 33, 'portfolio_name': 'CSI300', 'portfolio_id': 33}, {'name': 'KOSPI', 'index': 34, 'portfolio_name': 'KOSPI', 'portfolio_id': 34}, {'name': 'NIFTY50', 'index': 35, 'portfolio_name': 'NIFTY50', 'portfolio_id': 35}, {'name': 'S&P Merval', 'index': 36, 'portfolio_name': 'S&P Merval', 'portfolio_id': 36}, {'name': 'Tadawul All Share', 'index': 37, 'portfolio_name': 'Tadawul All Share', 'portfolio_id': 37}, {'name': 'Bovespa', 'index': 38, 'portfolio_name': 'Bovespa', 'portfolio_id': 38}, {'name': 'MSCI World', 'index': 39, 'portfolio_name': 'MSCI World', 'portfolio_id': 39}], 'default': {'name': 'TSX 60', 'index': 20, 'portfolio_name': 'TSX 60', 'portfolio_id': 20}}
-- BenchmarkSector: {'type': 'string', 'description': 'The base benchmark portfolio/index sector', 'enums': ['Financials', 'Materials', 'Energy', 'Consumer Staples', 'Consumer Discretionary', 'Industrials', 'Real Estate', 'Information Technology', 'Utilities'], 'default': 'Index'}
-- Portfolio: {'type': 'object', 'description': 'The target benchmark portfolio/index', 'enums': [{'name': 'TSX 60', 'index': 20, 'portfolio_name': 'TSX 60', 'portfolio_id': 20}, {'name': 'NIKKEI 225', 'index': 23, 'portfolio_name': 'NIKKEI 225', 'portfolio_id': 23}, {'name': 'FTSE 100', 'index': 24, 'portfolio_name': 'FTSE 100', 'portfolio_id': 24}, {'name': 'DAX 40', 'index': 21, 'portfolio_name': 'DAX 40', 'portfolio_id': 21}, {'name': 'S&P 500', 'index': 22, 'portfolio_name': 'S&P 500', 'portfolio_id': 22}, {'name': 'FTSE/JSE 40', 'index': 25, 'portfolio_name': 'FTSE/JSE 40', 'portfolio_id': 25}, {'name': 'BIST 30', 'index': 26, 'portfolio_name': 'BIST 30', 'portfolio_id': 26}, {'name': 'MOEX RUSSIA', 'index': 27, 'portfolio_name': 'MOEX RUSSIA', 'portfolio_id': 27}, {'name': 'IPC MEXICO', 'index': 28, 'portfolio_name': 'IPC MEXICO', 'portfolio_id': 28}, {'name': 'IDX80', 'index': 29, 'portfolio_name': 'IDX80', 'portfolio_id': 29}, {'name': 'FTSE MIB', 'index': 30, 'portfolio_name': 'FTSE MIB', 'portfolio_id': 30}, {'name': 'CAC 40', 'index': 31, 'portfolio_name': 'CAC 40', 'portfolio_id': 31}, {'name': 'ASX200', 'index': 32, 'portfolio_name': 'ASX200', 'portfolio_id': 32}, {'name': 'CSI300', 'index': 33, 'portfolio_name': 'CSI300', 'portfolio_id': 33}, {'name': 'KOSPI', 'index': 34, 'portfolio_name': 'KOSPI', 'portfolio_id': 34}, {'name': 'NIFTY50', 'index': 35, 'portfolio_name': 'NIFTY50', 'portfolio_id': 35}, {'name': 'S&P Merval', 'index': 36, 'portfolio_name': 'S&P Merval', 'portfolio_id': 36}, {'name': 'Tadawul All Share', 'index': 37, 'portfolio_name': 'Tadawul All Share', 'portfolio_id': 37}, {'name': 'Bovespa', 'index': 38, 'portfolio_name': 'Bovespa', 'portfolio_id': 38}, {'name': 'MSCI World', 'index': 39, 'portfolio_name': 'MSCI World', 'portfolio_id': 39}], 'default': {'name': 'S&P 500', 'index': 22, 'portfolio_name': 'S&P 500', 'portfolio_id': 22}}
-- PortfolioSector: {'type': 'string', 'description': 'The target benchmark portfolio/index sector', 'enums': ['Financials', 'Industrials', 'Consumer Discretionary', 'Health Care', 'Utilities', 'Information Technology', 'Real Estate', 'Energy', 'Materials', 'Communications', 'Consumer Staples'], 'default': 'Index'}
+- Horizon: {'type': 'integer', 'description': ...}
+- Scenario: {'type': 'object', 'description': ...}
+- Benchmark: {'type': 'object', 'description': ...]
+- BenchmarkSector: {'type': 'string', 'description': ...}
+- Portfolio: {'type': 'object', 'description': ...}
+- PortfolioSector: {'type': 'string', 'description': ...}
 
 <Assistant>:
 {
@@ -106,7 +106,7 @@ The cost per call would be `(1848 * 0.03 / 1000) + (140 * 0.06 / 1000) = $0.0638
 
 ## 0613 Function Calling
 
-```
+```bash
 <System>:
 N/A, using 0613 "Function calling"
 
@@ -114,7 +114,23 @@ N/A, using 0613 "Function calling"
 Bench nikkei against tsx in the energy sector for >4 degrees scenario in 2070
 
 Function calling params:
-[{'name': 'get_nav_params', 'description': 'Get navigational parameters based on user message and the scoped parameters', 'parameters': {'type': 'object', 'properties': {'Horizon': {'type': 'integer', 'description': 'parsed from user input to best match the closest next decade year', 'min': 2030, 'max': 2090, 'default': 2050}, 'Scenario': {'type': 'object', 'description': 'Climate crisis temperature rise scenario', 'enums': [{'id': 'RT3', 'name': 'ALL'}, {'id': 'Paris', 'name': '<2°'}, {'id': 'NDC', 'name': '2°- 4°'}, {'id': 'Hot House', 'name': '>4°'}], 'default': {'id': 'RT3', 'name': 'ALL'}}, 'Benchmark': {'type': 'object', 'description': 'The base benchmark portfolio/index', 'enums': [{'name': 'TSX 60', 'index': 20, 'portfolio_name': 'TSX 60', 'portfolio_id': 20}, {'name': 'NIKKEI 225', 'index': 23, 'portfolio_name': 'NIKKEI 225', 'portfolio_id': 23}, {'name': 'FTSE 100', 'index': 24, 'portfolio_name': 'FTSE 100', 'portfolio_id': 24}, {'name': 'DAX 40', 'index': 21, 'portfolio_name': 'DAX 40', 'portfolio_id': 21}, {'name': 'S&P 500', 'index': 22, 'portfolio_name': 'S&P 500', 'portfolio_id': 22}, {'name': 'FTSE/JSE 40', 'index': 25, 'portfolio_name': 'FTSE/JSE 40', 'portfolio_id': 25}, {'name': 'BIST 30', 'index': 26, 'portfolio_name': 'BIST 30', 'portfolio_id': 26}, {'name': 'MOEX RUSSIA', 'index': 27, 'portfolio_name': 'MOEX RUSSIA', 'portfolio_id': 27}, {'name': 'IPC MEXICO', 'index': 28, 'portfolio_name': 'IPC MEXICO', 'portfolio_id': 28}, {'name': 'IDX80', 'index': 29, 'portfolio_name': 'IDX80', 'portfolio_id': 29}, {'name': 'FTSE MIB', 'index': 30, 'portfolio_name': 'FTSE MIB', 'portfolio_id': 30}, {'name': 'CAC 40', 'index': 31, 'portfolio_name': 'CAC 40', 'portfolio_id': 31}, {'name': 'ASX200', 'index': 32, 'portfolio_name': 'ASX200', 'portfolio_id': 32}, {'name': 'CSI300', 'index': 33, 'portfolio_name': 'CSI300', 'portfolio_id': 33}, {'name': 'KOSPI', 'index': 34, 'portfolio_name': 'KOSPI', 'portfolio_id': 34}, {'name': 'NIFTY50', 'index': 35, 'portfolio_name': 'NIFTY50', 'portfolio_id': 35}, {'name': 'S&P Merval', 'index': 36, 'portfolio_name': 'S&P Merval', 'portfolio_id': 36}, {'name': 'Tadawul All Share', 'index': 37, 'portfolio_name': 'Tadawul All Share', 'portfolio_id': 37}, {'name': 'Bovespa', 'index': 38, 'portfolio_name': 'Bovespa', 'portfolio_id': 38}, {'name': 'MSCI World', 'index': 39, 'portfolio_name': 'MSCI World', 'portfolio_id': 39}], 'default': {'name': 'TSX 60', 'index': 20, 'portfolio_name': 'TSX 60', 'portfolio_id': 20}}, 'BenchmarkSector': {'type': 'string', 'description': 'The base benchmark portfolio/index sector', 'enums': ['Financials', 'Materials', 'Energy', 'Consumer Staples', 'Consumer Discretionary', 'Industrials', 'Real Estate', 'Information Technology', 'Utilities'], 'default': 'Index'}, 'Portfolio': {'type': 'object', 'description': 'The target benchmark portfolio/index', 'enums': [{'name': 'TSX 60', 'index': 20, 'portfolio_name': 'TSX 60', 'portfolio_id': 20}, {'name': 'NIKKEI 225', 'index': 23, 'portfolio_name': 'NIKKEI 225', 'portfolio_id': 23}, {'name': 'FTSE 100', 'index': 24, 'portfolio_name': 'FTSE 100', 'portfolio_id': 24}, {'name': 'DAX 40', 'index': 21, 'portfolio_name': 'DAX 40', 'portfolio_id': 21}, {'name': 'S&P 500', 'index': 22, 'portfolio_name': 'S&P 500', 'portfolio_id': 22}, {'name': 'FTSE/JSE 40', 'index': 25, 'portfolio_name': 'FTSE/JSE 40', 'portfolio_id': 25}, {'name': 'BIST 30', 'index': 26, 'portfolio_name': 'BIST 30', 'portfolio_id': 26}, {'name': 'MOEX RUSSIA', 'index': 27, 'portfolio_name': 'MOEX RUSSIA', 'portfolio_id': 27}, {'name': 'IPC MEXICO', 'index': 28, 'portfolio_name': 'IPC MEXICO', 'portfolio_id': 28}, {'name': 'IDX80', 'index': 29, 'portfolio_name': 'IDX80', 'portfolio_id': 29}, {'name': 'FTSE MIB', 'index': 30, 'portfolio_name': 'FTSE MIB', 'portfolio_id': 30}, {'name': 'CAC 40', 'index': 31, 'portfolio_name': 'CAC 40', 'portfolio_id': 31}, {'name': 'ASX200', 'index': 32, 'portfolio_name': 'ASX200', 'portfolio_id': 32}, {'name': 'CSI300', 'index': 33, 'portfolio_name': 'CSI300', 'portfolio_id': 33}, {'name': 'KOSPI', 'index': 34, 'portfolio_name': 'KOSPI', 'portfolio_id': 34}, {'name': 'NIFTY50', 'index': 35, 'portfolio_name': 'NIFTY50', 'portfolio_id': 35}, {'name': 'S&P Merval', 'index': 36, 'portfolio_name': 'S&P Merval', 'portfolio_id': 36}, {'name': 'Tadawul All Share', 'index': 37, 'portfolio_name': 'Tadawul All Share', 'portfolio_id': 37}, {'name': 'Bovespa', 'index': 38, 'portfolio_name': 'Bovespa', 'portfolio_id': 38}, {'name': 'MSCI World', 'index': 39, 'portfolio_name': 'MSCI World', 'portfolio_id': 39}], 'default': {'name': 'S&P 500', 'index': 22, 'portfolio_name': 'S&P 500', 'portfolio_id': 22}}, 'PortfolioSector': {'type': 'string', 'description': 'The target benchmark portfolio/index sector', 'enums': ['Financials', 'Industrials', 'Consumer Discretionary', 'Health Care', 'Utilities', 'Information Technology', 'Real Estate', 'Energy', 'Materials', 'Communications', 'Consumer Staples'], 'default': 'Index'}}}}]
+[
+  {
+    "name": "get_nav_params",
+    "description": "Get navigational parameters based on user message and the scoped parameters",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "Horizon": {"type": "integer", "description": ...},
+        "Scenario": {"type": "object", "description": ...},
+        "Benchmark": {"type": "object", "description": ...},
+        "BenchmarkSector": {"type": "string", "description": ...},
+        "Portfolio": {"type": "object", "description": ...},
+        "PortfolioSector": {"type": "string", "description": ...}
+      }
+    }
+  }
+]
 
 Model: gpt-4-0613
 
@@ -160,7 +176,7 @@ The `arguments` field is what we need to use. It's dysfunctional (to say the lea
 
 We rebase the same prompt engineering we used for the pre-0613 `gpt-4` model and apply it to both `gpt-4-0613` and `gpt-3.5-turbo-0613` (which has system steerability over the previous version).
 
-```
+```bash
 <System>:
 You are an app navigation copilot which converts user asks based on possible parameters to a JSON form. For errors, respond with {}
 
@@ -168,15 +184,15 @@ You are an app navigation copilot which converts user asks based on possible par
 Bench nikkei against tsx in the energy sector for >4 degrees scenario in 2070
 
 Output format:
-{"Horizon": 2050, "Scenario": {"id": "RT3", "name": "ALL"}, "Benchmark": {"name": "TSX 60", "index": 20, "portfolio_name": "TSX 60", "portfolio_id": 20}, "BenchmarkSector": "Index", "Portfolio": {"name": "S&P 500", "index": 22, "portfolio_name": "S&P 500", "portfolio_id": 22}, "PortfolioSector": "Index"}
+{"Horizon": 2050, "Scenario": {"id": "RT3", "name": "ALL"}, "Benchmark": ...}
 
 Possible values for each parameter:
-- Horizon: {'type': 'integer', 'description': 'parsed from user input to best match the closest next decade year', 'min': 2030, 'max': 2090, 'default': 2050}
-- Scenario: {'type': 'object', 'description': 'Climate crisis temperature rise scenario', 'enums': [{'id': 'RT3', 'name': 'ALL'}, {'id': 'Paris', 'name': '<2°'}, {'id': 'NDC', 'name': '2°- 4°'}, {'id': 'Hot House', 'name': '>4°'}], 'default': {'id': 'RT3', 'name': 'ALL'}}
-- Benchmark: {'type': 'object', 'description': 'The base benchmark portfolio/index', 'enums': [{'name': 'TSX 60', 'index': 20, 'portfolio_name': 'TSX 60', 'portfolio_id': 20}, {'name': 'NIKKEI 225', 'index': 23, 'portfolio_name': 'NIKKEI 225', 'portfolio_id': 23}, {'name': 'FTSE 100', 'index': 24, 'portfolio_name': 'FTSE 100', 'portfolio_id': 24}, {'name': 'DAX 40', 'index': 21, 'portfolio_name': 'DAX 40', 'portfolio_id': 21}, {'name': 'S&P 500', 'index': 22, 'portfolio_name': 'S&P 500', 'portfolio_id': 22}, {'name': 'FTSE/JSE 40', 'index': 25, 'portfolio_name': 'FTSE/JSE 40', 'portfolio_id': 25}, {'name': 'BIST 30', 'index': 26, 'portfolio_name': 'BIST 30', 'portfolio_id': 26}, {'name': 'MOEX RUSSIA', 'index': 27, 'portfolio_name': 'MOEX RUSSIA', 'portfolio_id': 27}, {'name': 'IPC MEXICO', 'index': 28, 'portfolio_name': 'IPC MEXICO', 'portfolio_id': 28}, {'name': 'IDX80', 'index': 29, 'portfolio_name': 'IDX80', 'portfolio_id': 29}, {'name': 'FTSE MIB', 'index': 30, 'portfolio_name': 'FTSE MIB', 'portfolio_id': 30}, {'name': 'CAC 40', 'index': 31, 'portfolio_name': 'CAC 40', 'portfolio_id': 31}, {'name': 'ASX200', 'index': 32, 'portfolio_name': 'ASX200', 'portfolio_id': 32}, {'name': 'CSI300', 'index': 33, 'portfolio_name': 'CSI300', 'portfolio_id': 33}, {'name': 'KOSPI', 'index': 34, 'portfolio_name': 'KOSPI', 'portfolio_id': 34}, {'name': 'NIFTY50', 'index': 35, 'portfolio_name': 'NIFTY50', 'portfolio_id': 35}, {'name': 'S&P Merval', 'index': 36, 'portfolio_name': 'S&P Merval', 'portfolio_id': 36}, {'name': 'Tadawul All Share', 'index': 37, 'portfolio_name': 'Tadawul All Share', 'portfolio_id': 37}, {'name': 'Bovespa', 'index': 38, 'portfolio_name': 'Bovespa', 'portfolio_id': 38}, {'name': 'MSCI World', 'index': 39, 'portfolio_name': 'MSCI World', 'portfolio_id': 39}], 'default': {'name': 'TSX 60', 'index': 20, 'portfolio_name': 'TSX 60', 'portfolio_id': 20}}
-- BenchmarkSector: {'type': 'string', 'description': 'The base benchmark portfolio/index sector', 'enums': ['Financials', 'Materials', 'Energy', 'Consumer Staples', 'Consumer Discretionary', 'Industrials', 'Real Estate', 'Information Technology', 'Utilities'], 'default': 'Index'}
-- Portfolio: {'type': 'object', 'description': 'The target benchmark portfolio/index', 'enums': [{'name': 'TSX 60', 'index': 20, 'portfolio_name': 'TSX 60', 'portfolio_id': 20}, {'name': 'NIKKEI 225', 'index': 23, 'portfolio_name': 'NIKKEI 225', 'portfolio_id': 23}, {'name': 'FTSE 100', 'index': 24, 'portfolio_name': 'FTSE 100', 'portfolio_id': 24}, {'name': 'DAX 40', 'index': 21, 'portfolio_name': 'DAX 40', 'portfolio_id': 21}, {'name': 'S&P 500', 'index': 22, 'portfolio_name': 'S&P 500', 'portfolio_id': 22}, {'name': 'FTSE/JSE 40', 'index': 25, 'portfolio_name': 'FTSE/JSE 40', 'portfolio_id': 25}, {'name': 'BIST 30', 'index': 26, 'portfolio_name': 'BIST 30', 'portfolio_id': 26}, {'name': 'MOEX RUSSIA', 'index': 27, 'portfolio_name': 'MOEX RUSSIA', 'portfolio_id': 27}, {'name': 'IPC MEXICO', 'index': 28, 'portfolio_name': 'IPC MEXICO', 'portfolio_id': 28}, {'name': 'IDX80', 'index': 29, 'portfolio_name': 'IDX80', 'portfolio_id': 29}, {'name': 'FTSE MIB', 'index': 30, 'portfolio_name': 'FTSE MIB', 'portfolio_id': 30}, {'name': 'CAC 40', 'index': 31, 'portfolio_name': 'CAC 40', 'portfolio_id': 31}, {'name': 'ASX200', 'index': 32, 'portfolio_name': 'ASX200', 'portfolio_id': 32}, {'name': 'CSI300', 'index': 33, 'portfolio_name': 'CSI300', 'portfolio_id': 33}, {'name': 'KOSPI', 'index': 34, 'portfolio_name': 'KOSPI', 'portfolio_id': 34}, {'name': 'NIFTY50', 'index': 35, 'portfolio_name': 'NIFTY50', 'portfolio_id': 35}, {'name': 'S&P Merval', 'index': 36, 'portfolio_name': 'S&P Merval', 'portfolio_id': 36}, {'name': 'Tadawul All Share', 'index': 37, 'portfolio_name': 'Tadawul All Share', 'portfolio_id': 37}, {'name': 'Bovespa', 'index': 38, 'portfolio_name': 'Bovespa', 'portfolio_id': 38}, {'name': 'MSCI World', 'index': 39, 'portfolio_name': 'MSCI World', 'portfolio_id': 39}], 'default': {'name': 'S&P 500', 'index': 22, 'portfolio_name': 'S&P 500', 'portfolio_id': 22}}
-- PortfolioSector: {'type': 'string', 'description': 'The target benchmark portfolio/index sector', 'enums': ['Financials', 'Industrials', 'Consumer Discretionary', 'Health Care', 'Utilities', 'Information Technology', 'Real Estate', 'Energy', 'Materials', 'Communications', 'Consumer Staples'], 'default': 'Index'}
+- Horizon: {'type': 'integer', 'description': ...}
+- Scenario: {'type': 'object', 'description': ...}
+- Benchmark: {'type': 'object', 'description': ...]
+- BenchmarkSector: {'type': 'string', 'description': ...}
+- Portfolio: {'type': 'object', 'description': ...}
+- PortfolioSector: {'type': 'string', 'description': ...}
 
 Model: gpt-4-0613
 
@@ -229,25 +245,17 @@ Model: gpt-3.5-turbo-0613
   "PortfolioSector": "Energy"
 }
 28.16s over 10 runs
+
+{
+  "prompt_tokens": 1848,
+  "completion_tokens": 113,
+  "total_tokens": 1961
+}
 ```
 
 Token `usage` (`gpt-4-0613`): `(1848 * 0.03 / 1000) + (140 * 0.06 / 1000) = $0.06384` per call, same as `gpt-4-0314`.
-```json
-{
-  "prompt_tokens": 1848,
-  "completion_tokens": 113,
-  "total_tokens": 1961
-}
-```
 
 Token `usage` (`gpt-3.5-turbo-0613`): `1961 * 0.0015 / 1000 = $0.0029415` per call.
-```json
-{
-  "prompt_tokens": 1848,
-  "completion_tokens": 113,
-  "total_tokens": 1961
-}
-```
 
 The result is excellent, where even though the speed is not as fast, and cost not as cheap, as OpenAI's in-house _Function Calling_ implementation, the same staple system and user prompt-engineering implementation is **5 times faster and 20 times cheaper** over `gpt-4-0314`, so all we had to do was a line of code change:
 
