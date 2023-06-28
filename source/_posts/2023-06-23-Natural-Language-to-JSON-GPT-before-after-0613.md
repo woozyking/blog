@@ -298,10 +298,10 @@ The result is excellent, where even though the speed is not as fast, and cost no
 
 ![code change](https://github.com/RiskThinking/work-samples/assets/2837532/f9e7e764-2a1e-4338-b778-427a7e2efcc1)
 
-Take a look at the difference before and after:
+Take a look at the difference before (`gpt-4-0314`) and after (`gpt-3.5-turbo-0613`) (credit: [@shanwhiz](https://medium.com/@shanwhiz)):
 
 <video controls>
-  <source src="https://github.com/RiskThinking/work-samples/assets/2837532/67115ea5-f6ec-4162-817b-b1802aa6576e" type="video/mp4">
+  <source src="https://github.com/RiskThinking/work-samples/assets/2837532/d37ab0d7-8eb8-4b25-a200-41281173a932" type="video/mp4">
   Your browser does not support HTML video.
 </video>
 
