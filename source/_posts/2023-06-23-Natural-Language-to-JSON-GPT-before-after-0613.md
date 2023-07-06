@@ -8,20 +8,20 @@ tags:
 
 ## TL;DR
 
-- We leveraged OpenAI's June 13 update to make our web app navigational assistant ("Copilot") **5x faster and 20x cheaper**.
+- We leveraged OpenAI's June 13 update to make our web app navigational assistant ("RiskPilot") **5x faster and 20x cheaper**.
 - While OpenAI stepped in the right direction with the _Function Calling_ feature, we proved it has room to improve still.
 
 ![table](https://github.com/RiskThinking/work-samples/assets/2837532/0d7a2764-d81b-42f4-aa0d-db3706352472)
 
 ## Intro
 
-At [RiskThinking.AI](https://riskthinking.ai/), we initiated a project back in April to leverage OpenAI's GPT model to build a navigational assistant (dubbed "Copilot") for our web app. At the time, `gpt-4-0314` was the only viable model since `gpt-3.5-turbo-0301` doesn't have system steerability.
+At [RiskThinking.AI](https://riskthinking.ai/), we initiated a project back in April to leverage OpenAI's GPT model to build a navigational assistant (dubbed "RiskPilot") for our web app. At the time, `gpt-4-0314` was the only viable model since `gpt-3.5-turbo-0301` doesn't have "system steerability" (the ability to guide the conversation towards a specific subject or goal.)
 
 The workflow is fairly simple:
 <!-- more -->
 ![flow](https://github.com/RiskThinking/work-samples/assets/2837532/2d9e7355-53e7-4807-8e6b-e50d7cfb42e4)
 
-Our "Copilot" takes a user query such as “Toronto”, and a web app view states `scope`:
+Our "RiskPilot" takes a user query such as “Toronto”, and a web app view states `scope`:
 ```js
 {
   viewState: {
@@ -83,7 +83,7 @@ We benchmarked the models before and after the June 13 update and concluded a ne
 
 ## Benchmark Base (`gpt-4-0314`)
 
-This is the base implementation of our original Copilot implementation, where we leverage both `<system>` and `<user>` prompt engineering to achieve the steerability we needed for stable and high precision `assistant` output of JSON object that can be used for application usage (e.g. VELO).
+This is the base implementation of our original "RiskPilot", where we leverage both `<system>` and `<user>` prompt engineering to achieve the steerability we needed for stable and high precision `assistant` output of JSON object that can be used for application usage.
 
 ```bash
 Model: "gpt-4-0314" (pre-0613)
@@ -140,7 +140,7 @@ Token `usage`:
 }
 ```
 
-The cost per call would be `(1848 * 0.03 / 1000) + (140 * 0.06 / 1000) = $0.06384` per call.
+The cost would be `(1848 * 0.03 / 1000) + (140 * 0.06 / 1000) = $0.06384` per call.
 
 ## 0613 Function Calling
 
