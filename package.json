@@ -21,5 +21,8 @@
     "hexo-renderer-stylus": "^2.0.0",
     "hexo-server": "^2.0.0",
     "hexo-theme-next": "^8.14.0"
+  },
+  "engines": {
+    "node": "20.x"
   }
 }
