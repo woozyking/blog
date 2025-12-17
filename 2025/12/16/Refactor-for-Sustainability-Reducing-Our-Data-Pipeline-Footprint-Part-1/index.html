@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 8.1.1">
+<link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="mask-icon" href="/favicon.ico" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"runzhou.li","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.26.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Buscando...","empty":"No hemos encontrado ningún resultado para la búsqueda: ${query}","hits_time":"${hits} resultados encontrados en ${time} ms","hits":"${hits} resultados encontrados"}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="TL;DRWe rewrote our asset preprocessing pipeline, replacing a “Frankenstein” mix of Pandas and manual multiprocessing with an end-to-end Polars LazyFrame workflow. The result? A 6x speedup and a massi">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Refactor for Sustainability: Reducing Our Data Pipeline Footprint (Part 1)">
+<meta property="og:url" content="https://runzhou.li/2025/12/16/Refactor-for-Sustainability-Reducing-Our-Data-Pipeline-Footprint-Part-1/index.html">
+<meta property="og:site_name" content="woozyking">
+<meta property="og:description" content="TL;DRWe rewrote our asset preprocessing pipeline, replacing a “Frankenstein” mix of Pandas and manual multiprocessing with an end-to-end Polars LazyFrame workflow. The result? A 6x speedup and a massi">
+<meta property="og:locale" content="es_ES">
+<meta property="og:image" content="https://runzhou.li/images/simplify-data-pipeline.webp">
+<meta property="article:published_time" content="2025-12-16T16:34:34.000Z">
+<meta property="article:modified_time" content="2025-12-17T02:08:58.352Z">
+<meta property="article:author" content="Runzhou Li (Leo)">
+<meta property="article:tag" content="Data Engineering">
+<meta property="article:tag" content="Polars">
+<meta property="article:tag" content="Sustainability">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://runzhou.li/images/simplify-data-pipeline.webp">
+
+
+<link rel="canonical" href="https://runzhou.li/2025/12/16/Refactor-for-Sustainability-Reducing-Our-Data-Pipeline-Footprint-Part-1/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"es","comments":true,"permalink":"https://runzhou.li/2025/12/16/Refactor-for-Sustainability-Reducing-Our-Data-Pipeline-Footprint-Part-1/","path":"2025/12/16/Refactor-for-Sustainability-Reducing-Our-Data-Pipeline-Footprint-Part-1/","title":"Refactor for Sustainability: Reducing Our Data Pipeline Footprint (Part 1)"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Refactor for Sustainability: Reducing Our Data Pipeline Footprint (Part 1) | woozyking</title>
+  
+
+
+
+
+
+
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous" defer></script>
+<script src="/js/utils.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Cambiar a barra de navegación" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">woozyking</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Buscar" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Tabla de contenidos
+        </li>
+        <li class="sidebar-nav-overview">
+          Inicio
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#TL-DR"><span class="nav-number">1.</span> <span class="nav-text">TL;DR</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#The-Cost-of-Digital-Waste"><span class="nav-number">2.</span> <span class="nav-text">The Cost of Digital Waste</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#The-%E2%80%9CFrankenstein%E2%80%9D-Bottleneck"><span class="nav-number">3.</span> <span class="nav-text">The “Frankenstein” Bottleneck</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Be-Lazy-The-Good-Kind"><span class="nav-number">4.</span> <span class="nav-text">Be Lazy (The Good Kind)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Surgical-Materialization"><span class="nav-number">5.</span> <span class="nav-text">Surgical Materialization</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Results-Efficiency-is-Green"><span class="nav-number">6.</span> <span class="nav-text">Results: Efficiency is Green</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Final-Remark"><span class="nav-number">7.</span> <span class="nav-text">Final Remark</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Runzhou Li (Leo)"
+      src="/favicon.png">
+  <p class="site-author-name" itemprop="name">Runzhou Li (Leo)</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">24</span>
+          <span class="site-state-item-name">entradas</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">35</span>
+        <span class="site-state-item-name">etiquetas</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/woozyking" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;woozyking" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="es">
+    <link itemprop="mainEntityOfPage" href="https://runzhou.li/2025/12/16/Refactor-for-Sustainability-Reducing-Our-Data-Pipeline-Footprint-Part-1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/favicon.png">
+      <meta itemprop="name" content="Runzhou Li (Leo)">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="woozyking">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Refactor for Sustainability: Reducing Our Data Pipeline Footprint (Part 1) | woozyking">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Refactor for Sustainability: Reducing Our Data Pipeline Footprint (Part 1)
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Publicado el</span>
+
+      <time title="Creado por: 2025-12-16 16:34:34" itemprop="dateCreated datePublished" datetime="2025-12-16T16:34:34+00:00">2025-12-16</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Editado el</span>
+      <time title="Modificado por: 2025-12-17 02:08:58" itemprop="dateModified" datetime="2025-12-17T02:08:58+00:00">2025-12-17</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h2 id="TL-DR"><a href="#TL-DR" class="headerlink" title="TL;DR"></a><strong>TL;DR</strong></h2><p>We rewrote our asset preprocessing pipeline, replacing a “Frankenstein” mix of Pandas and manual multiprocessing with an end-to-end <strong>Polars LazyFrame</strong> workflow. The result? A <strong>6x speedup</strong> and a massive reduction in memory usage (from <strong>110GB</strong> to <strong>2GB</strong>). By optimizing for efficiency, we didn’t just save money; we aligned our engineering capability with our mission: doing more with less to reduce our impact.</p>
+<p><img src="/images/simplify-data-pipeline.webp" alt="simplify-data-pipeline"></p>
+<h2 id="The-Cost-of-Digital-Waste"><a href="#The-Cost-of-Digital-Waste" class="headerlink" title="The Cost of Digital Waste"></a><strong>The Cost of Digital Waste</strong></h2><p>Optimization is often framed as a cost-saving exercise or a speed run. But at <a target="_blank" rel="noopener" href="http://riskthinking.ai/"><strong>RiskThinking.AI</strong></a>, we view it through a slightly different lens. We analyze climate risk, helping the world understand the impact of a changing environment. It felt philosophically inconsistent for us to be generating unnecessary “digital exhaust” in our own backyard.</p>
+<p>Our asset ingestion pipeline was reliable, but it was heavy. As our datasets grew to millions of assets, our legacy code required massive cloud instances to keep running. We were burning compute cycles, and by extension, <strong>energy</strong>, to solve a problem that shouldn’t have been that hard.</p>
+<p>We decided to rebuild it, not just to go faster, but to stop the waste.</p>
+<span id="more"></span>
+
+<h2 id="The-“Frankenstein”-Bottleneck"><a href="#The-“Frankenstein”-Bottleneck" class="headerlink" title="The “Frankenstein” Bottleneck"></a>The “Frankenstein” Bottleneck</h2><p>Our original implementation suffered from a common pattern: trying to micromanage performance.</p>
+<p>To process millions of rows, we were:</p>
+<ol>
+<li>Manually chunking data.</li>
+<li>Spinning up a <code>multiprocessing.Pool</code>.</li>
+<li>Materializing intermediate results in memory before concatenating them.</li>
+</ol>
+<p>It looked something like this:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># The Old Way: Manual chunking and multiprocessing</span></span><br><span class="line"><span class="keyword">with</span> mp.get_context(<span class="string">&quot;spawn&quot;</span>).Pool(processes=n_cpu) <span class="keyword">as</span> pool:</span><br><span class="line">    args = [(chunk, assets, top_naics) <span class="keyword">for</span> chunk <span class="keyword">in</span> chunks]</span><br><span class="line">    results = pool.starmap(process_chunk_for_materiality, args)</span><br><span class="line"></span><br><span class="line">df = pd.concat(results)</span><br><span class="line">df.write_parquet(output_path)</span><br></pre></td></tr></table></figure>
+
+<p>This approach is fine for smaller tasks, but at scale, the overhead of context switching and memory duplication eats up all the gains. We needed something that could handle the volume without the manual labour and bloated computing cost.</p>
+<h2 id="Be-Lazy-The-Good-Kind"><a href="#Be-Lazy-The-Good-Kind" class="headerlink" title="Be Lazy (The Good Kind)"></a>Be Lazy (The Good Kind)</h2><p>We replaced the entire flow with <strong>Polars</strong>. The key wasn’t just swapping libraries (i.e., <code>pd.read_parquet</code> for <code>pl.read_parquet</code>), but embracing the <strong>Lazy API</strong>.</p>
+<p>Pandas executes eagerly. Every step materializes intermediate results in RAM, forcing you to rent larger servers just to hold temporary data. Polars operates lazily. Operations like <code>scan_parquet</code> build a query plan. Polars then runs a query optimizer across your ETL operations to apply <strong>predicate pushdown</strong> (filtering data at scan time), <strong>projection pushdown</strong> (loading only necessary columns), and <a target="_blank" rel="noopener" href="https://docs.pola.rs/user-guide/lazy/optimizations/"><strong>more</strong></a>.</p>
+<p>The magic happens when you call <code>.sink_parquet()</code>. This triggers Polars’ <strong>streaming engine</strong>, which processes data in batches that fit in RAM and parallelizes across available CPU cores. By decoupling memory usage from dataset size, you can run “big data” jobs on “small hardware.”</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># The New Way: Declarative, lazy, and streaming</span></span><br><span class="line">(</span><br><span class="line">    pl.scan_parquet(input_path)</span><br><span class="line">    .<span class="built_in">filter</span>(pl.col(<span class="string">&quot;materiality_score&quot;</span>) &gt;= THRESHOLD)</span><br><span class="line">    .pipe(utils.apply_materiality_scores, mat_score_dict)</span><br><span class="line">    .sink_parquet(output_path) <span class="comment"># The trigger: streams data from input to output</span></span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<h2 id="Surgical-Materialization"><a href="#Surgical-Materialization" class="headerlink" title="Surgical Materialization"></a>Surgical Materialization</h2><p>The only snag was our dependency on GeoPandas for spatial joins (mapping lat&#x2F;lon to cities&#x2F;states.)</p>
+<p>Instead of reverting to eager execution for everything, we adopted a “surgical” approach:</p>
+<ol>
+<li>Keep the main pipeline lazy.</li>
+<li>Filter specifically for the subset of rows missing geo data.</li>
+<li><code>.collect()</code> (materialize) <em>only</em> that subset into RAM.</li>
+<li>Run the heavy GeoPandas operations.</li>
+<li>Convert back to Polars and merge.</li>
+</ol>
+<p><strong>This kept our memory profile reasonable</strong>, even when processing millions of assets. <em>In a future follow-up, we’ll detail how we engineered a solution to eliminate this materialization step entirely, making the pipeline 100% lazy.</em></p>
+<h2 id="Results-Efficiency-is-Green"><a href="#Results-Efficiency-is-Green" class="headerlink" title="Results: Efficiency is Green"></a>Results: Efficiency is Green</h2><p>We compared our legacy pipeline running on the cloud against the new pipeline running on a local machine.</p>
+<ul>
+<li><strong>The Old Way:</strong> Required <strong>15 vCPUs and 110GB of RAM</strong> (Cloud). Time: ~a hour.</li>
+<li><strong>The New Way:</strong> Ran on a <strong>MacBook Pro (M1, 16GB RAM)</strong>. Time: ~10 mins. Peak RAM: <strong>2GB</strong>.</li>
+</ul>
+<p>We eliminated the need for a massive, expensive node. A job that used to require a semi-truck now runs on a bicycle.</p>
+<h2 id="Final-Remark"><a href="#Final-Remark" class="headerlink" title="Final Remark"></a>Final Remark</h2><p>Every real-world technique comes with tradeoffs. But for us, the shift to Polars wasn’t just about the 6x speedup. It was about right-sizing our infrastructure.</p>
+<p>When you write code that is 98% more memory efficient, you aren’t just making your life easier as a developer. You are reducing the demand on data centers and lowering the energy cost of your insights. That’s a win for the product, and a small but meaningful win for the planet.</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Data-Engineering/" rel="tag"># Data Engineering</a>
+              <a href="/tags/Sustainability/" rel="tag"># Sustainability</a>
+              <a href="/tags/Polars/" rel="tag"># Polars</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2023/06/23/Natural-Language-to-JSON-GPT-before-after-0613/" rel="prev" title="Natural Language to JSON: GPT before&#x2F;after 0613">
+                  <i class="fa fa-angle-left"></i> Natural Language to JSON: GPT before/after 0613
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Runzhou Li (Leo)</span>
+  </div>
+  <div class="powered-by">Creado mediante <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Volver al principio">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+</body>
+</html>
