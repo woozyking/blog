@@ -95,3 +95,8 @@ theme_config:
     GitHub: https://github.com/woozyking || fab fa-github
   motion:
     enable: false
+  mermaid:
+    enable: true
+    theme:
+      light: default
+      dark: dark
