@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 8.1.2">
+<link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="mask-icon" href="/favicon.ico" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"runzhou.li","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.29.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="TL;DRI built DuckPipe, a serverless-first pipeline orchestrator you pip install and run as a plain Python file. No scheduler daemon, no metadata database, no broker, and no additional concepts beyond">
+<meta property="og:type" content="article">
+<meta property="og:title" content="DuckPipe">
+<meta property="og:url" content="https://runzhou.li/2026/09/03/DuckPipe/index.html">
+<meta property="og:site_name" content="woozyking">
+<meta property="og:description" content="TL;DRI built DuckPipe, a serverless-first pipeline orchestrator you pip install and run as a plain Python file. No scheduler daemon, no metadata database, no broker, and no additional concepts beyond">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://runzhou.li/images/playground-hero.webp">
+<meta property="article:published_time" content="2026-09-03T21:00:00.000Z">
+<meta property="article:modified_time" content="2026-09-04T02:19:11.774Z">
+<meta property="article:author" content="Runzhou Li (Leo)">
+<meta property="article:tag" content="Data Engineering">
+<meta property="article:tag" content="DuckDB">
+<meta property="article:tag" content="Open Source">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://runzhou.li/images/playground-hero.webp">
+
+
+<link rel="canonical" href="https://runzhou.li/2026/09/03/DuckPipe/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://runzhou.li/2026/09/03/DuckPipe/","path":"2026/09/03/DuckPipe/","title":"DuckPipe"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>DuckPipe | woozyking</title>
+  
+
+
+
+
+
+
+
+
+  
+<script src="/js/utils.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
+
+  
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mermaid/11.10.1/mermaid.min.js","integrity":"sha256-BmQmdWDS8X2OTbrwELWK366LV6escyWhHHe0XCTU/Hk="}}</script>
+  <script src="/js/third-party/tags/mermaid.js" defer></script>
+
+
+
+
+
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">woozyking</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#TL-DR"><span class="nav-number">1.</span> <span class="nav-text">TL;DR</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Old-way-infra-first-logic-second"><span class="nav-number">2.</span> <span class="nav-text">Old way: infra first, logic second</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#What-the-tax-actually-costs"><span class="nav-number">3.</span> <span class="nav-text">What the tax actually costs</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#New-way-just-logic-to-run"><span class="nav-number">4.</span> <span class="nav-text">New way: just logic to run</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#What-DuckPipe-doesn%E2%80%99t-do"><span class="nav-number">5.</span> <span class="nav-text">What DuckPipe doesn’t do</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Remark"><span class="nav-number">6.</span> <span class="nav-text">Remark</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Runzhou Li (Leo)"
+      src="/favicon.png">
+  <p class="site-author-name" itemprop="name">Runzhou Li (Leo)</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">25</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">37</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/woozyking" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;woozyking" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://runzhou.li/2026/09/03/DuckPipe/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/favicon.png">
+      <meta itemprop="name" content="Runzhou Li (Leo)">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="woozyking">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="DuckPipe | woozyking">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          DuckPipe
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2026-09-03 21:00:00" itemprop="dateCreated datePublished" datetime="2026-09-03T21:00:00+00:00">2026-09-03</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2026-09-04 02:19:11" itemprop="dateModified" datetime="2026-09-04T02:19:11+00:00">2026-09-04</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h2 id="TL-DR"><a href="#TL-DR" class="headerlink" title="TL;DR"></a><strong>TL;DR</strong></h2><p>I built <a target="_blank" rel="noopener" href="https://github.com/woozyking/duckpipe"><strong>DuckPipe</strong></a>, a serverless-first pipeline orchestrator you <code>pip install</code> and run as a plain Python file. No scheduler daemon, no metadata database, no broker, and no additional concepts beyond how Python works. The bet: eliminating that standing infrastructure is worth it regardless of how big your data is, and the orchestrator for the job should be a library, not a platform. It even runs, unmodified, inside a <a target="_blank" rel="noopener" href="https://woozyking.github.io/duckpipe/examples/08_browser_wasm/">browser tab</a>.</p>
+<p><img src="/images/playground-hero.webp" alt="duckpipe-playground"></p>
+<h2 id="Old-way-infra-first-logic-second"><a href="#Old-way-infra-first-logic-second" class="headerlink" title="Old way: infra first, logic second"></a>Old way: infra first, logic second</h2><p>The usual data pipelines I’ve encountered are a few Python functions that depend on each other, say pulling yesterday’s raw records, cleaning them, and rolling them up into a number someone downstream actually needs. Sometimes one step is slow enough that you’d want to skip re-running it when nothing changed. The moment that shape shows up, the reflexive industry answer is Prefect, Airflow, or Dagster.</p>
+<p>Most of these solutions ask you to set up infrastructure first: a scheduler, a webserver, a metadata database, usually a broker and a worker pool, before the data analysis reaches whoever needs it. That’s a tax, and it’s the same tax whether your job moves a few thousand rows once a month or a billion rows a minute.</p>
+<span id="more"></span>
+
+<p>A minimal Prefect flow for a job that pulls yesterday’s NYC taxi trips and rolls them up into daily fare totals:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> prefect <span class="keyword">import</span> flow, task</span><br><span class="line"></span><br><span class="line"><span class="meta">@task</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">extract_trips</span>():</span><br><span class="line">    ...</span><br><span class="line"></span><br><span class="line"><span class="meta">@task</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">daily_totals</span>(<span class="params">trips</span>):</span><br><span class="line">    ...</span><br><span class="line"></span><br><span class="line"><span class="meta">@flow</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">taxi_pipeline</span>():</span><br><span class="line">    trips = extract_trips()</span><br><span class="line">    <span class="keyword">return</span> daily_totals(trips)</span><br></pre></td></tr></table></figure>
+
+<p>That part reads like plain Python. Running it in production needs more:</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">deployments:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">taxi-pipeline-prod</span></span><br><span class="line">    <span class="attr">entrypoint:</span> <span class="string">pipeline.py:taxi_pipeline</span></span><br><span class="line">    <span class="attr">work_pool:</span></span><br><span class="line">      <span class="attr">name:</span> <span class="string">k8s-pool</span></span><br><span class="line">    <span class="attr">schedule:</span></span><br><span class="line">      <span class="attr">cron:</span> <span class="string">&quot;0 6 * * *&quot;</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>A <code>prefect.yaml</code> deployment block wiring the entrypoint to a work pool, like the one above</li>
+<li>A worker somewhere actually polling that pool</li>
+<li>Its own Dockerfile to build and push, once the job needs a runtime the default image doesn’t have</li>
+</ul>
+<p>None of that is wrong for what Prefect is actually built for: multi-tenant scheduling, retries across a real worker fleet, a UI ops can watch without reading logs over someone’s shoulder. It’s a lot of surface area for “roll up yesterday’s trips,” though, and I’ve watched it compound on a real pipeline system we maintain at work:</p>
+<ul>
+<li>A given pipeline gets described up to three times over: once as flow and task code, once more in <code>prefect.yaml</code> as a deployment, and once again in a hand-rolled YAML file naming which flows compose it, because deployments alone don’t let you say “run these flows together as one pipeline”</li>
+<li>That <code>prefect.yaml</code> is past a thousand lines on its own</li>
+<li>Five separate Dockerfiles cover different runtime needs in that same repo</li>
+<li>An entire second repository exists just to build the 16 base images those deployments pull from</li>
+</ul>
+<p>That surface area isn’t really about infrastructure, though. It’s concepts competing to solve overlapping problems, with no strong signal for which one to reach for:</p>
+<ul>
+<li>Flows call tasks, and a flow called from another flow quietly becomes a subflow</li>
+<li>Deployments wrap flows, work pools route to workers, blocks store what those need</li>
+<li>In our case, a homegrown YAML format sits above all of it, because none of the official ones covered composing flows together</li>
+<li>Try to sidestep the menu by staying close to plain Python, and the tax shows up from both directions: plain <code>print()</code>&#x2F;<code>logging</code> needs explicit Prefect configuration to reach its UI, and code written straight against deployment primitives (workers, schedules, etc.) has no easy way to run locally at all either</li>
+</ul>
+<p>It’s the same flavour of confusion PHP got a reputation for: several ways to do roughly the same job, <code>print</code> next to <code>echo</code>, with no strong reason to prefer one. The irony: this is exactly the axis “scaling” is supposed to help with. More pipelines should mean more of one shape repeated, not a wider menu of concepts and a bespoke manifest to cover the gap between them.</p>
+<p>I watched a related correction play out at the data-engine layer, years earlier. A pipeline I worked on ran as a Spark job on Amazon EMR, where submitting it costed at least 5 minutes for a cluster to spin up before real work even started. When we reworked it with DuckDB, the same workload ran end-to-end, cold start to finished result, on a 256MB AWS Lambda, in under 5 minutes. It never needed Spark, just one well-tuned process.</p>
+<h2 id="What-the-tax-actually-costs"><a href="#What-the-tax-actually-costs" class="headerlink" title="What the tax actually costs"></a>What the tax actually costs</h2><p>I wanted that same correction applied one layer up, to orchestration itself. These are two separate corrections that happen to rhyme, not one that implies the other: matching compute to data volume, and matching standing infrastructure to operational need. This post is about the second one. If Prefect’s primitives, deployment manifests, and dedicated images are the wrong amount of infrastructure for “roll up yesterday’s trips,” the fix isn’t a leaner Prefect. It’s not needing Prefect to answer that question at all.</p>
+<p>The claim of “matching standing infrastructure to operational need” is easy to state and hard to size. Here’s what it costs, using a job substantial enough to be a believable stand-in for a real workload, not a claim that it’s typical: a full year of real NYC taxi trips (~35M rows), rolled up by borough, run identically as a plain, on-demand function call, whichever platform:</p>
+<pre>
+<code class="mermaid">
+
+flowchart LR
+    t_extract[&quot;extract&quot;]
+    t_clean[&quot;clean&quot;]
+    t_join_boroughs[&quot;join_boroughs&quot;]
+    t_aggregate[&quot;aggregate&quot;]
+    t_report[&quot;report&quot;]
+    t_extract --&gt; t_clean
+    t_clean --&gt; t_join_boroughs
+    t_join_boroughs --&gt; t_aggregate
+    t_aggregate --&gt; t_report
+    class t_extract success
+    class t_clean success
+    class t_join_boroughs success
+    class t_aggregate success
+    class t_report success
+    classDef success fill:#d4f7dc,stroke:#2f9e44,color:#1a1a1a
+</code>
+</pre>
+
+<p>The only variable that changes is what has to be resident before that call happens. Self-hosted Prefect needs 24&#x2F;7 standing infrastructure, at a minimum one <code>prefect-server</code> and one <code>prefect-worker</code>, next to a Postgres server. Prefect Cloud submits straight to your own serverless infrastructure:</p>
+<pre>
+<code class="mermaid">
+
+flowchart LR
+    subgraph prefect_arm [&quot;Prefect (self-hosted)&quot;]
+        direction LR
+        standing[&quot;prefect-server +&lt;br&#x2F;&gt;prefect-worker + Cloud SQL&lt;br&#x2F;&gt;(24&#x2F;7, always on)&quot;] --&gt; run2[&quot;run_pipeline()&lt;br&#x2F;&gt;(identical code)&quot;]
+    end
+    subgraph duckpipe_arm [&quot;DuckPipe&quot;]
+        direction LR
+        trigger[&quot;cron &#x2F; EventBridge&quot;] --&gt; run1[&quot;run_pipeline()&quot;]
+    end
+    class trigger,run1,run2 ephemeral
+    class standing standing
+    classDef ephemeral fill:#d4f7dc,stroke:#2f9e44,color:#1a1a1a
+    classDef standing fill:#ffd8d8,stroke:#c0392b,color:#1a1a1a
+    style duckpipe_arm fill:none,stroke:none
+    style prefect_arm fill:none,stroke:none
+</code>
+</pre>
+
+<p>Measured, not estimated, against sourced energy&#x2F;PUE&#x2F;pricing figures (full methodology and citations in DuckPipe’s <a target="_blank" rel="noopener" href="https://github.com/woozyking/duckpipe/tree/main/examples/11_sustainability"><code>examples/11_sustainability</code></a>). The job’s own cost is beside the point as it’s identical in both arms. What isn’t identical is what has to stand there before that call happens, unconditionally, regardless of whether the job is a rounding error or a genuine workload:</p>
+<ul>
+<li>Self-hosted Prefect has no native multi-tenant workspace isolation, so Prefect’s own guidance for that gap is to run one instance per team (the same pattern Airflow vendors call “Airflow sprawl”.) That real setup costs <strong>25.2–35.7 kWh&#x2F;year</strong> and <strong>$2,761&#x2F;year</strong> per team. At 50 teams, each with their own instance: <strong>~1,260–1,780 kWh</strong> and <strong>~$138,000</strong> a year</li>
+<li>Prefect Cloud’s own workspaces solve that same isolation gap without N installs: the same 50 teams, one shared workspace, priced per seat (<strong>$1,200&#x2F;year each</strong>) instead of per instance. At an average of 2-3 seats per team, that’s <strong>$120,000-$180,000&#x2F;year total</strong> for all 50</li>
+</ul>
+<p>That Prefect Cloud number also has a blind spot the self-hosted one doesn’t: the self-hosted figure comes from a real node this example can measure directly, while Prefect Cloud’s control plane runs on infrastructure nobody outside Prefect can see into. For an org that has to account for it, that’s more than an inconvenience. Reporting regimes like the EU’s CSRD are starting to expect SaaS vendors to disclose energy use as part of Scope 3, leaving the customer to estimate a number it can’t measure.</p>
+<p>The tax is real either way, self-hosted or managed; DuckPipe’s bet is that most jobs shaped like this one never needed to pay it.</p>
+<p>That raises a sharper question: if the savings come purely from removing standing infrastructure, why not skip DuckPipe and just trigger a plain script on a schedule? For exactly one task, fair enough: there’s nothing here for DuckPipe to add. But past one task, that plain script quietly needs everything DuckPipe already does: DAG&#x2F;ordering, a way to skip what already ran, a record of what happened, some way to see how it’s going. Build that yourself and you’re hand-rolling a smaller, less-tested version of the same problems Prefect&#x2F;Airflow&#x2F;Dagster solve. DuckPipe just solves them without a server standing behind it.</p>
+<h2 id="New-way-just-logic-to-run"><a href="#New-way-just-logic-to-run" class="headerlink" title="New way: just logic to run"></a>New way: just logic to run</h2><p>Same job, same shape as the Prefect flow up top, minus everything that isn’t logic:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> duckdb</span><br><span class="line"><span class="keyword">from</span> duckpipe <span class="keyword">import</span> task, run</span><br><span class="line"></span><br><span class="line"><span class="meta">@task</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">extract_trips</span>():</span><br><span class="line">    <span class="keyword">return</span> duckdb.sql(<span class="string">&quot;select * from read_parquet(&#x27;trips.parquet&#x27;)&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="meta">@task(<span class="params">cache=<span class="literal">True</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">daily_totals</span>(<span class="params">trips=extract_trips</span>):  <span class="comment"># `trips=extract_trips` infers the dependency</span></span><br><span class="line">    <span class="keyword">return</span> trips.aggregate(</span><br><span class="line">        <span class="string">&quot;date_trunc(&#x27;day&#x27;, pickup_at) as day, sum(fare_amount) as total&quot;</span></span><br><span class="line">    )</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">    run(__file__)</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">duckpipe run pipeline.py</span><br></pre></td></tr></table></figure>
+
+<p>That’s the whole surface:</p>
+<ul>
+<li>No <code>Depends(...)</code> marker, no YAML deployment file, no <code>duckpipe init</code></li>
+<li>Dependencies come from default-argument values: <code>trips=extract_trips</code> means “run <code>extract_trips</code> first, hand me its result,” nothing to import, nothing to declare twice</li>
+<li>A <code>duckpipe.db</code> file appears next to the script holding run history: the entire “infrastructure,” and a plain file you can <code>duckdb duckpipe.db</code> into and query directly</li>
+<li>Every task gets a content fingerprint (its code, its config, its upstream’s fingerprint), so unchanged work is skipped by default, not by an opt-in flag</li>
+<li>A task’s signature is just <code>Callable[..., Any]</code>, so passing one task’s output to the next is a plain function call: whatever you return (a DuckDB relation, a Polars LazyFrame, a pandas DataFrame, a plain string, or <code>None</code>) crosses zero serialization boundaries, because the orchestrator never looks at it</li>
+</ul>
+<p>DuckPipe doesn’t care what engine your tasks use, only that something durable remembers what happened, which is what DuckDB is doing in the name: the orchestrator’s own memory.</p>
+<p>Task organization holds up the same way past a handful of steps, too. A pipeline is a Python module, so splitting tasks across sibling files needs nothing beyond normal Python imports. And when a task’s body needs to run a whole separate pipeline (e.g. a report generated once per category, each sourced from a shared inner extract-clean-aggregate pipeline), that nesting is supported and shows up as a real nested subgraph in the Mermaid diagram, not a black box. My own preference is still a flat DAG wherever one will do, but that’s a style choice, not a ceiling. DuckPipe doesn’t force it, and it doesn’t fall over the moment a pipeline needs more structure than that.</p>
+<p>A real DAG from <a target="_blank" rel="noopener" href="https://github.com/woozyking/datapunk">Datapunk</a>, my own multi-engine benchmark project, leveraging DuckPipe for orchestration:</p>
+<pre>
+<code class="mermaid">
+
+flowchart TD
+    subgraph t_suite_01 [&quot;suite_01&quot;]
+        t_suite_01__t_extract[&quot;extract&quot;]
+        t_suite_01__t_derive[&quot;derive&quot;]
+        t_suite_01__t_aggregate[&quot;aggregate&quot;]
+        t_suite_01__t_finalize[&quot;finalize&quot;]
+        t_suite_01__t_extract --&gt; t_suite_01__t_derive
+        t_suite_01__t_derive --&gt; t_suite_01__t_aggregate
+        t_suite_01__t_aggregate --&gt; t_suite_01__t_finalize
+        class t_suite_01__t_extract success
+        class t_suite_01__t_derive success
+        class t_suite_01__t_aggregate success
+        class t_suite_01__t_finalize success
+    end
+    subgraph t_suite_02 [&quot;suite_02&quot;]
+        t_suite_02__t_extract[&quot;extract&quot;]
+        t_suite_02__t_clean[&quot;clean&quot;]
+        t_suite_02__t_aggregate[&quot;aggregate&quot;]
+        t_suite_02__t_extract --&gt; t_suite_02__t_clean
+        t_suite_02__t_clean --&gt; t_suite_02__t_aggregate
+        class t_suite_02__t_extract success
+        class t_suite_02__t_clean success
+        class t_suite_02__t_aggregate success
+    end
+    subgraph t_suite_03 [&quot;suite_03&quot;]
+        t_suite_03__t_extract_lookup[&quot;extract_lookup&quot;]
+        t_suite_03__t_extract_trips[&quot;extract_trips&quot;]
+        t_suite_03__t_join_aggregate[&quot;join_aggregate&quot;]
+        t_suite_03__t_extract_trips --&gt; t_suite_03__t_join_aggregate
+        t_suite_03__t_extract_lookup --&gt; t_suite_03__t_join_aggregate
+        class t_suite_03__t_extract_lookup success
+        class t_suite_03__t_extract_trips success
+        class t_suite_03__t_join_aggregate success
+    end
+    subgraph t_suite_04 [&quot;suite_04&quot;]
+        t_suite_04__t_extract[&quot;extract&quot;]
+        t_suite_04__t_derive[&quot;derive&quot;]
+        t_suite_04__t_aggregate[&quot;aggregate&quot;]
+        t_suite_04__t_extract --&gt; t_suite_04__t_derive
+        t_suite_04__t_derive --&gt; t_suite_04__t_aggregate
+        class t_suite_04__t_extract success
+        class t_suite_04__t_derive success
+        class t_suite_04__t_aggregate success
+    end
+    subgraph t_suite_05 [&quot;suite_05&quot;]
+        t_suite_05__t_compute_bounds[&quot;compute_bounds&quot;]
+        t_suite_05__t_extract_candidates[&quot;extract_candidates&quot;]
+        t_suite_05__t_finalize[&quot;finalize&quot;]
+        t_suite_05__t_compute_bounds --&gt; t_suite_05__t_extract_candidates
+        t_suite_05__t_extract_candidates --&gt; t_suite_05__t_finalize
+        class t_suite_05__t_compute_bounds success
+        class t_suite_05__t_extract_candidates success
+        class t_suite_05__t_finalize success
+    end
+    t_validate_dashboard_json[&quot;validate_dashboard_json&quot;]
+    t_suite_01 --&gt; t_validate_dashboard_json
+    t_suite_02 --&gt; t_validate_dashboard_json
+    t_suite_03 --&gt; t_validate_dashboard_json
+    t_suite_04 --&gt; t_validate_dashboard_json
+    t_suite_05 --&gt; t_validate_dashboard_json
+    class t_suite_01 success
+    class t_suite_02 success
+    class t_suite_03 success
+    class t_suite_04 success
+    class t_suite_05 success
+    class t_validate_dashboard_json success
+    classDef success fill:#d4f7dc,stroke:#2f9e44,color:#1a1a1a
+</code>
+</pre>
+
+<h2 id="What-DuckPipe-doesn’t-do"><a href="#What-DuckPipe-doesn’t-do" class="headerlink" title="What DuckPipe doesn’t do"></a>What DuckPipe doesn’t do</h2><p>Three things are in tension here, and no library this size gets all of them at once: zero standing infrastructure, zero new concepts beyond plain Python, and built-in platform-scale operability (a hosted UI, SLA alerting, governance across many teams, and native massive fan-out.)</p>
+<div align="center">
+<svg viewBox="0 0 580 420" width="580" height="420" xmlns="http://www.w3.org/2000/svg">
+  <circle cx="180" cy="160" r="120" fill="#d4f7dc" fill-opacity="0.55" stroke="#2f9e44" stroke-width="1.5"/>
+  <circle cx="300" cy="160" r="120" fill="#d4e7f7" fill-opacity="0.55" stroke="#2f6a9e" stroke-width="1.5"/>
+  <circle cx="240" cy="260" r="120" fill="#fdf0d5" fill-opacity="0.55" stroke="#c98a2b" stroke-width="1.5"/>
+  <text x="70" y="35" font-size="14" font-weight="bold" fill="#2f9e44">Zero standing infra</text>
+  <text x="300" y="35" font-size="14" font-weight="bold" fill="#2f6a9e" text-anchor="middle">Zero new concepts</text>
+  <text x="240" y="405" font-size="14" font-weight="bold" fill="#c98a2b" text-anchor="middle">Platform-scale operability</text>
+  <text x="142" y="90" font-size="11" text-anchor="middle" fill="#1a1a1a">a bare Lambda handler</text>
+  <text x="341" y="95" font-size="12" text-anchor="middle" fill="#1a1a1a">a polling loop</text>
+  <text x="240" y="300" font-size="12" text-anchor="middle" fill="#1a1a1a">Airflow / Prefect /</text>
+  <text x="240" y="316" font-size="12" text-anchor="middle" fill="#1a1a1a">Dagster (self-hosted)</text>
+  <text x="240" y="115" font-size="12" text-anchor="middle" font-weight="bold" fill="#1a1a1a">DuckPipe</text>
+  <text x="240" y="132" font-size="10" text-anchor="middle" fill="#1a1a1a">or a plain script</text>
+  <text x="170" y="245" font-size="11" text-anchor="middle" fill="#1a1a1a">Step Functions</text>
+  <text x="172" y="262" font-size="11" text-anchor="middle" fill="#1a1a1a">Prefect Cloud</text>
+  <circle cx="240" cy="193" r="30" fill="none" stroke="#c0392b" stroke-width="1.5" stroke-dasharray="4,3"/>
+  <text x="240" y="197" font-size="12" text-anchor="middle" font-weight="bold" fill="#c0392b">nobody</text>
+  <rect x="430" y="175" width="140" height="50" fill="none" stroke="#666" stroke-width="1.5" stroke-dasharray="4,3" rx="6"/>
+  <text x="500" y="197" font-size="12" text-anchor="middle" font-weight="bold" fill="#1a1a1a">APScheduler</text>
+  <text x="500" y="213" font-size="9" text-anchor="middle" font-style="italic" fill="#555">gets none of the three</text>
+</svg>
+</div>
+
+<p>That’s not a knock on APScheduler. It’s a solid choice when a schedule can hang off an app already running for other reasons (a web server, a bot), no separate cron or standing service needed. It composes with DuckPipe exactly like cron does, just fire <code>duckpipe.run(pipeline)</code> from the job it triggers.</p>
+<p>DuckPipe picks the first two on purpose, not pretending it replaces Prefect&#x2F;Airflow&#x2F;Dagster outright. The third isn’t abandoned, though: it’s solved by composition, not by reinventing the wheel:</p>
+<ul>
+<li><strong>Trigger&#x2F;scheduling</strong> is whatever already fires things, on a timer or on an event. Timer-based: a plain <code>cron</code> line, a GitHub Actions workflow on a <code>schedule:</code> trigger, a Kubernetes CronJob. Event-based: an S3 <code>ObjectCreated</code> notification invoking a Lambda directly, no custom glue required, which calls <code>duckpipe.run(pipeline)</code> itself or hands off to a dedicated function if the trigger handler is too small for the real work. Either way, the DuckPipe side is the same: <code>duckpipe run pipeline.py</code> from a shell, or <code>duckpipe.run(module)</code> from Python, so there’s no separate “how does DuckPipe get triggered” story to learn on top of whichever trigger your infrastructure already has</li>
+<li><strong>UI and alerting</strong> are a <code>SELECT</code> away, not a missing feature. State is a plain DuckDB file, and <code>SELECT * FROM v_run_summary</code> is the dashboard query already; point that same query at a cron job and a webhook and you have alerting. Point <code>db_path</code> at a DuckLake catalog instead of a plain file, and the same query returns real snapshot history instead of just the latest run. Same commands, same code</li>
+<li><strong>Massive fan-out</strong> is exactly the thing a heavier orchestrator is already good at, so DuckPipe leans on it instead of competing with it. Prefect’s <code>.map()</code>, Dagster’s dynamic outputs, and Airflow’s dynamic task mapping can each drive thousands of parallel units, with every mapped unit running a small DuckPipe pipeline internally. The outer platform gets the fan-out and the scheduling visibility it’s built for; each unit gets fine-grained, fingerprint-based incrementality the outer platform’s own task-level caching can’t express on its own. A DuckPipe pipeline is just <code>duckpipe.run(module)</code>, an ordinary importable Python call, indistinguishable from any function a Prefect <code>@task</code>, an Airflow <code>PythonOperator</code>, or a Dagster <code>@op</code> might wrap</li>
+</ul>
+<p>Smaller fan-out doesn’t even need a heavier platform to lean on. A plain Python loop generating uniquely-named task instances does the job today, without a new decorator to learn. That raises an honest question. For the many teams whose real need is a handful of scheduled scripts, modest fan-out, and a way to see what happened, do they need Prefect, Airflow, or Dagster at all? For a growing number of them, probably not. I’m still not building that dashboard into DuckPipe, though. The moment a read-only query over <code>v_run_summary</code> starts growing alert rules or its own scheduler UI, it stops being a query and starts being a platform, not a library I intend it as.</p>
+<h2 id="Remark"><a href="#Remark" class="headerlink" title="Remark"></a>Remark</h2><p>The bet underneath all of this isn’t “built for small data.” It’s that pipelines don’t need standing infrastructure to be well-organized, incremental, and observable, and the orchestrator that proves it should get out of the way just as easily as it stepped in. If the zero-server experience is as easy as <code>pip install duckpipe</code> and running a file, there’s almost no reason not to reach for it first. That’s the same correction that made a believer out of me one layer down, watching a 5-minute Spark cluster spin-up turn into a 5-minute Lambda run. Scaling out (a distributed cluster, a serverless executor, or just a browser tab) is meant to extend that same core, not to prove you’ve outgrown it.</p>
+<p>None of the above needs to be taken on faith. <a target="_blank" rel="noopener" href="https://woozyking.github.io/duckpipe/examples/08_browser_wasm/">Try the browser example yourself</a>. If it still vibes for you 5 minutes later, <code>pip install duckpipe</code> is the whole next step.</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Data-Engineering/" rel="tag"># Data Engineering</a>
+              <a href="/tags/Open-Source/" rel="tag"># Open Source</a>
+              <a href="/tags/DuckDB/" rel="tag"># DuckDB</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2025/12/16/Refactor-for-Sustainability-Reducing-Our-Data-Pipeline-Footprint-Part-1/" rel="prev" title="Refactor for Sustainability: Reducing Our Data Pipeline Footprint (Part 1)">
+                  <i class="fa fa-angle-left"></i> Refactor for Sustainability: Reducing Our Data Pipeline Footprint (Part 1)
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Runzhou Li (Leo)</span>
+  </div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+</body>
+</html>
